@@ -1,0 +1,9 @@
+method,family,reward_model,paired_data,reference_model,compute,memory_gb_7b,slm_fit,robustness,key_paper,year
+RLHF/PPO,reward-based,True,True,True,high,56,low,high,ouyang2022training,2022
+DPO,direct-preference,False,True,True,low,28,high,medium,rafailov2023direct,2023
+IPO,direct-preference,False,True,True,low,28,high,medium,azar2023general,2023
+KTO,direct-preference,False,False,True,low,28,high,medium,ethayarajh2024kto,2024
+ORPO,reference-free,False,True,False,very_low,14,very_high,medium,hong2024orpo,2024
+SimPO,reference-free,False,True,False,very_low,14,very_high,medium,meng2024simpo,2024
+RLAIF,self-alignment,True,True,True,medium,28,medium,medium,lee2023rlaif,2023
+RepE,representation,False,False,False,minimal,0,very_high,low,zou2023representation,2023

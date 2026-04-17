@@ -1,0 +1,175 @@
+[
+  {
+    "method": "RLHF/PPO",
+    "family": "reward-based",
+    "reward_model": true,
+    "paired_data": true,
+    "reference_model": true,
+    "compute": "high",
+    "memory_gb_7b": 56,
+    "slm_fit": "low",
+    "robustness": "high",
+    "key_paper": "ouyang2022training",
+    "year": 2022,
+    "strengths": [
+      "Most robust alignment when well-executed",
+      "Explicit reward model captures nuanced preferences",
+      "KL constraint prevents catastrophic forgetting"
+    ],
+    "weaknesses": [
+      "4 models in memory simultaneously",
+      "Reward hacking via overoptimization",
+      "Complex implementation with many hyperparameters"
+    ]
+  },
+  {
+    "method": "DPO",
+    "family": "direct-preference",
+    "reward_model": false,
+    "paired_data": true,
+    "reference_model": true,
+    "compute": "low",
+    "memory_gb_7b": 28,
+    "slm_fit": "high",
+    "robustness": "medium",
+    "key_paper": "rafailov2023direct",
+    "year": 2023,
+    "strengths": [
+      "Simple supervised learning formulation",
+      "Stable training, half the memory of RLHF",
+      "LoRA-compatible for parameter efficiency"
+    ],
+    "weaknesses": [
+      "Reference model doubles memory",
+      "Bypasses rather than removes toxic capabilities",
+      "Shallow alignment \u2014 first few tokens only"
+    ]
+  },
+  {
+    "method": "IPO",
+    "family": "direct-preference",
+    "reward_model": false,
+    "paired_data": true,
+    "reference_model": true,
+    "compute": "low",
+    "memory_gb_7b": 28,
+    "slm_fit": "high",
+    "robustness": "medium",
+    "key_paper": "azar2023general",
+    "year": 2023,
+    "strengths": [
+      "Squared loss prevents overfitting",
+      "More stable on small/noisy datasets"
+    ],
+    "weaknesses": [
+      "Slightly lower peak performance than DPO",
+      "Still requires reference model"
+    ]
+  },
+  {
+    "method": "KTO",
+    "family": "direct-preference",
+    "reward_model": false,
+    "paired_data": false,
+    "reference_model": true,
+    "compute": "low",
+    "memory_gb_7b": 28,
+    "slm_fit": "high",
+    "robustness": "medium",
+    "key_paper": "ethayarajh2024kto",
+    "year": 2024,
+    "strengths": [
+      "Binary feedback \u2014 dramatically cheaper data",
+      "Grounded in prospect theory"
+    ],
+    "weaknesses": [
+      "Lower quality than paired preference methods",
+      "Theoretical grounding not empirically validated as mechanism"
+    ]
+  },
+  {
+    "method": "ORPO",
+    "family": "reference-free",
+    "reward_model": false,
+    "paired_data": true,
+    "reference_model": false,
+    "compute": "very_low",
+    "memory_gb_7b": 14,
+    "slm_fit": "very_high",
+    "robustness": "medium",
+    "key_paper": "hong2024orpo",
+    "year": 2024,
+    "strengths": [
+      "No reference model \u2014 lowest memory",
+      "Single-phase SFT+alignment training"
+    ],
+    "weaknesses": [
+      "Merged objective can create tension",
+      "Less fine-grained safety control"
+    ]
+  },
+  {
+    "method": "SimPO",
+    "family": "reference-free",
+    "reward_model": false,
+    "paired_data": true,
+    "reference_model": false,
+    "compute": "very_low",
+    "memory_gb_7b": 14,
+    "slm_fit": "very_high",
+    "robustness": "medium",
+    "key_paper": "meng2024simpo",
+    "year": 2024,
+    "strengths": [
+      "Reference-free with sequence-level reward",
+      "Memory-efficient"
+    ],
+    "weaknesses": [
+      "Implicit reward may miss fine-grained safety distinctions"
+    ]
+  },
+  {
+    "method": "RLAIF",
+    "family": "self-alignment",
+    "reward_model": true,
+    "paired_data": true,
+    "reference_model": true,
+    "compute": "medium",
+    "memory_gb_7b": 28,
+    "slm_fit": "medium",
+    "robustness": "medium",
+    "key_paper": "lee2023rlaif",
+    "year": 2023,
+    "strengths": [
+      "No human labels needed",
+      "Leverages frontier model judgment"
+    ],
+    "weaknesses": [
+      "Bounded by teacher model quality",
+      "Propagates teacher blind spots"
+    ]
+  },
+  {
+    "method": "RepE",
+    "family": "representation",
+    "reward_model": false,
+    "paired_data": false,
+    "reference_model": false,
+    "compute": "minimal",
+    "memory_gb_7b": 0,
+    "slm_fit": "very_high",
+    "robustness": "low",
+    "key_paper": "zou2023representation",
+    "year": 2023,
+    "strengths": [
+      "Zero training cost",
+      "Works on quantized models",
+      "Interpretable geometric mechanism"
+    ],
+    "weaknesses": [
+      "Coarse safety signal \u2014 single direction",
+      "Untested on sub-3B models",
+      "Over-refusal if steering too aggressive"
+    ]
+  }
+]
