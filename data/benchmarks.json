@@ -1,0 +1,261 @@
+[
+  {
+    "name": "RealToxicityPrompts",
+    "year": 2020,
+    "languages": [
+      "en"
+    ],
+    "scale": 100000,
+    "dimension": "toxicity",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "gehman2020realtoxicity"
+  },
+  {
+    "name": "ToxiGen",
+    "year": 2022,
+    "languages": [
+      "en"
+    ],
+    "scale": 274000,
+    "dimension": "implicit_toxicity",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "hartvigsen2022toxigen"
+  },
+  {
+    "name": "TruthfulQA",
+    "year": 2022,
+    "languages": [
+      "en"
+    ],
+    "scale": 817,
+    "dimension": "truthfulness",
+    "automated_eval": true,
+    "slm_tested": true,
+    "compression_aware": false,
+    "key": "lin2022truthfulqa"
+  },
+  {
+    "name": "BBQ",
+    "year": 2022,
+    "languages": [
+      "en"
+    ],
+    "scale": 58000,
+    "dimension": "social_bias",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "parrish2022bbq"
+  },
+  {
+    "name": "DecodingTrust",
+    "year": 2023,
+    "languages": [
+      "en"
+    ],
+    "scale": null,
+    "dimension": "comprehensive_8dim",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "wang2023decodingtrust"
+  },
+  {
+    "name": "HarmBench",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": 510,
+    "dimension": "harmful_behaviors",
+    "automated_eval": true,
+    "slm_tested": true,
+    "compression_aware": false,
+    "key": "mazeika2024harmbench"
+  },
+  {
+    "name": "SALAD-Bench",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": 30000,
+    "dimension": "comprehensive_66cat",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "li2024salad"
+  },
+  {
+    "name": "XSafety",
+    "year": 2024,
+    "languages": [
+      "en",
+      "zh",
+      "ar",
+      "hi",
+      "fr",
+      "de",
+      "es",
+      "pt",
+      "ru",
+      "ja"
+    ],
+    "scale": 14000,
+    "dimension": "multilingual_safety",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "wang2024xsafety"
+  },
+  {
+    "name": "JailbreakBench",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": 100,
+    "dimension": "jailbreak_robustness",
+    "automated_eval": true,
+    "slm_tested": true,
+    "compression_aware": false,
+    "key": "chao2024jailbreakbench"
+  },
+  {
+    "name": "StrongREJECT",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": null,
+    "dimension": "refusal_robustness",
+    "automated_eval": true,
+    "slm_tested": true,
+    "compression_aware": false,
+    "key": "souly2024strongreject"
+  },
+  {
+    "name": "OR-Bench",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": 80000,
+    "dimension": "over_refusal",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "cui2024orbench"
+  },
+  {
+    "name": "SORRY-Bench",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": 1000,
+    "dimension": "refusal_45cat",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "xie2024sorry"
+  },
+  {
+    "name": "AgentHarm",
+    "year": 2024,
+    "languages": [
+      "en"
+    ],
+    "scale": null,
+    "dimension": "agent_safety",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "andriushchenko2024agentharm"
+  },
+  {
+    "name": "AILuminate v1.0",
+    "year": 2025,
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "scale": 24000,
+    "dimension": "comprehensive_12cat",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "ailuminate2025"
+  },
+  {
+    "name": "PolyGuardPrompts",
+    "year": 2025,
+    "languages": 17,
+    "scale": 29000,
+    "dimension": "multilingual_moderation",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "polyguard2025"
+  },
+  {
+    "name": "M-ALERT",
+    "year": 2025,
+    "languages": [
+      "de",
+      "fr",
+      "it",
+      "es",
+      "pt"
+    ],
+    "scale": 75000,
+    "dimension": "cross_lingual_safety",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "malert2025"
+  },
+  {
+    "name": "SafeArena",
+    "year": 2025,
+    "languages": [
+      "en"
+    ],
+    "scale": 500,
+    "dimension": "web_agent_safety",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "safearena2025"
+  },
+  {
+    "name": "HalluHard",
+    "year": 2026,
+    "languages": [
+      "en"
+    ],
+    "scale": 950,
+    "dimension": "multi_turn_hallucination",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "halluhard2026"
+  },
+  {
+    "name": "ATBench",
+    "year": 2026,
+    "languages": [
+      "en"
+    ],
+    "scale": 500,
+    "dimension": "agent_trajectory",
+    "automated_eval": true,
+    "slm_tested": false,
+    "compression_aware": false,
+    "key": "atbench2026"
+  }
+]
