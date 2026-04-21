@@ -1,0 +1,65 @@
+% Figure 1: Taxonomy of Safety and Alignment for Small Language Models
+% Compile with: pdflatex (requires tikz, forest packages)
+\begin{figure*}[t]
+\centering
+\begin{forest}
+  for tree={
+    grow'=0,
+    child anchor=west,
+    parent anchor=south,
+    anchor=west,
+    calign=first,
+    edge path={
+      \noexpand\path [draw, \forestoption{edge}]
+      (!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+    },
+    before typesetting nodes={
+      if n=1
+        {insert before={[,phantom]}}
+        {}
+    },
+    fit=band,
+    before computing xy={l=15pt},
+    font=\small,
+  }
+[Safety \& Alignment\\of Small LMs, text width=3.2cm, font=\small\bfseries
+  [Alignment\\Techniques \S4, text width=2.4cm, font=\small\itshape
+    [Reward-Based (RLHF{,} PPO), text width=4.5cm]
+    [Direct Preference (DPO{,} IPO{,} KTO{,} ORPO{,} SimPO), text width=5.8cm]
+    [Self-Alignment (RLAIF{,} CAI{,} SPIN), text width=4.5cm]
+    [Game-Theoretic (Nash-LHF{,} SPPO{,} DNO), text width=4.8cm]
+    [Representation Engineering (RepE{,} steering), text width=4.8cm]
+    [Guardrails (Llama Guard{,} NeMo{,} WildGuard), text width=4.8cm]
+  ]
+  [Safety\\Evaluation \S5, text width=2.4cm, font=\small\itshape
+    [Toxicity (RealToxicityPrompts{,} ToxiGen), text width=4.8cm]
+    [Truthfulness (TruthfulQA{,} FActScore{,} HaluEval), text width=5.2cm]
+    [Bias (BBQ{,} StereoSet{,} CrowS-Pairs{,} BOLD), text width=5.2cm]
+    [Comprehensive (HarmBench{,} DecodingTrust{,} SALAD-Bench), text width=5.8cm]
+    [Jailbreak (JailbreakBench{,} StrongREJECT), text width=4.8cm]
+    [Agent Safety (AgentHarm{,} R-Judge{,} ToolEmu), text width=4.8cm]
+  ]
+  [Efficiency\\$\times$ Safety \S6, text width=2.4cm, font=\small\itshape
+    [Quantization Effects (4-bit safe{,} $\leq$3-bit degrades), text width=5.8cm]
+    [LoRA for Safety (Safe LoRA{,} SaLoRA{,} orthogonal), text width=5.2cm]
+    [Distillation (safety transfer risks), text width=4.5cm]
+    [Pruning (sparse safety regions $\sim$3\%), text width=4.5cm]
+    [Alignment Tax (null-space methods), text width=4.5cm]
+    [Edge Deployment (LiteLMGuard{,} DSA), text width=4.5cm]
+  ]
+  [Multilingual\\Safety \S7, text width=2.4cm, font=\small\itshape
+    [Cross-Lingual Safety Gaps, text width=4.5cm]
+    [Low-Resource Jailbreaking, text width=4.5cm]
+    [Cultural Bias in Alignment, text width=4.5cm]
+  ]
+  [Mechanistic\\Interpretability \S8, text width=2.4cm, font=\small\itshape
+    [Circuit Discovery (ACDC{,} activation patching), text width=5.2cm]
+    [Feature Analysis (SAEs{,} monosemanticity), text width=4.8cm]
+    [Safety Circuits (refusal direction{,} DPO bypass), text width=5.2cm]
+    [Interp-Guided Safety (ITI{,} SafeInt{,} steering), text width=5.2cm]
+  ]
+]
+\end{forest}
+\caption{Taxonomy of safety and alignment research for small language models, organized along five axes corresponding to Sections 4--8 of this survey.}
+\label{fig:taxonomy}
+\end{figure*}
