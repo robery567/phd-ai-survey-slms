@@ -1,5 +1,4 @@
 % Figure 1: Taxonomy of Safety and Alignment for Small Language Models
-% Compile with: pdflatex (requires tikz, forest packages)
 \begin{figure*}[t]
 \centering
 \begin{forest}
@@ -23,43 +22,44 @@
     font=\small,
   }
 [Safety \& Alignment\\of Small LMs, text width=3.2cm, font=\small\bfseries
-  [Alignment\\Techniques \S4, text width=2.4cm, font=\small\itshape
-    [Reward-Based (RLHF{,} PPO), text width=4.5cm]
+  [Data-Centric\\Safety \S4, text width=2.4cm, font=\small\itshape
+    [Pretraining data filtering \& curation, text width=5cm]
+    [Safety-focused fine-tuning data, text width=5cm]
+    [Synthetic data for alignment (RLAIF{,} Magpie), text width=5.5cm]
+  ]
+  [Training-Time\\Alignment \S5, text width=2.4cm, font=\small\itshape
+    [Reward-Based (RLHF{,} PPO{,} Safe RLHF), text width=5cm]
     [Direct Preference (DPO{,} IPO{,} KTO{,} ORPO{,} SimPO), text width=5.8cm]
-    [Self-Alignment (RLAIF{,} CAI{,} SPIN), text width=4.5cm]
-    [Game-Theoretic (Nash-LHF{,} SPPO{,} DNO), text width=4.8cm]
-    [Representation Engineering (RepE{,} steering), text width=4.8cm]
-    [Guardrails (Llama Guard{,} NeMo{,} WildGuard), text width=4.8cm]
+    [Self-Alignment (RLAIF{,} CAI{,} SPIN), text width=5cm]
+    [Representation Engineering (RepE{,} steering), text width=5cm]
   ]
-  [Safety\\Evaluation \S5, text width=2.4cm, font=\small\itshape
-    [Toxicity (RealToxicityPrompts{,} ToxiGen), text width=4.8cm]
-    [Truthfulness (TruthfulQA{,} FActScore{,} HaluEval), text width=5.2cm]
-    [Bias (BBQ{,} StereoSet{,} CrowS-Pairs{,} BOLD), text width=5.2cm]
-    [Comprehensive (HarmBench{,} DecodingTrust{,} SALAD-Bench), text width=5.8cm]
-    [Jailbreak (JailbreakBench{,} StrongREJECT), text width=4.8cm]
-    [Agent Safety (AgentHarm{,} R-Judge{,} ToolEmu), text width=4.8cm]
+  [Post-Training\\Safeguards \S6, text width=2.4cm, font=\small\itshape
+    [Safety classifiers (Llama Guard{,} WildGuard), text width=5.2cm]
+    [Edge guardrails (LiteLMGuard{,} DSA{,} EASE), text width=5.2cm]
+    [Constitutional \& rule-based approaches, text width=5cm]
   ]
-  [Efficiency\\$\times$ Safety \S6, text width=2.4cm, font=\small\itshape
-    [Quantization Effects (4-bit safe{,} $\leq$3-bit degrades), text width=5.8cm]
-    [LoRA for Safety (Safe LoRA{,} SaLoRA{,} orthogonal), text width=5.2cm]
-    [Distillation (safety transfer risks), text width=4.5cm]
-    [Pruning (sparse safety regions $\sim$3\%), text width=4.5cm]
-    [Alignment Tax (null-space methods), text width=4.5cm]
-    [Edge Deployment (LiteLMGuard{,} DSA), text width=4.5cm]
+  [Model Editing \&\\Unlearning \S7, text width=2.4cm, font=\small\itshape
+    [Knowledge unlearning (WMDP{,} RMU), text width=5cm]
+    [Targeted model editing (MEMIT), text width=5cm]
+    [Fine-tuning safety risks, text width=5cm]
   ]
-  [Multilingual\\Safety \S7, text width=2.4cm, font=\small\itshape
-    [Cross-Lingual Safety Gaps, text width=4.5cm]
-    [Low-Resource Jailbreaking, text width=4.5cm]
-    [Cultural Bias in Alignment, text width=4.5cm]
+  [Efficiency\\$\times$ Safety \S8, text width=2.4cm, font=\small\itshape
+    [Quantization (4-bit safe{,} $\leq$3-bit degrades), text width=5.5cm]
+    [LoRA for safety (Safe LoRA{,} rank-1{,} NSPO), text width=5.5cm]
+    [Pruning \& distillation trade-offs, text width=5cm]
   ]
-  [Mechanistic\\Interpretability \S8, text width=2.4cm, font=\small\itshape
-    [Circuit Discovery (ACDC{,} activation patching), text width=5.2cm]
-    [Feature Analysis (SAEs{,} monosemanticity), text width=4.8cm]
-    [Safety Circuits (refusal direction{,} DPO bypass), text width=5.2cm]
-    [Interp-Guided Safety (ITI{,} SafeInt{,} steering), text width=5.2cm]
+  [Multilingual\\Safety \S9, text width=2.4cm, font=\small\itshape
+    [Cross-lingual safety gaps, text width=5cm]
+    [Sparse weight editing for transfer, text width=5cm]
+    [Cultural bias in alignment, text width=5cm]
+  ]
+  [Mechanistic\\Interpretability \S10, text width=2.4cm, font=\small\itshape
+    [Safety circuits (refusal direction{,} shallow alignment), text width=5.8cm]
+    [Interpretability-guided interventions (ITI{,} SAEs), text width=5.8cm]
+    [Reasoning model safety (SafePath{,} EASE), text width=5.5cm]
   ]
 ]
 \end{forest}
-\caption{Taxonomy of safety and alignment research for small language models, organized along five axes corresponding to Sections 4--8 of this survey.}
+\caption{Taxonomy of safety and alignment research for small language models, organized along seven axes corresponding to Sections~4--10 of this survey.}
 \label{fig:taxonomy}
 \end{figure*}
