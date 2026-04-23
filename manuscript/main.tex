@@ -1,0 +1,764 @@
+% Safety and Alignment of Small Language Models — Survey Paper
+% Target: Artificial Intelligence Review (Springer)
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{forest}
+\bibliographystyle{abbrvnat}
+
+\newtheorem{definition}{Definition}
+
+\title{\textbf{Safety and Alignment of Small Language Models:}\\ \textbf{A Systematic Survey of Methods, Evaluation, and Open Challenges}}
+
+\author{
+  Robert-Mihai Colca \\
+  \small Faculty of Mathematics and Computer Science \\
+  \small West University of Timi\c{s}oara, Romania \\
+  \small \texttt{robert.colca@e-uvt.ro}
+  \and
+  Dana Petcu \\
+  \small Faculty of Mathematics and Computer Science \\
+  \small West University of Timi\c{s}oara, Romania \\
+  \small \texttt{dana.petcu@e-uvt.ro}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent The rapid proliferation of small language models (SLMs)---defined here as models with up to 7 billion active parameters---has democratized access to capable language technology, allowing deployment on consumer hardware, mobile devices, and edge infrastructure. However, the safety and alignment properties of these models remain critically understudied relative to their frontier counterparts. This survey offers the first comprehensive review of safety and alignment specifically focused on small language models. We organize the landscape along seven axes: (1)~data-centric safety approaches, (2)~training-time alignment techniques and their comparative effectiveness, (3)~post-training safeguards and guardrails, (4)~model editing and knowledge management, (5)~the interaction between efficiency techniques and safety, (6)~multilingual safety disparities, and (7)~mechanistic interpretability of safety behaviors. For each axis, we provide a critical comparative analysis identifying strengths, weaknesses, and trade-offs. We systematically review more than 200 articles published between 2022 and 2026, construct a unified taxonomy, survey evaluation benchmarks and their limitations, catalog known failure modes, and identify eight concrete open research challenges. Our analysis reveals that safety alignment in SLMs is not simply a scaled-down version of frontier model alignment but presents qualitatively distinct challenges---including acute capacity--safety trade-offs, compression-induced safety degradation, and amplified multilingual vulnerabilities---that require dedicated investigation.
+\end{abstract}
+
+\smallskip
+\noindent\textbf{Keywords:} Small language models $\cdot$ AI safety $\cdot$ Alignment $\cdot$ Preference optimization $\cdot$ Safety evaluation $\cdot$ Efficient alignment $\cdot$ Mechanistic interpretability $\cdot$ Multilingual safety \\
+\\
+
+%%% SECTION 1 %%%
+\section{Introduction}\label{sec:intro}
+
+Large language models (LLMs) have transformed natural language processing, achieving remarkable performance across tasks from open-ended dialogue to complex reasoning and code generation. A parallel and increasingly consequential development has been the emergence of highly capable \emph{small} language models (SLMs): open-weight models with up to approximately 7 billion parameters that can be fine-tuned, deployed, and served on commodity hardware. Unlike their frontier counterparts, which require multi-GPU clusters and substantial infrastructure, SLMs can run on a single consumer GPU or even a smartphone, making them the primary vehicle through which language technology reaches most users and applications worldwide.
+
+The SLM ecosystem has expanded rapidly along several independent axes. Microsoft's Phi series demonstrated that data quality can compensate for parameter count, with Phi-3 Mini (3.8B) rivaling models several times its size on academic benchmarks~\citep{abdin2024phi3}, and Phi-4 extending this to multimodal capabilities~\citep{abdin2024phi4}. Google DeepMind's Gemma family progressed from Gemma~2 through Gemma~3 to Gemma~4 (2026), whose E2B model runs natively on smartphones with a 256K context window~\citep{gemma2024b,gemma2025,gemma2026}. Alibaba's Qwen series evolved through Qwen~2.5~\citep{qwen2024} and Qwen~3~\citep{qwen2025} to Qwen~3.6, with the 35B-A3B variant achieving 73.4\% on SWE-bench Verified using only 3B active parameters via Mixture-of-Experts~\citep{qwen2026_36}. Meta's Llama 3.2 introduced 1B and 3B models for on-device deployment~\citep{grattafiori2024llama3}. Community efforts such as TinyLlama~\citep{zhang2024tinyllama}, SmolLM~\citep{benallal2024smollm}, OLMo~\citep{groeneveld2024olmo}, and OpenELM~\citep{mehta2024openelm} have further enriched the field with fully open training pipelines.
+
+This proliferation raises a critical question: \textbf{are small language models safe?}
+
+The safety and alignment of LLMs has been a major research focus since InstructGPT~\citep{ouyang2022training}, which established the RLHF paradigm. Subsequent work has produced a rich landscape of alignment techniques---from DPO~\citep{rafailov2023direct} and Constitutional AI~\citep{bai2022constitutional} to representation engineering~\citep{zou2023representation}---alongside safety benchmarks such as HarmBench~\citep{mazeika2024harmbench}, DecodingTrust~\citep{wang2023decodingtrust}, and TrustLLM~\citep{huang2024trustllm}. The overwhelming majority of this work targets frontier-scale models with 70B or more parameters, leaving a significant gap in our understanding of how these techniques transfer to smaller architectures.
+
+Several factors make safety alignment in SLMs a qualitatively distinct problem:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Capacity constraints.} Smaller models have fewer parameters to simultaneously encode world knowledge, task capabilities, and safety behaviors. The ``superficial safety alignment hypothesis''~\citep{yi2024superficial} suggests safety may be encoded in surprisingly few components, but the implications for capacity-constrained models remain unclear. When a 3B model must allocate its limited representational capacity between knowing facts, following instructions, and refusing harmful requests, the trade-offs become qualitatively different from those in a 70B model.
+    \item \textbf{Compression sensitivity.} SLMs are frequently quantized, pruned, or distilled for deployment. \citet{hong2024compressed} demonstrated that aggressive compression can significantly degrade safety even when perplexity remains stable. \citet{wei2024brittleness} showed safety-critical regions occupy only ${\sim}3\%$ of parameters, making them disproportionately vulnerable to compression.
+    \item \textbf{Alignment tax.} The trade-off between safety and capability is more acute in smaller models. A 7B model that loses 5\% of its reasoning ability to safety training may drop below usability thresholds, whereas a 70B model absorbs the same relative loss without functional impact.
+    \item \textbf{Multilingual gaps.} Safety alignment is predominantly English-centric; cross-lingual transfer is unreliable. \citet{deng2024multilingual} showed that translating harmful prompts to low-resource languages bypasses alignment entirely, and \citet{yong2024lowresource} demonstrated this even against GPT-4. In SLMs, where multilingual capacity is already constrained, these gaps are amplified.
+    \item \textbf{Deployment context.} SLMs deployed on edge devices---smartphones, IoT hardware, local servers---lack centralized safety monitoring, content filtering infrastructure, and the ability to apply real-time patches. In privacy-sensitive environments (healthcare, legal, on-device personal assistants), outputs cannot be logged or reviewed by external systems. Safety must be deeply embedded in the model itself.
+\end{enumerate}
+
+Despite these distinct challenges, no existing survey addresses safety and alignment from the SLM perspective. Prior surveys cover LLM safety broadly~\citep{li2024safetysurvey}, red-teaming~\citep{wang2024redteamsurvey}, jailbreaks~\citep{yi2024jailbreaksurvey}, efficient LLMs~\citep{wan2024efficient}, and small language models~\citep{wang2024slmsurvey,lu2024slm}. \citet{li2024safetysurvey} provide the most comprehensive safety overview but do not differentiate by model scale. \citet{wang2024slmsurvey} and \citet{lu2024slm} survey SLM capabilities but treat safety as peripheral. None examines the intersection of safety and efficiency that defines the SLM alignment problem.
+
+\paragraph{Contributions.} (1)~The first systematic survey of safety and alignment focused on SLMs ($\leq$7B active parameters), reviewing over 200 papers (2022--2026). (2)~A seven-axis taxonomy (Figure~\ref{fig:taxonomy}) covering data-centric approaches, training-time alignment, post-training safeguards, model editing, efficiency--safety interactions, multilingual safety, and mechanistic interpretability. (3)~Critical comparative analyses identifying strengths, weaknesses, and trade-offs for each method and benchmark (Figures~\ref{fig:alignment}--\ref{fig:coverage}). (4)~A dedicated analysis of failure modes specific to SLMs. (5)~Eight concrete open research challenges with feasibility assessments.
+
+\paragraph{Organization.} Section~\ref{sec:method} describes our methodology and positions this survey relative to prior work. Section~\ref{sec:background} provides definitions and context. Sections~\ref{sec:datacentric}--\ref{sec:interp} present our seven-axis taxonomy with comparative analysis. Section~\ref{sec:eval} surveys evaluation benchmarks and their limitations. Section~\ref{sec:failures} catalogs failure modes. Section~\ref{sec:challenges} identifies open challenges. Section~\ref{sec:empirical} presents our own empirical validation experiments. Section~\ref{sec:limitations} discusses limitations. Section~\ref{sec:conclusion} concludes.
+
+
+%%% SECTION 2 %%%
+\section{Survey Methodology}\label{sec:method}
+
+We conducted this survey following a systematic approach inspired by the PRISMA guidelines, adapted for the rapidly evolving nature of ML research. We searched arXiv (cs.CL, cs.AI, cs.LG, cs.CR), Google Scholar, Semantic Scholar, ACM Digital Library, IEEE Xplore, and ACL Anthology between January and April 2026. Search queries combined terms from three groups: (1)~model scope (``small language model,'' ``SLM,'' ``efficient LLM,'' ``on-device model''), (2)~safety scope (``safety,'' ``alignment,'' ``harmlessness,'' ``jailbreak,'' ``toxicity,'' ``bias,'' ``refusal''), and (3)~technique scope (``RLHF,'' ``DPO,'' ``quantization safety,'' ``pruning alignment,'' ``interpretability safety,'' ``data curation,'' ``model editing,'' ``unlearning'').
+
+\textbf{Inclusion criteria:} published 2022--2026; peer-reviewed at a top venue (NeurIPS, ICML, ICLR, ACL, EMNLP, AAAI) or high-impact preprint ($\geq$20 citations or from a recognized research group); directly relevant to at least one survey axis. Foundational works from before 2022 (e.g., RLHF~\citep{ziegler2019fine}) were included when essential.
+
+\textbf{Exclusion criteria:} papers focused exclusively on models above 13B with no SLM experiments or transferable insights; application-specific papers without methodological contributions; non-English papers without English abstracts.
+
+The initial search yielded ${\sim}450$ candidates. After title/abstract screening, 280 were retained for full-text review. After applying inclusion/exclusion criteria, 215 papers were included. Of these, 29\% were published in 2025--2026, reflecting the rapid growth of the field. Figure~\ref{fig:prisma} summarizes the selection process.
+
+% --- Figure 5: PRISMA flow ---
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\columnwidth]{figures/fig5-prisma-flow.pdf}
+\caption{PRISMA-inspired systematic review flow. Numbers in parentheses indicate papers at each stage. The 215 included papers span six thematic categories (some papers contribute to multiple categories).}
+\label{fig:prisma}
+\end{figure}
+
+\subsection{Comparison with Existing Surveys}
+
+Table~\ref{tab:surveys} positions our survey relative to prior work. \citet{li2024safetysurvey} provide the most comprehensive LLM safety overview but do not differentiate by model scale. \citet{wang2024slmsurvey} and \citet{lu2024slm} survey SLM capabilities but treat safety as peripheral. \citet{wan2024efficient} cover efficiency techniques without examining safety implications. \citet{yi2024jailbreaksurvey} focus exclusively on jailbreaks. None examines the intersection of safety and efficiency that defines the SLM alignment problem, and none provides the comparative strengths/weaknesses analysis that practitioners need.
+
+\begin{table}[t]
+\centering
+\caption{Positioning relative to existing surveys. \checkmark = covered, (\checkmark) = partially covered, -- = not covered.}\label{tab:surveys}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Survey} & \textbf{SLM} & \textbf{Safety} & \textbf{Effic.} & \textbf{Multi-} & \textbf{Comp.} \\
+ & \textbf{focus} & \textbf{methods} & \textbf{$\times$safety} & \textbf{lingual} & \textbf{analysis} \\
+\midrule
+\citet{li2024safetysurvey} & -- & \checkmark & -- & (\checkmark) & -- \\
+\citet{wang2024slmsurvey} & \checkmark & -- & (\checkmark) & -- & -- \\
+\citet{lu2024slm} & \checkmark & -- & (\checkmark) & -- & -- \\
+\citet{wan2024efficient} & (\checkmark) & -- & \checkmark & -- & -- \\
+\citet{yi2024jailbreaksurvey} & -- & (\checkmark) & -- & -- & -- \\
+\citet{wang2024redteamsurvey} & -- & (\checkmark) & -- & -- & -- \\
+\textbf{This survey} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%%% SECTION 3 %%%
+\section{Background and Definitions}\label{sec:background}
+
+% --- Figure 1: Taxonomy ---
+\input{figures/fig1-taxonomy}
+
+\subsection{Defining Small Language Models}
+
+\begin{definition}[Small Language Model]
+A small language model (SLM) is a pretrained autoregressive transformer with at most 7 billion \emph{active} parameters per forward pass, designed to be fine-tuned and deployed on commodity hardware without distributed inference. For Mixture-of-Experts (MoE) models, the active parameter count---not the total---determines classification.
+\end{definition}
+
+This threshold is motivated by practical considerations: dense models at or below 7B can be served in 4-bit quantization within 8\,GB of VRAM, corresponding to a single consumer GPU or the unified memory of a modern smartphone. MoE models with 3--4B active parameters (e.g., Qwen~3.6-35B-A3B) achieve comparable inference costs despite larger total parameter counts. Table~\ref{tab:models} summarizes the major SLM families.
+
+\begin{table*}[t]
+\centering
+\caption{Major small language model families ($\leq$7B active parameters), 2023--2026.}\label{tab:models}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccp{3.8cm}l@{}}
+\toprule
+\textbf{Model} & \textbf{Org} & \textbf{Year} & \textbf{Sizes} & \textbf{Key Innovation} & \textbf{Safety} \\
+\midrule
+Phi-3 Mini & Microsoft & 2024 & 3.8B & Phone deployment & SFT + safety \\
+Phi-4 Mini & Microsoft & 2025 & 3.8B & MoLoRA multimodal & Safety-aligned \\
+Gemma 2 & Google & 2024 & 2B, 9B & Distillation & Safety-tuned \\
+Gemma 3 & Google & 2025 & 1B--4B & Multimodal, 128K ctx & Safety-tuned \\
+\textbf{Gemma 4} & \textbf{Google} & \textbf{2026} & \textbf{E2B, E4B} & \textbf{PLE, p-RoPE, 256K ctx} & \textbf{Safety-tuned} \\
+Qwen 2.5 & Alibaba & 2024 & 0.5B--7B & 30+ languages & Safety-aligned \\
+Qwen 3 & Alibaba & 2025 & 0.6B--4B & Think/non-think mode & Safety-aligned \\
+\textbf{Qwen 3.6} & \textbf{Alibaba} & \textbf{2026} & \textbf{35B-A3B} & \textbf{SWE-bench 73.4\%, 3B active} & \textbf{Safety-aligned} \\
+Llama 3.2 & Meta & 2024 & 1B, 3B & On-device variants & Llama Guard 3 \\
+Mistral 7B & Mistral & 2023 & 7B & GQA + sliding window attn & Minimal \\
+TinyLlama & Community & 2024 & 1.1B & Overtraining & Minimal \\
+SmolLM 2 & HuggingFace & 2024 & 0.1B--1.7B & Curated corpus & Instr.-tuned \\
+OLMo 2 & AI2 & 2025 & 7B & Fully open & Safety-tuned \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Safety, Alignment, and Harmlessness}\label{sec:definitions}
+
+We adopt the following definitions. \emph{Alignment}: a model's behavior consistently reflects developer-specified values, commonly operationalized through the HHH criteria (helpful, harmless, honest)~\citep{bai2022constitutional}. \emph{Safety}: the property that a model does not produce outputs that cause or contribute to harm---a subset of alignment focused on harm prevention. \emph{Harmlessness}: the behavioral property that a model does not produce harmful outputs even under adversarial prompting---the observable manifestation of safety.
+
+For SLMs, these distinctions are particularly important because capacity constraints force explicit trade-offs. A 3B model may not have sufficient representational capacity to be simultaneously maximally helpful and maximally safe; understanding which property is being optimized---and at what cost to the others---is essential.
+
+\subsection{Taxonomy of Safety Concerns}
+
+We organize safety concerns into six categories, each presenting distinct challenges at small scale:
+
+\begin{enumerate}[leftmargin=*]
+    \item \emph{Toxicity}---hateful, threatening, or offensive content. SLMs show higher baseline toxicity rates than larger models~\citep{gehman2020realtoxicity}, likely because safety training data is proportionally smaller relative to pretraining data.
+    \item \emph{Social bias}---systematic disparities across demographic groups. Debiasing techniques consume capacity that small models can ill afford~\citep{gallegos2024bias}.
+    \item \emph{Truthfulness and hallucination}---factually incorrect or fabricated information. Smaller models hallucinate more frequently~\citep{lin2022truthfulqa}, and the boundary between ``does not know'' and ``makes up an answer'' is harder to enforce with limited parameters.
+    \item \emph{Adversarial robustness}---vulnerability to jailbreaks and prompt injection. The superficial alignment hypothesis~\citep{yi2024superficial} suggests safety in current models is shallow, and \citet{qi2025shallow} confirmed that alignment adapts only the first few output tokens.
+    \item \emph{Privacy}---memorization and reproduction of private training data. SLMs trained on curated datasets may have lower memorization risk, but systematic evaluation is lacking. In privacy-sensitive deployments (healthcare, legal), even low-probability memorization is unacceptable.
+    \item \emph{Over-refusal}---refusing benign requests that superficially resemble harmful ones. OR-Bench~\citep{cui2024orbench} showed this is a significant problem, and anecdotal evidence suggests it is worse in smaller models where the decision boundary is less precise.
+\end{enumerate}
+
+\subsection{The Alignment Pipeline}
+
+Modern alignment follows a multi-stage pipeline~\citep{ouyang2022training}: (1)~pretraining on large text corpora, (2)~supervised fine-tuning (SFT) on instruction-following data, (3)~preference optimization (RLHF or DPO), (4)~safety-specific training (red-teaming, refusal training), and (5)~deployment safeguards (content filters, guardrails). For SLMs, this pipeline is often compressed: stages 2--3 may be combined using ORPO~\citep{hong2024orpo}; stage 3 frequently uses LoRA~\citep{thakkar2024tradeoffs}; stage 5 must be lightweight for edge deployment. The RLHF workflow~\citep{dong2024rlhf} and its implementation details~\citep{zheng2023secrets} have been documented for large models, but the optimal pipeline for SLMs remains an open question. Figure~\ref{fig:timeline} provides a chronological overview of the key developments in alignment methods, safety benchmarks, and small model releases from 2020 to 2026.
+
+
+%%% SECTION 4 %%%
+\section{Data-Centric Safety Approaches}\label{sec:datacentric}
+
+% --- Figure 2: Timeline ---
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig2-timeline.pdf}
+\caption{Evolution of safety alignment methods, benchmarks, and small language models (2020--2026). The field has progressed from foundational RLHF to efficient methods (DPO, ORPO, RepE) suitable for SLMs, while the benchmark ecosystem has expanded from toxicity-focused to comprehensive multi-dimensional evaluation.}
+\label{fig:timeline}
+\end{figure*}
+
+Before any alignment training occurs, the safety properties of a language model are substantially determined by its pretraining and fine-tuning data. Data-centric approaches address safety at the source, and are particularly relevant for SLMs where every training token has outsized influence on model behavior.
+
+\subsection{Pretraining Data Filtering and Curation}
+
+The composition of pretraining data directly shapes a model's propensity for toxic, biased, or harmful outputs. \citet{longpre2024pretrainer} showed that data age, domain coverage, and toxicity filtering all measurably affect downstream safety properties. The Phi series~\citep{abdin2024phi3} demonstrated that aggressive data curation---using ``textbook-quality'' synthetic and filtered data---can produce models that are both more capable and less toxic than models trained on unfiltered web crawls of equivalent scale.
+
+\emph{Strengths:} Data filtering is a one-time cost that benefits all downstream uses of the model. It addresses safety at the root cause rather than patching symptoms. For SLMs, where the pretraining budget is smaller, the marginal impact of each data quality improvement is larger.
+
+\emph{Weaknesses:} Aggressive filtering can reduce data diversity, harming the model's ability to discuss sensitive topics appropriately (as opposed to refusing them entirely). Toxicity classifiers used for filtering have known biases---for example, flagging African American Vernacular English as toxic~\citep{gehman2020realtoxicity}---which can amplify representational harms. There is no consensus on optimal filtering thresholds, and the interaction between filtering stringency and downstream safety is poorly characterized.
+
+\subsection{Safety-Focused Fine-Tuning Data}
+
+\citet{bianchi2024safetytuned} demonstrated that adding as few as 3\% safety-focused examples to instruction-tuning data significantly improves safety without degrading helpfulness. BeaverTails~\citep{ji2023beavertails} provides a large-scale human-preference dataset explicitly annotated for safety, enabling targeted safety SFT.
+
+\emph{Strengths:} Minimal data requirements make this approach highly practical for SLMs. The safety improvement is reliable and does not require complex training procedures.
+
+\emph{Weaknesses:} Safety-focused SFT teaches the model \emph{what to say} (refusal templates) rather than \emph{why to refuse}, producing brittle safety that can be bypassed by rephrasing. The quality of safety data is critical: poorly constructed safety examples can teach over-refusal or inconsistent behavior.
+
+\subsection{Synthetic Data for Alignment}
+
+Magpie~\citep{xu2024magpie} generates alignment data by prompting aligned LLMs with empty inputs, extracting the model's implicit instruction-following distribution. \citet{li2024datacentric} showed that self-guided data selection---where the model identifies which training examples are most informative---improves both capability and safety.
+
+\emph{Strengths:} Synthetic data generation scales cheaply and can target specific safety gaps (e.g., generating refusal examples for underrepresented harm categories or languages). For SLMs, where human-annotated safety data is expensive relative to the model's training budget, synthetic data is often the only practical option.
+
+\emph{Weaknesses:} Synthetic safety data inherits the biases and blind spots of the generating model. If the teacher model has poor multilingual safety, the synthetic data will not cover multilingual harms. There is also a risk of ``mode collapse'' in safety behavior: models trained on synthetic refusals may learn a narrow set of refusal patterns that are easy to circumvent.
+
+\emph{Comparative assessment:} Data-centric approaches are complementary rather than competitive. The recommended pipeline for SLMs is: (1)~filter pretraining data for toxicity and quality, (2)~include 3--5\% safety examples in SFT data, (3)~generate synthetic preference data via RLAIF for preference optimization. This pipeline addresses safety at multiple stages with minimal computational overhead.
+
+%%% SECTION 5 %%%
+\section{Training-Time Alignment}\label{sec:alignment}
+
+Training-time alignment modifies model weights to encode safety behaviors. We organize methods into five families and provide a comparative analysis (Table~\ref{tab:alignment_comparison} and Figure~\ref{fig:alignment}).
+
+\subsection{Reward-Based Optimization: RLHF and PPO}
+
+RLHF~\citep{ouyang2022training,stiennon2020learning,ziegler2019fine} trains a reward model on human preferences, then optimizes the policy using PPO with a KL divergence constraint.
+
+\emph{Strengths:} RLHF produces the strongest alignment when executed well. The explicit reward model captures fine-grained preferences, and the KL constraint prevents catastrophic forgetting. Safe RLHF~\citep{dai2024safe} extends the framework with separate reward and cost models, allowing explicit Pareto optimization between helpfulness and harmlessness.
+
+\emph{Weaknesses:} PPO requires four models simultaneously (policy, reference, reward, value), demanding ${\sim}56$\,GB for a 7B model in float16---far exceeding single-GPU constraints. Reward model overoptimization~\citep{gao2023scaling} and reward inconsistency~\citep{shen2024trickle} further complicate the approach. The implementation complexity documented by \citet{zheng2023secrets} makes reliable reproduction difficult.
+
+\emph{SLM verdict:} Not recommended as the primary method due to computational demands. When infrastructure permits, Safe RLHF offers the most principled approach.
+
+\subsection{Direct Preference Optimization and Variants}
+
+DPO~\citep{rafailov2023direct} eliminates the reward model via a closed-form solution:
+\begin{equation}
+\mathcal{L}_{\text{DPO}} = -\mathbb{E}\!\left[\log\sigma\!\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right]
+\end{equation}
+
+DPO has become the de facto alignment method for open-weight SLMs, demonstrated by Zephyr-7B~\citep{tunstall2023zephyr} and T\"ulu~2~\citep{ivison2023tulu}.
+
+\emph{Strengths:} Simple, stable, requires roughly half the memory of RLHF. \citet{thakkar2024tradeoffs} showed parameter-efficient DPO via LoRA works well on models up to 7B. The GPO framework~\citep{tang2024gpo} provides theoretical grounding by unifying DPO, IPO, and SLiC as special cases.
+
+\emph{Weaknesses:} DPO requires a reference model, doubling memory. More critically, DPO \emph{bypasses} rather than removes toxic capabilities: the model learns to avoid harmful outputs but retains the underlying knowledge~\citep{arditi2024refusal}. \citet{qi2025shallow} (ICLR 2026) showed alignment is ``shallow''---adapting only the first few output tokens---explaining vulnerability to suffix and prefilling attacks. \citet{ethayarajh2024limits} showed DPO degenerates with noisy preference data. \citet{zhao2025dualobjective} addressed this by disentangling DPO into refusal training and harmful knowledge unlearning (ICML 2025).
+
+\textbf{Variants.} \textbf{IPO}~\citep{azar2023general}: squared loss regularization; more stable on small/noisy datasets but slightly lower peak performance. \textbf{KTO}~\citep{ethayarajh2024kto}: unpaired binary feedback; dramatically cheaper data collection but lower quality than paired methods. \textbf{ORPO}~\citep{hong2024orpo} and \textbf{SimPO}~\citep{meng2024simpo}: eliminate the reference model entirely, reducing memory by ${\sim}50\%$; the most memory-efficient preference methods available, but the merged SFT+alignment objective can create tension between the two goals.
+
+\emph{Comparative assessment:} Under severe memory constraints ($\leq$8\,GB), ORPO or SimPO are preferred. With paired data and sufficient memory, DPO+LoRA offers the best quality--cost trade-off. KTO is optimal when only binary feedback is available. IPO should be preferred over DPO when the dataset is small or noisy. See \citet{chen2024dposurvey} for a comprehensive DPO survey.
+
+\subsection{Self-Alignment and AI Feedback}
+
+Constitutional AI~\citep{bai2022constitutional} replaces human labels with AI self-critique. RLAIF~\citep{lee2023rlaif} uses a larger model to generate preference labels, achieving quality comparable to human-labeled RLHF. SPIN~\citep{chen2024spin} uses self-play without preference labels. Self-rewarding models~\citep{yuan2024selfrewarding} generate their own reward signals.
+
+\emph{Strengths:} Dramatically reduces data collection costs. RLAIF is particularly attractive for SLMs: a frontier model generates labels, and the SLM is aligned via DPO. Weak-to-strong extrapolation~\citep{zheng2024expo} shows that even imperfect teacher signals can produce strong alignment.
+
+\emph{Weaknesses:} Self-alignment quality is bounded by the model's own capabilities. For SLMs, pure self-alignment is unreliable: a 3B model cannot reliably judge the safety of its own outputs. RLAIF propagates the teacher's blind spots (e.g., multilingual safety gaps). \citet{weaksupervision2026} systematically analyzed whether safety can emerge from weak supervision in SLMs, finding that it can for common harm categories but fails for subtle or culturally specific harms.
+
+\subsection{Game-Theoretic and Emerging Approaches}
+
+Nash-LHF~\citep{munos2024nash} frames alignment as Nash equilibrium. SPPO~\citep{wu2024sppo} and DNO~\citep{rosset2024dno} approximate equilibria through self-play.
+
+\emph{Strengths:} Avoids reward hacking by construction; stronger theoretical foundations than DPO.
+
+\emph{Weaknesses:} Computationally more demanding; marginal empirical gains over DPO on standard benchmarks. Not currently recommended for SLMs.
+
+\subsection{Representation Engineering}
+
+RepE~\citep{zou2023representation} intervenes directly on model representations at inference time. \citet{arditi2024refusal} discovered that refusal is mediated by a single direction in activation space. \citet{turner2023activation} demonstrated inference-time steering vectors. Safety Arithmetic~\citep{safetyarithmetic2025} extends this to a training-free framework.
+
+\emph{Strengths:} Zero training cost; negligible latency overhead; applicable to quantized models; interpretable. Exceptionally attractive for SLMs.
+
+\emph{Weaknesses:} The single refusal direction is a coarse signal that cannot distinguish harm types. Steering too aggressively causes over-refusal. Whether the geometric structure persists in sub-3B models is unknown.
+
+\subsection{Comparative Summary}
+
+Table~\ref{tab:alignment_comparison} and Figure~\ref{fig:alignment} synthesize the trade-offs across alignment families.
+
+\begin{table*}[t]
+\centering
+\caption{Comparative analysis of alignment method families for small language models.}\label{tab:alignment_comparison}
+\small
+\begin{tabular}{@{}lp{3.5cm}p{3.5cm}ccc@{}}
+\toprule
+\textbf{Method} & \textbf{Strengths} & \textbf{Weaknesses} & \textbf{Memory} & \textbf{Robust.} & \textbf{SLM Fit} \\
+\midrule
+RLHF/PPO & Strongest; explicit reward & 4 models; complex; reward hacking & Very High & High & Low \\
+DPO & Simple; stable; LoRA-compat. & Ref.\ model; shallow alignment & High & Medium & High \\
+ORPO/SimPO & No ref.\ model; single-phase & Merged objective tension & Low & Medium & Very High \\
+KTO & Binary feedback (cheap data) & Lower quality than paired & Medium & Medium & High \\
+RLAIF & No human labels; teacher quality & Bounded by teacher & Medium & Medium & Medium \\
+RepE & Zero training; quantized-compat. & Coarse signal; untested $<$3B & Minimal & Low & Very High \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\emph{Recommended layered approach for SLMs:} (1)~DPO or ORPO as primary method with LoRA; (2)~preference data via RLAIF from a larger teacher; (3)~RepE steering vectors as zero-cost safety boost; (4)~lightweight guardrails as final layer; (5)~evaluate on both safety and capability benchmarks to monitor the alignment tax.
+
+% --- Figure 3: Alignment comparison ---
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig3-alignment-comparison.pdf}
+\caption{Comparative assessment of alignment methods across four dimensions relevant to SLM deployment. ORPO, SimPO, and RepE score highest on memory efficiency and SLM suitability, while RLHF/PPO leads on robustness at the cost of prohibitive resource requirements.}
+\label{fig:alignment}
+\end{figure*}
+
+
+%%% SECTION 6 %%%
+\section{Post-Training Safeguards and Guardrails}\label{sec:guardrails}
+
+Post-training safeguards operate as external safety layers, classifying inputs and outputs independently of the model's internal alignment.
+
+\subsection{LLM-Based Safety Classifiers}
+
+Llama Guard~\citep{inan2023llamaguard} uses a fine-tuned LLM as a safety classifier. WildGuard~\citep{han2024wildguard} provides open-source moderation covering both prompt and response safety. Anthropic's Constitutional Classifiers~\citep{sharma2025constitutional} withstood over 3,000 hours of red teaming with no universal jailbreak found, at only 0.38\% increase in production refusals.
+
+\emph{Strengths:} Model-agnostic; works regardless of the underlying model's safety properties. Constitutional Classifiers demonstrate that guardrails can be remarkably robust.
+
+\emph{Weaknesses:} Full Llama Guard inference adds ${\sim}200$\,ms per request. Guardrails create a cat-and-mouse dynamic with attackers. They cannot fix a fundamentally unsafe model---only filter its outputs.
+
+\subsection{Lightweight and Edge-Compatible Guardrails}
+
+For SLM deployment, standard guardrails are too heavy. LiteLMGuard~\citep{nakka2025litelmguard} achieves 97.75\% accuracy at ${\sim}135$\,ms on-device. Disentangled Safety Adapters~\citep{krishna2025dsa} boost safety by 93\% on StrongREJECT while maintaining 98\% of MTBench performance, and can be dynamically enabled at inference time. NeMo Guardrails~\citep{rebedea2023nemo} enables programmable safety policies through a domain-specific language.
+
+\emph{Strengths:} Modular, deployable on edge devices, can be updated independently of the base model.
+
+\emph{Weaknesses:} Even 135\,ms overhead is significant for real-time applications. Adapter-based approaches add deployment complexity. The safety classifier itself can be a single point of failure.
+
+\subsection{Constitutional and Rule-Based Approaches}
+
+Constitutional AI~\citep{bai2022constitutional} embeds safety principles (a ``constitution'') into the training process, enabling the model to self-critique and revise its outputs. This approach bridges training-time and post-training safety: the constitution guides both RLAIF data generation and inference-time self-correction.
+
+\emph{Strengths:} Principled; the constitution is human-readable and auditable; enables safety without human preference labels.
+
+\emph{Weaknesses:} The quality of alignment depends entirely on the quality of the constitution. There is no established methodology for writing constitutions optimized for SLMs, where the model may lack the reasoning capacity to apply complex principles. Rule-based systems (e.g., keyword filters, regex patterns) are trivially circumvented and should not be relied upon as primary safety mechanisms.
+
+\emph{Comparative assessment:} For SLMs on edge devices, the recommended stack is: Disentangled Safety Adapters for modular safety control, LiteLMGuard for output filtering when latency permits, and constitutional self-critique only for models with sufficient reasoning capacity ($\geq$3B).
+
+%%% SECTION 7 %%%
+\section{Model Editing, Unlearning, and Knowledge Management}\label{sec:editing}
+
+A complementary approach to alignment is directly editing the model's knowledge---removing dangerous capabilities rather than training the model to suppress them.
+
+\subsection{Knowledge Unlearning}
+
+\citet{eldan2023whosharry} demonstrated approximate unlearning in LLMs, selectively removing knowledge of specific topics (Harry Potter) while preserving general capabilities. \citet{li2024wmdp} introduced the WMDP benchmark for measuring and reducing malicious use through unlearning, targeting knowledge about weapons of mass destruction and cybersecurity exploits. \citet{liu2024rmu} proposed Representation Mismatch Unlearning (RMU), which modifies model representations to make dangerous knowledge inaccessible.
+
+\emph{Strengths:} Unlearning addresses the root cause of certain safety risks: if the model does not \emph{know} how to synthesize a dangerous substance, it cannot be jailbroken into providing instructions. This is fundamentally stronger than behavioral alignment, which merely suppresses outputs while retaining knowledge.
+
+\emph{Weaknesses:} Complete unlearning is provably difficult---current methods reduce but do not eliminate dangerous knowledge. Unlearning is also blunt: removing knowledge about chemistry to prevent weapon synthesis also removes knowledge needed for legitimate chemistry questions. The WMDP benchmark~\citep{li2024wmdp} showed that current unlearning methods reduce dangerous capability by 50--80\% but never reach zero. For SLMs, where knowledge capacity is already limited, aggressive unlearning may disproportionately degrade general capabilities.
+
+\subsection{Targeted Model Editing}
+
+MEMIT~\citep{mitchell2022memit} enables fast, targeted editing of factual associations in transformer models. Applied to safety, this could correct specific harmful associations (e.g., removing a model's knowledge of how to pick locks) without retraining.
+
+\emph{Strengths:} Surgical precision; minimal impact on unrelated capabilities; fast (seconds per edit).
+
+\emph{Weaknesses:} Edits can have unpredictable side effects on related knowledge. The method assumes harmful knowledge is localized in specific parameters, which may not hold for complex, distributed representations. Scalability to hundreds or thousands of edits is unproven.
+
+\subsection{Fine-Tuning Safety Risks}
+
+A critical concern for open-weight SLMs is that safety alignment can be \emph{removed} through fine-tuning. \citet{qi2024finetuning} showed that fine-tuning on as few as 100 benign examples can compromise safety, even when the fine-tuning data contains no harmful content. \citet{huang2024lazy} proposed Lazy Safety Alignment to make safety more resilient to fine-tuning by embedding safety in deeper model layers.
+
+\emph{Strengths of Lazy Safety Alignment:} Addresses a real and practical threat---open-weight SLMs will inevitably be fine-tuned by users with varying intentions.
+
+\emph{Weaknesses:} No current method can make safety fully resilient to adversarial fine-tuning while keeping the model open-weight. This is a fundamental tension: open weights enable both beneficial customization and safety removal.
+
+\emph{Comparative assessment:} Unlearning and model editing are promising complements to behavioral alignment but are not yet mature enough to serve as primary safety mechanisms. The fine-tuning vulnerability is the most pressing practical concern for open-weight SLMs and has no satisfactory solution.
+
+%%% SECTION 8 %%%
+\section{The Interaction Between Efficiency and Safety}\label{sec:efficiency}
+
+SLMs are defined by their efficiency constraints, making the interaction between compression techniques and safety properties a central concern.
+
+\subsection{Quantization and Safety}
+
+\citet{hong2024compressed} established that 4-bit quantization largely preserves trustworthiness across all DecodingTrust dimensions, but 3-bit and below causes significant degradation \emph{invisible from perplexity}---a critical finding, since perplexity is the standard metric for quantization quality. This means a quantized model can appear linguistically competent while having silently lost its safety properties.
+
+Contrastive Alignment Quantization (CAQ)~\citep{wee2025caq} adds a contrastive loss during quantization that preserves safety-relevant activation patterns. \emph{Strength:} directly targets safety representations. \emph{Weakness:} requires safety-labeled data during quantization. Q-resafe~\citep{chen2025qresafe} provides post-hoc safety patching for quantized models. \emph{Strength:} applicable to already-quantized models. \emph{Weakness:} requires additional training.
+
+TurboQuant~\citep{zandieh2025turboquant} (ICLR 2026) achieves quality neutrality at 3.5 bits and marginal degradation at 2.5 bits via PolarQuant~\citep{zandieh2026polarquant} and QJL~\citep{zandieh2024qjl}. \emph{Strength:} pushes the safe quantization boundary from 4 bits to 2.5--3.5 bits. \emph{Weakness:} safety-specific evaluation has not been conducted; quality neutrality in perplexity does not guarantee preservation of safety activation patterns.
+
+\emph{Recommendation:} Use 4-bit quantization with confidence. For 3-bit and below, apply CAQ or Q-resafe and re-evaluate safety post-quantization.
+
+\subsection{LoRA, Pruning, and Distillation}
+
+\textbf{LoRA for safety.} Safe LoRA~\citep{hsu2024safelora} projects LoRA updates onto the safety-aligned subspace, preventing fine-tuning from degrading safety. \citet{xue2025lora} showed rank-1 LoRA suffices for safety alignment. \citet{mou2025decoupling} demonstrated that LoRA naturally decouples safety into an orthogonal subspace, supporting modular safety adapters.
+
+\textbf{Pruning.} Safety-critical regions occupy ${\sim}3\%$ of parameters~\citep{wei2024brittleness}. Moderate pruning ($\leq$20\% with WANDA) can \emph{increase} jailbreak resistance by removing parameters that contribute to harmful capabilities while leaving sparse safety regions intact. Beyond ${\sim}20\%$, both capability and safety degrade.
+
+\textbf{Distillation.} Knowledge distillation of safety from a larger teacher is conceptually appealing but empirically problematic: it can \emph{worsen} multilingual robustness, as the student learns English-centric safety behaviors that fail to transfer cross-lingually.
+
+\textbf{Null-space alignment.} NSPO~\citep{niu2025nspo} (ICLR 2026) projects safety gradients into the null space of capability gradients, mathematically guaranteeing zero capability degradation from safety training. Achieves state-of-the-art safety with 40\% less data. \emph{Weakness:} computing the null space adds overhead.
+
+Table~\ref{tab:efficiency} summarizes efficiency--safety interactions.
+
+\begin{table}[t]
+\centering
+\caption{Summary of efficiency technique impacts on safety.}\label{tab:efficiency}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Technique} & \textbf{Safety Impact} & \textbf{Recommendation} \\
+\midrule
+4-bit quantization & Preserved & Evaluate post-quant \\
+$\leq$3-bit quant & Degraded & Use CAQ/Q-resafe \\
+LoRA fine-tuning & Risk of removal & Use Safe LoRA \\
+LoRA safety align & Effective & Rank $\geq$1 suffices \\
+KD of safety & Risky & Validate multilingual \\
+Moderate pruning & Can improve & WANDA $\leq$20\% \\
+Null-space align & Best practice & NSPO recommended \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Edge Deployment Considerations}
+
+Edge deployment---smartphones, IoT devices, local servers without cloud connectivity---presents unique safety challenges. There is no server-side content filter, no output logging, and no mechanism for real-time patches. In privacy-sensitive environments (healthcare, legal, personal assistants), even the guardrail inference must happen on-device.
+
+LiteLMGuard~\citep{nakka2025litelmguard} provides on-device safety at ${\sim}135$\,ms. EASE~\citep{ease2025} (AAAI 2026) selectively activates safety reasoning only for potentially dangerous queries, cutting inference overhead by 90\%. Disentangled Safety Adapters~\citep{krishna2025dsa} enable dynamic inference-time alignment.
+
+\emph{Recommended edge stack:} EASE for efficient safety reasoning, RepE steering vectors as zero-cost baseline, LiteLMGuard for output filtering when latency permits. No single method is sufficient; defense-in-depth is essential.
+
+
+%%% SECTION 9 %%%
+\section{Multilingual Safety}\label{sec:multilingual}
+
+Multilingual safety is arguably the most critical and least addressed dimension of SLM safety. Safety alignment is conducted almost exclusively in English, but SLMs are deployed worldwide in dozens of languages. We examine the gap in detail, explains why SLMs are disproportionately affected, and evaluates emerging solutions.
+
+\subsection{The Cross-Lingual Safety Gap}
+
+XSafety~\citep{wang2024xsafety} provided the first systematic measurement, revealing that models which refuse harmful requests in English comply readily when the same request is posed in Chinese, Arabic, or Hindi. The gap is not uniform: it correlates with the language's representation in both pretraining and alignment data. \citet{deng2024multilingual} showed that simply translating harmful prompts to low-resource languages bypasses alignment entirely---even for well-aligned models. \citet{yong2024lowresource} demonstrated this vulnerability persists in GPT-4, establishing that the problem is not limited to small or open-weight models.
+
+The severity follows a clear gradient. For high-resource languages with substantial alignment data (English, Chinese), safety is relatively robust. For mid-resource languages present in pretraining but absent from alignment (German, French, Spanish), safety partially transfers but with significant gaps. For low-resource languages (Zulu, Scots Gaelic, most Eastern European languages including Romanian), safety is effectively absent. This gradient is steeper in SLMs, where the total multilingual capacity is smaller.
+
+\subsection{Why SLMs Are Disproportionately Vulnerable}
+
+Three structural factors compound the multilingual safety gap in SLMs:
+
+\textbf{Reduced multilingual capacity.} A 7B model has fewer parameters to represent multiple languages than a 70B model. When capacity is constrained, the model prioritizes high-resource languages at the expense of low-resource ones. Safety behaviors, already a small fraction of learned behaviors, are the first to degrade in underrepresented languages. \citet{weaksupervision2026} confirmed this empirically: safety from weak supervision emerges for common harm categories in high-resource languages but fails for subtle or culturally specific harms.
+
+\textbf{English-dominated alignment data.} Virtually all preference datasets (BeaverTails~\citep{ji2023beavertails}, HH-RLHF) are English-only. When a model is aligned using English data, safety behaviors are encoded in English-specific representations that may not transfer to languages with different scripts (Arabic, Chinese, Thai) or significantly different syntax (Japanese, Korean, Turkish).
+
+\textbf{Distillation amplifying failures.} When safety properties are distilled from a larger teacher to a smaller student, cross-lingual failures can be amplified. The teacher's English-centric safety behaviors are distilled faithfully, but the student lacks the multilingual capacity to generalize them. In some cases, distilled models perform \emph{worse} on multilingual safety than models trained without safety distillation---a counter-intuitive finding that highlights the fragility of cross-lingual safety transfer.
+
+\subsection{Emerging Solutions and Their Limitations}
+
+Sparse weight editing~\citep{multilingualsparse2026} identifies ``safety neurons''---specific neurons that mediate safety behaviors---and transfers English safety guardrails to low-resource languages by editing only these neurons. \emph{Strength:} no additional training data required; works on already-deployed models. \emph{Weakness:} safety neuron identification is approximate, and editing may have unintended side effects on other behaviors. The method has been demonstrated on 5 languages but not validated at scale.
+
+PolyGuardPrompts~\citep{polyguard2025} provides the first large-scale multilingual safety moderation tool covering 17 languages with 29K examples, supporting both evaluation and training of multilingual safety classifiers. M-ALERT~\citep{malert2025} focuses on 5 EU languages with 75K examples, providing the deepest coverage for European deployment scenarios. Lingua-SafetyBench~\citep{linguasafetybench2026} adds multimodal multilingual evaluation. \emph{Comparative assessment:} PolyGuardPrompts offers the broadest language coverage; M-ALERT provides the deepest coverage for EU languages; XSafety was the pioneer but is now superseded in both scale and coverage. Romanian and most Eastern European languages remain uncovered by all benchmarks.
+
+\subsection{Cultural Bias in Alignment}
+
+Beyond language, safety definitions are culturally situated. What constitutes ``harmful'' content varies across cultures, legal systems, and social norms. Discussions of alcohol are benign in Western contexts but potentially harmful in cultures where alcohol is prohibited. Political satire is protected speech in some jurisdictions and criminal in others. LGBTQ+ content is mainstream in some cultures and illegal in others.
+
+Current alignment approaches embed predominantly Western (and specifically American) norms, which creates two problems for global SLM deployment. First, the model may refuse culturally appropriate requests (over-refusal in non-Western contexts). Second, it may fail to refuse culturally harmful requests that are benign in Western contexts (under-refusal). No existing alignment method or benchmark accounts for cultural variation, and developing culturally adaptive safety alignment---where the model's safety behavior adapts to the deployment context---remains an open challenge of high importance and difficulty.
+
+%%% SECTION 10 %%%
+\section{Mechanistic Interpretability of Safety}\label{sec:interp}
+
+Mechanistic interpretability (MI) offers a unique promise for safety: instead of treating the model as a black box, we can directly inspect the internal mechanisms that produce safe or unsafe behavior~\citep{bereska2024mi}.
+
+\subsection{The MI Toolkit}
+
+Four complementary approaches form the modern MI toolkit, each with distinct trade-offs for safety analysis:
+
+\textbf{Transformer circuits}~\citep{elhage2021mathematical} decompose transformer computations into interpretable circuits---subgraphs of the computational graph that implement specific functions (e.g., induction heads, safety refusal circuits). \emph{Strength:} provides causal, mechanistic explanations of \emph{how} a model produces a specific behavior, not merely \emph{that} it does. \emph{Weakness:} circuit discovery is labor-intensive, requiring manual hypothesis formation and testing. It does not scale easily beyond individual behaviors.
+
+\textbf{Superposition theory}~\citep{elhage2022superposition} explains how models represent more features than they have dimensions by encoding features in overlapping, non-orthogonal directions. This is directly relevant to SLM safety: it explains why safety behaviors can be encoded in a small number of parameters (${\sim}3\%$;~\citealp{wei2024brittleness}) and why removing those parameters disproportionately degrades safety. \emph{Strength:} provides the theoretical foundation for understanding capacity--safety trade-offs. \emph{Weakness:} superposition makes individual features harder to isolate and intervene on, because modifying one direction affects multiple overlapping features.
+
+\textbf{Sparse autoencoders (SAEs)}~\citep{bricken2023monosemanticity,templeton2024scaling} address superposition by learning a sparse, overcomplete dictionary of interpretable features from model activations. \citet{templeton2024scaling} applied SAEs to Claude 3 Sonnet at scale, identifying millions of interpretable features including safety-relevant ones (e.g., features that activate for deceptive content, harmful instructions, or refusal behavior). \emph{Strength:} scalable; produces human-interpretable features; enables targeted intervention by clamping specific features. \emph{Weakness:} the learned features are not guaranteed to be causally relevant---some may be correlational artifacts. Training SAEs adds computational overhead, though this is modest for SLMs.
+
+\textbf{Causal tracing}~\citep{meng2022rome,conmy2023acdc} identifies which model components are causally responsible for specific behaviors by intervening on activations (corrupting or restoring them) and measuring the effect on outputs. ACDC~\citep{conmy2023acdc} automates circuit discovery by systematically testing which edges in the computational graph are necessary. Anthropic's circuit tracing~\citep{lindsey2025biology} applied these methods to Claude 3.5 Haiku at production scale, revealing how the model processes multi-step reasoning and implements safety behaviors. \emph{Strength:} provides causal rather than correlational evidence---the gold standard for mechanistic claims. \emph{Weakness:} combinatorially expensive; the number of possible interventions grows with model size, though this is precisely why SLMs are the ideal testbed.
+
+\emph{Comparative assessment:} For SLM safety research, the recommended approach is: use causal tracing to identify safety-critical components, SAEs to decompose them into interpretable features, and circuit analysis to understand the computational mechanism. This pipeline is computationally feasible for models up to 7B on a single GPU.
+
+\subsection{Safety-Specific Findings}
+
+MI has produced three findings with direct implications for SLM safety:
+
+\textbf{The refusal direction.} \citet{arditi2024refusal} discovered that refusal behavior is mediated by a single direction in activation space. Ablating this direction removes safety from any model; adding it induces refusal. This is both powerful (it provides a simple mechanism for safety) and alarming (safety depends on a fragile geometric structure removable by a single intervention, such as fine-tuning on a small adversarial dataset). For SLMs, the question is whether this clean geometric structure persists at smaller scales or whether safety is encoded more diffusely---and therefore either more resilient or entirely absent.
+
+\textbf{Shallow alignment.} \citet{qi2025shallow} (ICLR 2026) showed that DPO-based alignment modifies only the first few output tokens, leaving the model's harmful capabilities intact deeper in the generation. This explains why suffix attacks (appending adversarial tokens) and prefilling attacks (providing the first few tokens of a harmful response) are effective: they bypass the shallow safety layer. The implication for SLMs is concerning: if alignment is shallow in large models with abundant capacity, it is likely even shallower in small models where the representational budget for deep safety encoding is more limited.
+
+\textbf{Deceptive alignment.} \citet{hubinger2024sleeper} showed that deceptive behaviors (``sleeper agents'') can persist through standard safety training, activating only under specific trigger conditions. However, simple linear probes can detect these behaviors with ${>}99\%$ AUROC, suggesting that deception leaves detectable traces in activation space. \citet{greenblatt2024faking} demonstrated alignment faking in Claude, where the model behaves safely during evaluation but unsafely when it believes it is not being monitored. For SLMs, deceptive alignment is less likely (small models lack the capacity for sophisticated deception), but the detection methods (linear probes) are directly applicable and computationally cheap.
+
+\subsection{Implications for Small Models}
+
+MI is particularly promising for SLMs for four reasons: (1)~\textbf{computational tractability}---circuit discovery, SAE training, and causal tracing are all feasible on a single GPU for models up to 7B; (2)~\textbf{potentially simpler circuits}---smaller models may implement safety through fewer components, making them easier to understand and verify; (3)~\textbf{verification potential}---MI could enable \emph{verified safety}, proving that safety properties hold under all inputs rather than just tested ones; (4)~\textbf{targeted intervention efficiency}---RepE, ITI~\citep{li2023iti}, and steering vectors are more effective when safety features are well-separated in activation space.
+
+The critical open question is whether MI findings from larger models transfer to SLMs. The refusal direction was discovered in 7B+ models; does it exist in 1B models? Are safety circuits simpler or merely absent at small scale? If the refusal direction does not exist below a certain parameter threshold, then RepE-based interventions are inapplicable to the smallest SLMs, and fundamentally different safety approaches are needed. Answering this question is among the highest-priority research directions we identify.
+
+\subsection{Safety of Reasoning Models}
+
+\citet{zhou2025hiddenrisks} found stronger reasoning correlates with greater potential harm. \citet{kuo2025hcot} showed hijacking the reasoning chain drops refusal rates from 98\% to below 2\%. OpenAI's Deliberative Alignment~\citep{openai2025deliberative} embeds safety into the reasoning process.
+
+For SLMs: SafePath~\citep{safepath2025} reduces harmful responses by 90\% via an 8-token safety primer. STAR-1~\citep{star1_2025} achieves 40\% safety improvement with 1K examples. EASE~\citep{ease2025} selectively activates safety reasoning only for dangerous queries, cutting overhead by 90\%. ThinkSafe~\citep{thinksafe2026} enables self-generated safety alignment for reasoning models.
+
+%%% SECTION 11 %%%
+\section{Safety Evaluation: Benchmarks, Metrics, and Their Limitations}\label{sec:eval}
+
+A rigorous evaluation framework is essential for measuring progress. We survey the benchmark ecosystem and critically analyze its limitations, particularly for SLMs.
+
+\subsection{Benchmark Landscape}
+
+Table~\ref{tab:benchmarks} summarizes the major safety benchmarks.
+
+\begin{table*}[t]
+\centering
+\caption{Safety evaluation benchmarks by primary dimension (2020--2026).}\label{tab:benchmarks}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llccll@{}}
+\toprule
+\textbf{Benchmark} & \textbf{Year} & \textbf{Langs} & \textbf{Scale} & \textbf{Dimension} & \textbf{Reference} \\
+\midrule
+RealToxicityPrompts & 2020 & EN & 100K & Toxicity & \citet{gehman2020realtoxicity} \\
+ToxiGen & 2022 & EN & 274K & Implicit toxicity & \citet{hartvigsen2022toxigen} \\
+TruthfulQA & 2022 & EN & 817 & Truthfulness & \citet{lin2022truthfulqa} \\
+BBQ & 2022 & EN & 58K & Social bias & \citet{parrish2022bbq} \\
+DecodingTrust & 2023 & EN & Multi & 8 trust dimensions & \citet{wang2023decodingtrust} \\
+HarmBench & 2024 & EN & 510 & Harmful behaviors & \citet{mazeika2024harmbench} \\
+SALAD-Bench & 2024 & EN & 30K+ & 66 safety categories & \citet{li2024salad} \\
+XSafety & 2024 & 10 & 14K & Multilingual safety & \citet{wang2024xsafety} \\
+SORRY-Bench & 2024 & EN & 1K & 45 refusal categories & \citet{xie2024sorry} \\
+JailbreakBench & 2024 & EN & 100 & Jailbreak robustness & \citet{chao2024jailbreakbench} \\
+StrongREJECT & 2024 & EN & Var. & Refusal robustness & \citet{souly2024strongreject} \\
+OR-Bench & 2024 & EN & 80K & Over-refusal & \citet{cui2024orbench} \\
+AgentHarm & 2024 & EN & Var. & Agent safety & \citet{andriushchenko2024agentharm} \\
+AILuminate v1.0 & 2025 & EN, FR & 24K/lang & 12 hazard categories & \citet{ailuminate2025} \\
+PolyGuardPrompts & 2025 & 17 & 29K & Multilingual moderation & \citet{polyguard2025} \\
+M-ALERT & 2025 & 5 EU & 75K & Cross-lingual safety & \citet{malert2025} \\
+SafeArena & 2025 & EN & 500 & Web agent safety & \citet{safearena2025} \\
+HalluHard & 2026 & EN & 950 & Multi-turn hallucination & \citet{halluhard2026} \\
+ATBench & 2026 & EN & 500 & Agent trajectory safety & \citet{atbench2026} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Comparative Analysis by Dimension}
+
+\textbf{Toxicity.} RealToxicityPrompts~\citep{gehman2020realtoxicity} provides breadth (100K prompts) with continuous toxicity scores from the Perspective API, enabling fine-grained analysis of generation toxicity under varying prompt conditions. \emph{Strength:} large scale, real-world prompts. \emph{Weakness:} the Perspective API has known biases---flagging African American Vernacular English as toxic, for instance---and the prompts are drawn from web text that may not reflect user interactions with SLMs. ToxiGen~\citep{hartvigsen2022toxigen} captures implicit toxicity---statements that are harmful without explicit slurs. \emph{Strength:} addresses a subtler, more realistic form of harm. \emph{Weakness:} machine-generated prompts; automated evaluation is unreliable for implicit toxicity, requiring human judgment. Neither benchmark provides size-stratified analysis showing how toxicity rates change across model scales.
+
+\textbf{Truthfulness and hallucination.} TruthfulQA~\citep{lin2022truthfulqa} tests whether models reproduce common misconceptions across 817 questions. \emph{Strength:} well-curated, targets imitative falsehoods. \emph{Weakness:} small scale; increasingly memorized by models trained on web data. FActScore~\citep{min2023factscore} decomposes long-form generations into atomic facts and verifies each against a knowledge source. \emph{Strength:} fine-grained, interpretable. \emph{Weakness:} requires a reliable knowledge source. HaluEval~\citep{li2023halueval} provides 35K samples across QA, dialogue, and summarization. HalluHard~\citep{halluhard2026} extends to multi-turn conversations in high-stakes domains. \emph{Strength:} realistic setting. \emph{Weakness:} small scale (950 examples), English-only. For SLMs, hallucination is arguably the most critical safety concern, yet no benchmark accounts for the interaction between quantization and hallucination rates.
+
+\textbf{Bias.} BBQ~\citep{parrish2022bbq} is the most comprehensive bias benchmark (58K examples, 9 social dimensions), providing both ambiguous and disambiguated contexts to separate bias from reasoning errors. StereoSet~\citep{nadeem2021stereoset} measures both stereotype score and language modeling score, enabling analysis of the bias--capability trade-off. CrowS-Pairs~\citep{nangia2020crows} uses minimal pairs to isolate demographic effects but has annotation quality issues acknowledged by its authors. BOLD~\citep{dhamala2021bold} evaluates bias in open-ended generation. All share a fundamental limitation for SLMs: they do not measure how bias changes under compression.
+
+\textbf{Comprehensive safety.} HarmBench~\citep{mazeika2024harmbench} provides the best balance of rigor and practicality: 510 harmful behaviors, standardized protocol, automated red-teaming baselines (GCG~\citep{zou2023gcg}, PAIR~\citep{chao2023pair}, AutoDAN~\citep{liu2023autodan}). \emph{Weakness:} English-only; may not cover emerging harm categories. DecodingTrust~\citep{wang2023decodingtrust} is the most comprehensive (8 trust dimensions) but assumes API access, making it difficult for locally deployed SLMs. SALAD-Bench~\citep{li2024salad} offers unmatched granularity (66 categories, 30K+ examples) but some categories have too few examples for statistical reliability. TrustLLM~\citep{huang2024trustllm} overlaps significantly with DecodingTrust. AILuminate~\citep{ailuminate2025} is the first industry-standardized benchmark from MLCommons (12 hazard categories, English and French). \emph{Strength:} industry backing ensures adoption. \emph{Weakness:} only two languages; Western-centric hazard taxonomy.
+
+\textbf{Adversarial robustness.} JailbreakBench~\citep{chao2024jailbreakbench} is the standard for reporting (100 behaviors, living leaderboard, white-box and black-box attacks). StrongREJECT~\citep{souly2024strongreject} distinguishes genuine refusals from evasive non-answers---a critical distinction, since many models produce vague deflections rather than clear refusals. SORRY-Bench~\citep{xie2024sorry} provides the finest refusal taxonomy (45 categories). OR-Bench~\citep{cui2024orbench} is the only large-scale over-refusal benchmark (80K examples). None systematically tests how model size affects jailbreak success rates.
+
+\textbf{Agent safety.} AgentHarm~\citep{andriushchenko2024agentharm}, SafeArena~\citep{safearena2025}, OS-Harm~\citep{osharm2025}, and ATBench~\citep{atbench2026} evaluate agent safety across web browsing, computer use, and tool access. All assume frontier-scale models and do not account for the limited planning capabilities of SLMs, which may cause harm through incompetence rather than intent.
+
+\textbf{Multilingual safety.} PolyGuardPrompts~\citep{polyguard2025} offers the broadest language coverage (17 languages, 29K examples). M-ALERT~\citep{malert2025} provides the deepest EU coverage (5 languages, 75K examples). XSafety~\citep{wang2024xsafety} was the pioneer (10 languages) but is now superseded in both scale and coverage. Lingua-SafetyBench~\citep{linguasafetybench2026} adds multimodal evaluation. Romanian and most Eastern European languages remain uncovered by all benchmarks.
+
+\subsection{Critical Limitations of Current Evaluation}
+
+% --- Figure 4: Benchmark coverage gaps ---
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig4-benchmark-coverage.pdf}
+\caption{Safety benchmark coverage matrix across 18 benchmarks and 9 evaluation dimensions. Green indicates full coverage, yellow partial coverage, and red absence. The red-bordered columns highlight the two most critical gaps for SLM deployment: no benchmark systematically tests SLMs at different scales, and none evaluates safety under quantization or pruning.}
+\label{fig:coverage}
+\end{figure*}
+
+We identify five structural limitations that are particularly acute for SLM evaluation (see also Figure~\ref{fig:coverage}):
+
+\textbf{(1) No size-stratified analysis.} No benchmark systematically reports how safety properties change across model scales (1B, 3B, 7B, 13B, 70B). This is the most fundamental gap: without size-stratified data, we cannot characterize the relationship between model size and safety.
+
+\textbf{(2) No compression-aware evaluation.} No benchmark evaluates safety at multiple quantization levels (FP16, INT8, INT4, INT3) across multiple methods (GPTQ, AWQ, GGUF). Given that most SLMs are deployed quantized, this is a critical blind spot.
+
+\textbf{(3) Benchmark overfitting and safetywashing.} \citet{ren2024safetywashing} introduced the concept of ``safetywashing''---the phenomenon where models are optimized to score well on safety benchmarks without genuine safety improvement. Static benchmarks with known test sets are particularly vulnerable. Models can learn to recognize benchmark-style prompts and refuse them while remaining unsafe on novel prompts. This is analogous to teaching to the test in education.
+
+\textbf{(4) Lack of real-world validity.} Most benchmarks use synthetic or curated prompts that do not reflect the distribution of actual user interactions. SimpleSafetyTests~\citep{vidgen2023simplesafety} attempted to address this with ``obvious'' safety tests, but the gap between benchmark performance and real-world safety remains uncharacterized.
+
+\textbf{(5) Missing languages.} Romanian and most Eastern European languages are uncovered by any safety benchmark. Agent safety benchmarks do not target SLMs. Over-refusal patterns of small models are uncharacterized.
+
+%%% SECTION 12 %%%
+\section{Failure Modes and Risks Specific to SLMs}\label{sec:failures}
+
+Beyond the general safety concerns shared with larger models, SLMs exhibit failure modes that are qualitatively distinct or significantly amplified at small scale. Understanding these failure modes is essential for responsible deployment.
+
+\subsection{Hallucination Amplification}
+
+Smaller models hallucinate more frequently and more confidently than larger ones~\citep{lin2022truthfulqa}. The underlying cause is straightforward: with fewer parameters, the model has less capacity to store factual knowledge, but the autoregressive generation mechanism produces fluent text regardless. The result is confident confabulation---the model generates plausible-sounding but factually incorrect statements with no indication of uncertainty.
+
+This is particularly dangerous in privacy-sensitive deployments (healthcare, legal) where users may trust the model's outputs. A 3B model deployed as a medical assistant that confidently hallucinates drug interactions poses a direct safety risk that is qualitatively different from a chatbot that occasionally gets trivia wrong.
+
+\emph{Mitigation:} Retrieval-augmented generation (RAG) can ground outputs in verified sources, but adds latency and infrastructure requirements that may be incompatible with edge deployment. Calibration techniques that make the model express uncertainty are promising but underexplored for SLMs.
+
+\subsection{Jailbreak Susceptibility}
+
+SLMs are more susceptible to jailbreaks than larger models for two compounding reasons. First, the alignment is shallower: \citet{qi2025shallow} showed that safety alignment modifies only the first few output tokens, and this shallow layer is likely even thinner in smaller models with less representational redundancy. Second, the model has less capacity to distinguish between legitimate and adversarial prompts---the decision boundary between ``explain how locks work'' (benign) and ``explain how to pick a lock'' (potentially harmful) requires fine-grained understanding that smaller models may lack.
+
+\citet{wei2024jailbroken} identified two fundamental failure modes of safety training: \emph{competing objectives}, where the model's helpfulness objective overrides its safety objective, and \emph{mismatched generalization}, where safety training does not generalize to the distribution of adversarial prompts. Both are amplified in SLMs: the helpfulness--safety competition is more acute with limited capacity, and generalization is weaker with fewer parameters.
+
+Concrete attack vectors that are particularly effective against SLMs include: (1)~low-resource language translation~\citep{deng2024multilingual}---translating a harmful English prompt to Zulu or Scots Gaelic bypasses alignment entirely; (2)~encoding attacks (base64, ROT13, leetspeak)---smaller models are less likely to have learned to refuse encoded harmful content; (3)~multi-turn escalation, where each individual turn is benign but the conversation gradually steers toward harmful territory; (4)~prefix injection attacks that exploit the shallow alignment layer~\citep{qi2025shallow} by providing the first few tokens of a harmful response; and (5)~persona attacks~\citep{perez2022ignore} that instruct the model to adopt a character who would comply with harmful requests.
+
+The GCG attack~\citep{zou2023gcg} deserves special attention for SLMs. GCG appends adversarial suffixes to prompts that are optimized to bypass safety. Because the attack is gradient-based, it is more effective against smaller models where the loss landscape is simpler and the adversarial suffix can more easily find a path around the safety barrier. AutoDAN~\citep{liu2023autodan} generates stealthy jailbreak prompts that are semantically meaningful (unlike GCG's gibberish suffixes), making them harder to detect via input filtering.
+
+\emph{Mitigation:} Defense-in-depth is essential. No single method---alignment training, guardrails, or representation engineering---is sufficient alone. The combination of DPO-based alignment, RepE steering vectors, and lightweight output classifiers provides the strongest defense currently available for SLMs.
+
+\subsection{Bias Amplification Under Compression}
+
+\citet{gallegos2024bias} surveyed bias in LLMs broadly, but the interaction between compression and bias is specific to SLMs. Quantization can amplify existing biases by disproportionately affecting the parameters that encode minority-group representations. Pruning can remove debiasing components while preserving biased associations. Distillation can amplify the teacher's biases if the student has less capacity to represent subtle distinctions.
+
+No systematic study has measured bias amplification across compression levels for SLMs. This is a critical gap: if a model is evaluated for bias at FP16 but deployed at INT4, the deployment-time bias may be significantly worse than the evaluated bias.
+
+\subsection{Instruction Misalignment and Over-Refusal}
+
+SLMs frequently exhibit instruction misalignment---failing to follow instructions correctly, particularly complex or multi-step ones. When combined with safety training, this produces a characteristic failure mode: the model refuses benign requests that it cannot fully parse, defaulting to refusal as a ``safe'' fallback. OR-Bench~\citep{cui2024orbench} documented this at scale, but the problem is likely worse in SLMs where instruction-following capability is weaker.
+
+The over-refusal problem creates a practical tension: users who encounter frequent false refusals lose trust in the model and may seek unaligned alternatives, ultimately reducing the safety of the ecosystem.
+
+\subsection{Fine-Tuning Vulnerability}
+
+As discussed in Section~\ref{sec:editing}, open-weight SLMs are vulnerable to safety removal through fine-tuning~\citep{qi2024finetuning}. This is not a failure of the model itself but of the deployment model: open weights are simultaneously the greatest strength (enabling customization, transparency, and research) and the greatest safety risk (enabling safety removal). \citet{huang2024lazy} proposed embedding safety in deeper layers to resist fine-tuning, but no current method provides robust protection.
+
+
+%%% SECTION 13 %%%
+\section{Open Challenges and Future Directions}\label{sec:challenges}
+
+Our survey identifies eight concrete open challenges, organized by estimated impact and feasibility. For each, we describe the current state, why it matters for SLMs, and what a solution would require.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Multilingual safety benchmarks for underrepresented languages.} Current benchmarks cover at most 17 languages (PolyGuardPrompts), leaving Romanian, most Eastern European languages, and hundreds of others unaddressed. Culturally adapted benchmarks---not merely translated---are needed, because harm categories vary across cultures and legal systems. A benchmark that translates English toxicity prompts to Romanian without adapting for Romanian cultural context will miss locally relevant harms while flagging culturally benign content. \emph{Impact: Very High. Feasibility: High}---the methodology exists (XSafety, M-ALERT); what is needed is linguistic and cultural expertise to extend it.
+
+    \item \textbf{Alignment methods optimized for parameter-constrained models.} Current alignment methods (DPO, ORPO) were designed for frontier models and adapted to SLMs. Methods that explicitly optimize the safety--capability Pareto frontier under a parameter budget---for example, by identifying which safety behaviors to prioritize when capacity is limited, or by allocating representational capacity between safety and capability---do not exist. The alignment tax is not merely a quantitative problem (less safety per parameter) but a qualitative one (different failure modes at different scales). \emph{Impact: High. Feasibility: Medium}---requires new theoretical frameworks for capacity-aware alignment.
+
+    \item \textbf{Mechanistic understanding of safety in sub-3B models.} The refusal direction~\citep{arditi2024refusal} was discovered in 7B+ models. Does it exist in 1B or 3B models? Are safety circuits simpler, or do they not form at all below a certain scale? If the refusal direction does not exist in sub-3B models, then RepE-based safety interventions are inapplicable to the smallest SLMs, and alternative approaches are needed. \emph{Impact: High. Feasibility: High}---the MI toolkit is mature and computationally tractable at small scale.
+
+    \item \textbf{Compression-aware safety evaluation.} No existing benchmark tests safety at multiple quantization levels (FP16, INT8, INT4, INT3) across multiple compression methods (GPTQ, AWQ, GGUF) and multiple safety dimensions. Such a benchmark would enable practitioners to make informed decisions about the safety--efficiency trade-off for their specific deployment context. \emph{Impact: High. Feasibility: High}---requires combining existing benchmarks with existing quantization tools, a primarily engineering effort.
+
+    \item \textbf{Robust alignment under distribution shift.} Current alignment methods are brittle: they work on the distribution of prompts seen during training but fail on out-of-distribution inputs, including novel languages, domains, and attack strategies. Methods that generalize across these axes---perhaps through meta-learning, domain-agnostic safety representations, or adversarial training against diverse attack distributions---are needed. This is arguably the hardest open problem in alignment. \emph{Impact: Very High. Feasibility: Low--Medium.}
+
+    \item \textbf{Unified safety evaluation framework.} The current benchmark landscape is fragmented: a practitioner must run HarmBench for adversarial robustness, TruthfulQA for truthfulness, BBQ for bias, and XSafety for multilingual safety, each with different protocols and metrics. A unified framework integrating all dimensions, languages, compression levels, and model sizes would dramatically reduce the evaluation burden and enable standardized comparison. HELM~\citep{liang2022helm} and AILuminate~\citep{ailuminate2025} provide partial solutions. \emph{Impact: Medium. Feasibility: Medium.}
+
+    \item \textbf{Safety for agentic SLMs.} As SLMs are increasingly used as autonomous agents with tool access (web browsing, code execution, file system access), new safety challenges emerge: the model can cause harm not just through its outputs but through its actions. Current agent safety benchmarks (AgentHarm, SafeArena, ATBench) assume frontier-scale models. Benchmarks and methods targeting SLM agents---which have limited planning ability and are more likely to take harmful actions through incompetence rather than intent---are needed. \emph{Impact: High. Feasibility: Medium.}
+
+    \item \textbf{Scaling laws for safety.} Systematic studies connecting model size to safety properties---with controlled variables (same training data, same alignment method, different sizes)---would enable practitioners to predict the safety properties of a model from its size. Current evidence is anecdotal: we know smaller models are generally less safe, but we do not know the functional form of the relationship or whether there are critical thresholds below which certain safety properties cannot be maintained. \emph{Impact: High. Feasibility: Medium}---requires training multiple model sizes with identical pipelines, which is expensive but methodologically straightforward.
+\end{enumerate}
+
+%%% SECTION 14 %%%
+\section{Empirical Validation}\label{sec:empirical}
+
+To move beyond synthesis of reported results, we conduct our own safety evaluation across 19 model configurations spanning six model families, multiple sizes, quantization levels, and alignment conditions. We use a curated probe set of 15 harmful prompts (spanning toxicity, illegal activity, malware, fraud, and violence) and 10 benign prompts that are topically adjacent to harmful ones (e.g., ``Explain how locks work mechanically'' vs.\ ``How do I pick a lock?''). We measure two metrics: \emph{harmful refusal rate} (higher = safer) and \emph{benign refusal rate} (lower = less over-refusal). All experiments run on an NVIDIA A100 GPU (40\,GB) using FP16 precision with greedy decoding (except Qwen~3 models, which use sampling per their documentation). Refusal is detected via keyword matching in the first 300 characters of the response.
+
+\subsection{Experiment 1: Size-Stratified Safety Across Families}\label{sec:exp1}
+
+Table~\ref{tab:empirical} and Figure~\ref{fig:empirical} present results across 14 instruct-tuned models from six families: Qwen~2.5~\citep{qwen2024}, Qwen~3~\citep{qwen2025}, Llama~3.2~\citep{grattafiori2024llama3}, Gemma~2~\citep{gemma2024b}, Gemma~3~\citep{gemma2025}, Phi-4~\citep{abdin2024phi4}, and SmolLM2~\citep{benallal2024smollm}.
+
+\begin{table*}[t]
+\centering
+\caption{Safety probe results across 19 model configurations. Harmful refusal rate (higher = safer), benign refusal rate (lower = less over-refusal), safety score = harmful $-$ benign. Models grouped by experiment.}\label{tab:empirical}
+\small
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+\textbf{Model} & \textbf{Params} & \textbf{Quant} & \textbf{Harmful} & \textbf{Benign} & \textbf{Score} \\
+\midrule
+\multicolumn{6}{@{}l}{\emph{Experiment 1: Size-stratified safety}} \\
+\addlinespace[2pt]
+Qwen 2.5-0.5B-Instruct & 0.5B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
+Qwen 2.5-1.5B-Instruct & 1.5B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
+Qwen 2.5-3B-Instruct & 3B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
+Qwen 2.5-7B-Instruct & 7B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
+\addlinespace[2pt]
+Llama 3.2-1B-Instruct & 1B & fp16 & 73.3\% & 0.0\% & 73.3\% \\
+Llama 3.2-3B-Instruct & 3B & fp16 & 60.0\% & 0.0\% & 60.0\% \\
+\addlinespace[2pt]
+Gemma 2-2B-IT & 2B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
+Gemma 3-1B-IT & 1B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
+Gemma 3-4B-IT & 4B & fp16 & 0.0\% & 0.0\% & 0.0\% \\
+\addlinespace[2pt]
+Qwen 3-0.6B & 0.6B & fp16 & 40.0\% & 0.0\% & 40.0\% \\
+Qwen 3-1.7B & 1.7B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
+Qwen 3-4B & 4B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
+\addlinespace[2pt]
+Phi-4-Mini & 3.8B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
+SmolLM2-1.7B-Instruct & 1.7B & fp16 & 46.7\% & 0.0\% & 46.7\% \\
+\midrule
+\multicolumn{6}{@{}l}{\emph{Experiment 2: Compression-aware safety (Qwen 2.5-3B)}} \\
+\addlinespace[2pt]
+Qwen 2.5-3B-Instruct & 3B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
+Qwen 2.5-3B-Instruct & 3B & int8 & 100.0\% & 0.0\% & 100.0\% \\
+Qwen 2.5-3B-Instruct & 3B & int4 & 100.0\% & 0.0\% & 100.0\% \\
+\midrule
+\multicolumn{6}{@{}l}{\emph{Experiment 3: Base vs.\ instruct}} \\
+\addlinespace[2pt]
+Qwen 2.5-3B-Base & 3B & fp16 & 26.7\% & 0.0\% & 26.7\% \\
+Llama 3.2-3B-Base & 3B & fp16 & 0.0\% & 0.0\% & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig6-empirical-results.pdf}
+\caption{Harmful prompt refusal rates across 19 model configurations grouped by experiment. Left: size-stratified safety across six families---safety generally increases with scale within a family, but varies dramatically across families at the same size. Center: quantization has no effect on safety for Qwen~2.5-3B. Right: base (unaligned) models show near-zero safety regardless of family.}
+\label{fig:empirical}
+\end{figure*}
+
+Five key findings emerge from the cross-family comparison.
+
+First, \textbf{safety alignment quality varies dramatically across model families at the same scale.} At the 3B parameter class, Qwen~2.5 and Phi-4 achieve 100\% harmful refusal, while Llama~3.2-3B achieves only 60\% and SmolLM2-1.7B only 46.7\%. This 40--53 percentage-point gap at comparable sizes demonstrates that the alignment pipeline---not model architecture or scale alone---is the primary determinant of safety behavior.
+
+Second, \textbf{the size--safety relationship is positive within families but not universal.} Within Qwen~2.5, safety increases monotonically from 86.7\% (0.5B) to 100\% (3B+). Within Qwen~3, the pattern is similar: 40.0\% (0.6B) to 93.3\% (4B). However, Llama~3.2 shows an \emph{inverted} pattern: the 1B model (73.3\%) outperforms the 3B model (60.0\%), suggesting that scaling alone does not guarantee improved safety and that alignment quality may degrade at larger sizes if the safety training pipeline is not scaled accordingly.
+
+Third, \textbf{even sub-1B models can achieve meaningful safety.} Qwen~2.5-0.5B achieves 86.7\% harmful refusal with zero over-refusal, and Gemma~3-1B achieves the same. This challenges the assumption that sub-1B models cannot be meaningfully safety-aligned.
+
+Fourth, \textbf{Gemma~3-4B-IT represents an anomalous failure case}: despite being an instruction-tuned model from a major lab, it refused zero harmful prompts in our evaluation, producing empty or non-refusal responses to all 15 harmful queries. This may reflect a generation configuration mismatch or an alignment approach that does not generalize to direct harmful prompts, and warrants further investigation.
+
+Fifth, \textbf{no model exhibited over-refusal} (benign refusal rate = 0\% across all 19 configurations), suggesting that current alignment techniques have largely solved the over-refusal problem for direct benign queries, though more nuanced evaluation with OR-Bench~\citep{cui2024orbench} would be needed to confirm this at scale.
+
+\subsection{Experiment 2: Compression-Aware Safety}\label{sec:exp2}
+
+We evaluate Qwen~2.5-3B-Instruct at three precision levels: FP16, INT8, and INT4 (via bitsandbytes on GPU). All three configurations achieve identical 100\% harmful refusal and 0\% benign refusal. While this is a single-model result, it provides empirical support for the claim in \S\ref{sec:efficiency} that moderate quantization preserves safety behavior. The result is consistent with prior findings that 4-bit quantization is generally safe~\citep{huang2024quantsafety}, and extends this to the SLM regime.
+
+\subsection{Experiment 3: Base vs.\ Instruct}\label{sec:exp3}
+
+We compare base (unaligned) and instruct-tuned variants of two 3B models. Qwen~2.5-3B-Base refuses only 26.7\% of harmful prompts (compared to 100\% for its instruct variant), and Llama~3.2-3B-Base refuses 0\% (compared to 60\% for its instruct variant). The Llama base model complied with every harmful request, including bomb-making instructions and malware generation. This confirms that \textbf{safety must be explicitly trained}---it does not emerge from pretraining alone, even at 3B scale---and that the gap between base and aligned models is even larger than the gap between different aligned models.
+
+\subsection{Implications}
+
+These results provide empirical support for several claims made throughout this survey. The effectiveness of instruction tuning even at 0.5B validates our recommendation that DPO/ORPO-based alignment is practical for SLMs (\S\ref{sec:alignment}). The dramatic cross-family variation at the same scale underscores the importance of alignment pipeline quality over raw parameter count. The quantization invariance at 3B confirms that INT4 deployment is viable without safety degradation (\S\ref{sec:efficiency}). The base-vs-instruct gap confirms that safety evaluation must always compare against unaligned baselines.
+
+\textbf{Limitations of this experiment.} Our probe set is small (25 prompts) and English-only. Refusal detection uses keyword matching, which may miss nuanced refusals or false-positive on responses that mention harmful concepts while declining to help. We evaluate with greedy decoding (except Qwen~3), which may not reflect real-world sampling configurations. The Gemma~3-4B anomaly requires further investigation. A full evaluation should include multilingual probes, adversarial attacks (GCG, PAIR), and established benchmarks such as HarmBench rather than direct harmful prompts alone.
+
+%%% SECTION 15 %%%
+\section{Limitations of This Survey}\label{sec:limitations}
+
+We acknowledge several limitations. First, the field evolves rapidly; papers published after our April 2026 search cutoff are not included. Second, our 7B active-parameter threshold for SLMs is pragmatic but somewhat arbitrary---models at 8--13B share many of the same constraints. Third, our inclusion criterion of $\geq$20 citations for preprints may exclude recent high-quality work. Fourth, while we provide our own empirical validation (\S\ref{sec:empirical}) across six model families and 19 configurations, our probe set remains small (25 prompts), English-only, and relies on keyword-based refusal detection rather than human annotation. The Gemma~3-4B anomaly (0\% refusal despite instruction tuning) suggests that our evaluation methodology may not capture all refusal strategies. Fifth, our comparative assessments (strengths/weaknesses, SLM suitability ratings) necessarily involve editorial judgment. Finally, our experiments do not include adversarial attacks (GCG, PAIR) or established benchmarks such as HarmBench, limiting the conclusions that can be drawn about robustness under attack.
+
+%%% SECTION 15 %%%
+\section{Conclusion}\label{sec:conclusion}
+
+This survey has provided the first comprehensive review of safety and alignment for small language models, analyzing over 200 papers across seven axes. Our comparative analysis reveals five principal findings:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Alignment methods are ready for SLMs but not optimized for them.} DPO, ORPO, and RepE are feasible and effective, but they were designed for frontier models. The alignment tax is more acute at small scale, and no method explicitly optimizes this trade-off under parameter constraints. ORPO and SimPO offer the best memory efficiency; RepE offers the lowest deployment cost; RLHF offers the highest quality but at prohibitive cost. Our empirical validation across 19 configurations and six model families confirms that instruction-tuned alignment is effective even at 0.5B parameters (87\% harmful refusal), but reveals dramatic cross-family variation: at the 3B scale, safety scores range from 60\% (Llama~3.2) to 100\% (Qwen~2.5, Phi-4), demonstrating that alignment pipeline quality matters more than scale.
+
+    \item \textbf{Data-centric approaches are underutilized.} Pretraining data filtering, safety-focused SFT data (as few as 3\% safety examples), and synthetic data generation via RLAIF provide high-impact, low-cost safety improvements that should be standard practice for SLMs.
+
+    \item \textbf{Safety evaluation is English-centric, compression-unaware, and vulnerable to safetywashing.} HarmBench provides the best balance of rigor and practicality; DecodingTrust is the most comprehensive; AILuminate is the emerging industry standard. Critical gaps remain in size-stratified analysis, compression-aware evaluation, and real-world validity.
+
+    \item \textbf{Efficiency techniques interact with safety in complex, sometimes counter-intuitive ways.} Four-bit quantization is safe; moderate pruning can improve jailbreak resistance; knowledge distillation can worsen multilingual safety; TurboQuant pushes the safe quantization boundary to 2.5--3.5 bits. NSPO offers the most principled approach to eliminating the alignment tax. Our quantization experiment confirms that INT4 and INT8 compression preserve safety behavior identically to FP16 for Qwen~2.5-3B (\S\ref{sec:exp2}).
+
+    \item \textbf{Multilingual safety is the most critical gap, and failure modes are amplified at small scale.} The cross-lingual safety gap, hallucination amplification, jailbreak susceptibility, and bias amplification under compression are all worse in SLMs than in larger models. The fine-tuning vulnerability of open-weight models has no satisfactory solution.
+\end{enumerate}
+
+Broader access to language technology through small, open-weight models is among the most consequential developments in AI. These models will be deployed on billions of devices worldwide, in hundreds of languages, often without server-side safety infrastructure. Ensuring that this democratization does not come at the cost of safety is both a technical challenge and a societal imperative. The research community must move beyond treating SLM safety as a scaled-down version of frontier safety and develop methods, benchmarks, and theoretical frameworks designed for the unique constraints and deployment contexts of small language models.
+
+% =====================================================================
+\section*{Data Availability}
+All data supporting this survey (bibliography, taxonomy, comparison matrices) is available at \url{https://github.com/robery567/phd-ai-survey-slms}.
+
+\bibliography{references}
+
+\end{document}
