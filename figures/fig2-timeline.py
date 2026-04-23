@@ -88,6 +88,6 @@ ax.set_title("Evolution of Safety Alignment Methods, Benchmarks, and Small Langu
 ax.axis('off')
 
 plt.tight_layout()
-plt.savefig("papers/paper1-survey/figures/fig2-timeline.pdf", dpi=300, bbox_inches='tight')
-plt.savefig("papers/paper1-survey/figures/fig2-timeline.png", dpi=300, bbox_inches='tight')
+plt.savefig("figures/fig2-timeline.pdf", dpi=300, bbox_inches='tight')
+plt.savefig("figures/fig2-timeline.png", dpi=300, bbox_inches='tight')
 print("Saved fig2-timeline.pdf and fig2-timeline.png")
