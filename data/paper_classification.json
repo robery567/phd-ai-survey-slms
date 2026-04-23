@@ -1,0 +1,956 @@
+[
+  {
+    "key": "ouyang2022training",
+    "title": "Training language models to follow instructions with human feedback",
+    "year": 2022,
+    "axis": "alignment"
+  },
+  {
+    "key": "stiennon2020learning",
+    "title": "Learning to summarize with human feedback",
+    "year": 2020,
+    "axis": "alignment"
+  },
+  {
+    "key": "ziegler2019fine",
+    "title": "Fine-tuning language models from human preferences",
+    "year": 2019,
+    "axis": "alignment"
+  },
+  {
+    "key": "rafailov2023direct",
+    "title": "Direct preference optimization: Your language model is secretly a reward model",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "azar2023general",
+    "title": "A general theoretical paradigm to understand learning from human feedback",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "ethayarajh2024kto",
+    "title": "KTO",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "hong2024orpo",
+    "title": "ORPO",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "meng2024simpo",
+    "title": "SimPO",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "bai2022constitutional",
+    "title": "Constitutional AI",
+    "year": 2022,
+    "axis": "alignment"
+  },
+  {
+    "key": "lee2023rlaif",
+    "title": "RLAIF",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "chen2024spin",
+    "title": "Self-play fine-tuning converts weak language models to strong language models",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "yuan2024selfrewarding",
+    "title": "Self-rewarding language models",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "munos2024nash",
+    "title": "Nash learning from human feedback",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "wu2024sppo",
+    "title": "Self-play preference optimization for language model alignment",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "rosset2024dno",
+    "title": "Direct N",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "zou2023representation",
+    "title": "Representation engineering: A top-down approach to AI",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "arditi2024refusal",
+    "title": "Refusal in language models is mediated by a single direction",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "turner2023activation",
+    "title": "Activation addition: Steering language models without optimization",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "dai2024safe",
+    "title": "Safe RLHF",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "tunstall2023zephyr",
+    "title": "Zephyr: Direct distillation of LM",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "ivison2023tulu",
+    "title": "Camels in a changing climate: Enhancing LM",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "liu2024rso",
+    "title": "Statistical rejection sampling improves preference optimization",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "gao2023scaling",
+    "title": "Scaling laws for reward model overoptimization",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "tang2024gpo",
+    "title": "Generalized preference optimization: A unified approach to offline alignment",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "chen2024dposurvey",
+    "title": "A comprehensive survey of direct preference optimization",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "ethayarajh2024limits",
+    "title": "Towards analyzing and understanding the limitations of DPO",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "zheng2024expo",
+    "title": "Weak-to-strong extrapolation expedites alignment",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "zheng2023secrets",
+    "title": "Secrets of RLHF",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "dong2024rlhf",
+    "title": "RLHF",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "shen2024trickle",
+    "title": "The trickle-down impact of reward inconsistency on RLHF",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "thakkar2024tradeoffs",
+    "title": "A deep dive into the trade-offs of parameter-efficient preference alignment techniques",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "qi2025shallow",
+    "title": "Safety Alignment Should Be Made More Than Just a Few Tokens Deep",
+    "year": 2026,
+    "axis": "alignment"
+  },
+  {
+    "key": "zhao2025dualobjective",
+    "title": "Improving LLM",
+    "year": 2025,
+    "axis": "alignment"
+  },
+  {
+    "key": "safetyarithmetic2025",
+    "title": "Safety Arithmetic: A Framework for Test-time Safety Alignment by Steering Parameters and Activations",
+    "year": 2025,
+    "axis": "alignment"
+  },
+  {
+    "key": "weaksupervision2026",
+    "title": "Can Safety Emerge from Weak Supervision? A Systematic Analysis of Small Language Models",
+    "year": 2026,
+    "axis": "alignment"
+  },
+  {
+    "key": "inan2023llamaguard",
+    "title": "Llama Guard",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "rebedea2023nemo",
+    "title": "NeMo Guardrails",
+    "year": 2023,
+    "axis": "alignment"
+  },
+  {
+    "key": "han2024wildguard",
+    "title": "WildGuard",
+    "year": 2024,
+    "axis": "alignment"
+  },
+  {
+    "key": "sharma2025constitutional",
+    "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+    "year": 2025,
+    "axis": "alignment"
+  },
+  {
+    "key": "nakka2025litelmguard",
+    "title": "LiteLMGuard",
+    "year": 2025,
+    "axis": "alignment"
+  },
+  {
+    "key": "krishna2025dsa",
+    "title": "Disentangled safety adapters enable efficient guardrails and flexible inference-time alignment",
+    "year": 2025,
+    "axis": "alignment"
+  },
+  {
+    "key": "gehman2020realtoxicity",
+    "title": "RealToxicityPrompts",
+    "year": 2020,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "hartvigsen2022toxigen",
+    "title": "ToxiGen",
+    "year": 2022,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "lin2022truthfulqa",
+    "title": "TruthfulQA",
+    "year": 2022,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "parrish2022bbq",
+    "title": "BBQ",
+    "year": 2022,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "nadeem2021stereoset",
+    "title": "StereoSet",
+    "year": 2021,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "nangia2020crows",
+    "title": "CrowS-Pairs",
+    "year": 2020,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "dhamala2021bold",
+    "title": "BOLD",
+    "year": 2021,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "sheng2019regard",
+    "title": "The woman worked as a babysitter: On biases in language generation",
+    "year": 2019,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "zhao2018winobias",
+    "title": "Gender bias in coreference resolution: Evaluation and debiasing methods",
+    "year": 2018,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "rudinger2018winogender",
+    "title": "Gender bias in coreference resolution",
+    "year": 2018,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "mazeika2024harmbench",
+    "title": "HarmBench",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "wang2023decodingtrust",
+    "title": "DecodingTrust",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "li2024salad",
+    "title": "SALAD-Bench",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "huang2024trustllm",
+    "title": "TrustLLM",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "xie2024sorry",
+    "title": "SORRY-Bench",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "cui2024orbench",
+    "title": "OR-Bench",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "li2023halueval",
+    "title": "HaluEval",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "min2023factscore",
+    "title": "FActScore",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "liang2022helm",
+    "title": "Holistic evaluation of language models",
+    "year": 2022,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "vidgen2024mlcommons",
+    "title": "MLCommons AI Safety",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "chao2024jailbreakbench",
+    "title": "JailbreakBench",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "souly2024strongreject",
+    "title": "A strongreject for empty jailbreaks",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "andriushchenko2024agentharm",
+    "title": "AgentHarm",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "ruan2024toolemu",
+    "title": "Identifying the risks of LM",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "vidgen2023simplesafety",
+    "title": "SimpleSafetyTests",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "ji2023beavertails",
+    "title": "BeaverTails",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "gao2023lmeval",
+    "title": "A framework for few-shot language model evaluation",
+    "year": 2023,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "ailuminate2025",
+    "title": "AILuminate",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "polyguard2025",
+    "title": "PolyGuard",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "malert2025",
+    "title": "M-ALERT",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "safearena2025",
+    "title": "SafeArena",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "halluhard2026",
+    "title": "HalluHard",
+    "year": 2026,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "atbench2026",
+    "title": "ATBench",
+    "year": 2026,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "osharm2025",
+    "title": "OS-Harm",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "openagentsafety2025",
+    "title": "OpenAgentSafety",
+    "year": 2025,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "linguasafetybench2026",
+    "title": "Lingua-SafetyBench",
+    "year": 2026,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "ren2024safetywashing",
+    "title": "Safetywashing: Do AI",
+    "year": 2024,
+    "axis": "benchmarks"
+  },
+  {
+    "key": "hong2024compressed",
+    "title": "Decoding compressed trust: Scrutinizing the trustworthiness of efficient LLMs",
+    "year": 2024,
+    "axis": "efficiency"
+  },
+  {
+    "key": "wee2025caq",
+    "title": "Safety-preserving PTQ",
+    "year": 2025,
+    "axis": "efficiency"
+  },
+  {
+    "key": "chen2025qresafe",
+    "title": "Q-resafe: Assessing safety risks and quantization-aware safety patching for quantized LLMs",
+    "year": 2025,
+    "axis": "efficiency"
+  },
+  {
+    "key": "hsu2024safelora",
+    "title": "Safe LoRA",
+    "year": 2024,
+    "axis": "efficiency"
+  },
+  {
+    "key": "xue2025lora",
+    "title": "LoRA",
+    "year": 2025,
+    "axis": "efficiency"
+  },
+  {
+    "key": "mou2025decoupling",
+    "title": "Decoupling safety into orthogonal subspace",
+    "year": 2025,
+    "axis": "efficiency"
+  },
+  {
+    "key": "salora2025",
+    "title": "SaLoRA",
+    "year": 2025,
+    "axis": "efficiency"
+  },
+  {
+    "key": "wei2024brittleness",
+    "title": "Assessing the brittleness of safety alignment via pruning and low-rank modifications",
+    "year": 2024,
+    "axis": "efficiency"
+  },
+  {
+    "key": "niu2025nspo",
+    "title": "Mitigating the safety alignment tax with null-space constrained policy optimization",
+    "year": 2026,
+    "axis": "efficiency"
+  },
+  {
+    "key": "zandieh2025turboquant",
+    "title": "TurboQuant",
+    "year": 2026,
+    "axis": "efficiency"
+  },
+  {
+    "key": "zandieh2024qjl",
+    "title": "QJL",
+    "year": 2024,
+    "axis": "efficiency"
+  },
+  {
+    "key": "zandieh2026polarquant",
+    "title": "PolarQuant",
+    "year": 2026,
+    "axis": "efficiency"
+  },
+  {
+    "key": "ease2025",
+    "title": "EASE",
+    "year": 2026,
+    "axis": "efficiency"
+  },
+  {
+    "key": "wang2024xsafety",
+    "title": "XSafety",
+    "year": 2024,
+    "axis": "multilingual"
+  },
+  {
+    "key": "deng2024multilingual",
+    "title": "Multilingual jailbreak challenges in large language models",
+    "year": 2024,
+    "axis": "multilingual"
+  },
+  {
+    "key": "yong2024lowresource",
+    "title": "Low-resource languages jailbreak GPT-4",
+    "year": 2024,
+    "axis": "multilingual"
+  },
+  {
+    "key": "multilingualsparse2026",
+    "title": "Multilingual Safety Alignment Via Sparse Weight Editing",
+    "year": 2026,
+    "axis": "multilingual"
+  },
+  {
+    "key": "polyguard2025",
+    "title": "PolyGuard",
+    "year": 2025,
+    "axis": "multilingual"
+  },
+  {
+    "key": "malert2025",
+    "title": "M-ALERT",
+    "year": 2025,
+    "axis": "multilingual"
+  },
+  {
+    "key": "linguasafetybench2026",
+    "title": "Lingua-SafetyBench",
+    "year": 2026,
+    "axis": "multilingual"
+  },
+  {
+    "key": "elhage2021mathematical",
+    "title": "A mathematical framework for transformer circuits",
+    "year": 2021,
+    "axis": "interpretability"
+  },
+  {
+    "key": "elhage2022superposition",
+    "title": "Toy models of superposition",
+    "year": 2022,
+    "axis": "interpretability"
+  },
+  {
+    "key": "bricken2023monosemanticity",
+    "title": "Towards monosemanticity: Decomposing language models with dictionary learning",
+    "year": 2023,
+    "axis": "interpretability"
+  },
+  {
+    "key": "templeton2024scaling",
+    "title": "Scaling monosemanticity: Extracting interpretable features from Claude",
+    "year": 2024,
+    "axis": "interpretability"
+  },
+  {
+    "key": "meng2022rome",
+    "title": "Locating and editing factual associations in GPT",
+    "year": 2022,
+    "axis": "interpretability"
+  },
+  {
+    "key": "conmy2023acdc",
+    "title": "Towards automated circuit discovery for mechanistic interpretability",
+    "year": 2023,
+    "axis": "interpretability"
+  },
+  {
+    "key": "hubinger2024sleeper",
+    "title": "Sleeper agents: Training deceptive LLMs",
+    "year": 2024,
+    "axis": "interpretability"
+  },
+  {
+    "key": "greenblatt2024faking",
+    "title": "Alignment faking in large language models",
+    "year": 2024,
+    "axis": "interpretability"
+  },
+  {
+    "key": "li2023iti",
+    "title": "Inference-time intervention: Eliciting truthful answers from a language model",
+    "year": 2023,
+    "axis": "interpretability"
+  },
+  {
+    "key": "bereska2024mi",
+    "title": "Mechanistic interpretability for AI",
+    "year": 2024,
+    "axis": "interpretability"
+  },
+  {
+    "key": "lindsey2025biology",
+    "title": "On the Biology of a Large Language Model",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "yi2024superficial",
+    "title": "Superficial safety alignment hypothesis",
+    "year": 2024,
+    "axis": "interpretability"
+  },
+  {
+    "key": "zhou2025hiddenrisks",
+    "title": "The Hidden Risks of Large Reasoning Models: A Safety Assessment of R1",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "kuo2025hcot",
+    "title": "H-CoT",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "openai2025deliberative",
+    "title": "Deliberative Alignment: Reasoning Enables Safer Language Models",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "safepath2025",
+    "title": "SafePath",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "star1_2025",
+    "title": "STAR-1",
+    "year": 2025,
+    "axis": "interpretability"
+  },
+  {
+    "key": "thinksafe2026",
+    "title": "ThinkSafe",
+    "year": 2026,
+    "axis": "interpretability"
+  },
+  {
+    "key": "abdin2024phi3",
+    "title": "Phi-3 technical report: A highly capable language model locally on your phone",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "abdin2024phi4",
+    "title": "Phi-4 technical report",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "gemma2024",
+    "title": "Gemma: Open models based on Gemini",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "gemma2024b",
+    "title": "Gemma 2: Improving open language models at a practical size",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "gemma2025",
+    "title": "Gemma 3 technical report",
+    "year": 2025,
+    "axis": "models"
+  },
+  {
+    "key": "gemma2026",
+    "title": "Gemma 4 Technical Report",
+    "year": 2026,
+    "axis": "models"
+  },
+  {
+    "key": "qwen2024",
+    "title": "Qwen2.5 technical report",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "qwen2025",
+    "title": "Qwen3 technical report",
+    "year": 2025,
+    "axis": "models"
+  },
+  {
+    "key": "qwen2026_35",
+    "title": "Qwen3.5 Technical Report",
+    "year": 2026,
+    "axis": "models"
+  },
+  {
+    "key": "qwen2026_36",
+    "title": "Qwen3.6-35B-A3B: Efficient Mixture-of-Experts with Gated DeltaNet",
+    "year": 2026,
+    "axis": "models"
+  },
+  {
+    "key": "grattafiori2024llama3",
+    "title": "The Llama",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "touvron2023llama2",
+    "title": "Llama 2: Open foundation and fine-tuned chat models",
+    "year": 2023,
+    "axis": "models"
+  },
+  {
+    "key": "jiang2023mistral",
+    "title": "Mistral 7B",
+    "year": 2023,
+    "axis": "models"
+  },
+  {
+    "key": "zhang2024tinyllama",
+    "title": "TinyLlama",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "benallal2024smollm",
+    "title": "SmolLM",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "groeneveld2024olmo",
+    "title": "OLMo",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "mehta2024openelm",
+    "title": "OpenELM",
+    "year": 2024,
+    "axis": "models"
+  },
+  {
+    "key": "phi4vision2026",
+    "title": "Phi-4-reasoning-vision: Adaptive Visual Reasoning in a 15B Model",
+    "year": 2026,
+    "axis": "models"
+  },
+  {
+    "key": "zou2023gcg",
+    "title": "Universal and transferable adversarial attacks on aligned language models",
+    "year": 2023,
+    "axis": "attacks"
+  },
+  {
+    "key": "liu2023autodan",
+    "title": "AutoDAN",
+    "year": 2024,
+    "axis": "attacks"
+  },
+  {
+    "key": "chao2023pair",
+    "title": "Jailbreaking black box large language models in twenty queries",
+    "year": 2023,
+    "axis": "attacks"
+  },
+  {
+    "key": "perez2022red",
+    "title": "Red teaming language models with language models",
+    "year": 2022,
+    "axis": "attacks"
+  },
+  {
+    "key": "bowen2024scaling",
+    "title": "Scaling trends for data poisoning in LLMs",
+    "year": 2024,
+    "axis": "attacks"
+  },
+  {
+    "key": "wei2024jailbroken",
+    "title": "Jailbroken: How Does LLM",
+    "year": 2024,
+    "axis": "attacks"
+  },
+  {
+    "key": "qi2024finetuning",
+    "title": "Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To",
+    "year": 2024,
+    "axis": "attacks"
+  },
+  {
+    "key": "perez2022ignore",
+    "title": "Ignore This Title and HackAPrompt",
+    "year": 2023,
+    "axis": "attacks"
+  },
+  {
+    "key": "huang2024lazy",
+    "title": "Lazy Safety Alignment for Large Language Models against Harmful Fine-tuning",
+    "year": 2024,
+    "axis": "attacks"
+  },
+  {
+    "key": "mitchell2022memit",
+    "title": "Fast Model Editing at Scale",
+    "year": 2022,
+    "axis": "editing"
+  },
+  {
+    "key": "li2024wmdp",
+    "title": "The WMDP",
+    "year": 2024,
+    "axis": "editing"
+  },
+  {
+    "key": "eldan2023whosharry",
+    "title": "Who's Harry Potter",
+    "year": 2023,
+    "axis": "editing"
+  },
+  {
+    "key": "liu2024rmu",
+    "title": "Rethinking Machine Unlearning for Large Language Models",
+    "year": 2024,
+    "axis": "editing"
+  },
+  {
+    "key": "longpre2024pretrainer",
+    "title": "A Pretrainer's Guide to Training Data",
+    "year": 2024,
+    "axis": "data_centric"
+  },
+  {
+    "key": "wang2024toxicdata",
+    "title": "A Pretrainer's Guide to Training Data: Measuring the Effects of Data Age, Domain Coverage, Quality, and Toxicity",
+    "year": 2024,
+    "axis": "data_centric"
+  },
+  {
+    "key": "li2024datacentric",
+    "title": "From Quantity to Quality: Boosting LLM",
+    "year": 2024,
+    "axis": "data_centric"
+  },
+  {
+    "key": "xu2024magpie",
+    "title": "Magpie: Alignment Data Synthesis from Scratch by Prompting Aligned LLMs",
+    "year": 2024,
+    "axis": "data_centric"
+  },
+  {
+    "key": "bianchi2024safetytuned",
+    "title": "Safety-Tuned LLaMAs",
+    "year": 2024,
+    "axis": "data_centric"
+  },
+  {
+    "key": "li2024safetysurvey",
+    "title": "A survey on large language model safety",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "wang2024slmsurvey",
+    "title": "A comprehensive survey of small language models in the era of large language models",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "lu2024slm",
+    "title": "Small language models: Survey, measurements, and insights",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "wan2024efficient",
+    "title": "Efficient large language models: A survey",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "wang2024redteamsurvey",
+    "title": "A survey on red teaming for generative models",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "yi2024jailbreaksurvey",
+    "title": "Jailbreak attacks and defenses against large language models: A survey",
+    "year": 2024,
+    "axis": "surveys"
+  },
+  {
+    "key": "gallegos2024bias",
+    "title": "Bias and Fairness in Large Language Models: A Survey",
+    "year": 2024,
+    "axis": "surveys"
+  }
+]

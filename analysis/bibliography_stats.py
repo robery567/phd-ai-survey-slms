@@ -6,7 +6,7 @@ import re
 from collections import Counter
 
 
-def parse_bib(path="references.bib"):
+def parse_bib(path="manuscript/references.bib"):
     with open(path) as f:
         text = f.read()
 

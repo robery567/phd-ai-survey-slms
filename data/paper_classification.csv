@@ -1,0 +1,160 @@
+key,title,year,axis
+ouyang2022training,Training language models to follow instructions with human feedback,2022,alignment
+stiennon2020learning,Learning to summarize with human feedback,2020,alignment
+ziegler2019fine,Fine-tuning language models from human preferences,2019,alignment
+rafailov2023direct,Direct preference optimization: Your language model is secretly a reward model,2023,alignment
+azar2023general,A general theoretical paradigm to understand learning from human feedback,2024,alignment
+ethayarajh2024kto,KTO,2024,alignment
+hong2024orpo,ORPO,2024,alignment
+meng2024simpo,SimPO,2024,alignment
+bai2022constitutional,Constitutional AI,2022,alignment
+lee2023rlaif,RLAIF,2023,alignment
+chen2024spin,Self-play fine-tuning converts weak language models to strong language models,2024,alignment
+yuan2024selfrewarding,Self-rewarding language models,2024,alignment
+munos2024nash,Nash learning from human feedback,2024,alignment
+wu2024sppo,Self-play preference optimization for language model alignment,2024,alignment
+rosset2024dno,Direct N,2024,alignment
+zou2023representation,Representation engineering: A top-down approach to AI,2023,alignment
+arditi2024refusal,Refusal in language models is mediated by a single direction,2024,alignment
+turner2023activation,Activation addition: Steering language models without optimization,2023,alignment
+dai2024safe,Safe RLHF,2024,alignment
+tunstall2023zephyr,Zephyr: Direct distillation of LM,2023,alignment
+ivison2023tulu,Camels in a changing climate: Enhancing LM,2023,alignment
+liu2024rso,Statistical rejection sampling improves preference optimization,2024,alignment
+gao2023scaling,Scaling laws for reward model overoptimization,2023,alignment
+tang2024gpo,Generalized preference optimization: A unified approach to offline alignment,2024,alignment
+chen2024dposurvey,A comprehensive survey of direct preference optimization,2024,alignment
+ethayarajh2024limits,Towards analyzing and understanding the limitations of DPO,2024,alignment
+zheng2024expo,Weak-to-strong extrapolation expedites alignment,2024,alignment
+zheng2023secrets,Secrets of RLHF,2023,alignment
+dong2024rlhf,RLHF,2024,alignment
+shen2024trickle,The trickle-down impact of reward inconsistency on RLHF,2024,alignment
+thakkar2024tradeoffs,A deep dive into the trade-offs of parameter-efficient preference alignment techniques,2024,alignment
+qi2025shallow,Safety Alignment Should Be Made More Than Just a Few Tokens Deep,2026,alignment
+zhao2025dualobjective,Improving LLM,2025,alignment
+safetyarithmetic2025,Safety Arithmetic: A Framework for Test-time Safety Alignment by Steering Parameters and Activations,2025,alignment
+weaksupervision2026,Can Safety Emerge from Weak Supervision? A Systematic Analysis of Small Language Models,2026,alignment
+inan2023llamaguard,Llama Guard,2023,alignment
+rebedea2023nemo,NeMo Guardrails,2023,alignment
+han2024wildguard,WildGuard,2024,alignment
+sharma2025constitutional,Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming,2025,alignment
+nakka2025litelmguard,LiteLMGuard,2025,alignment
+krishna2025dsa,Disentangled safety adapters enable efficient guardrails and flexible inference-time alignment,2025,alignment
+gehman2020realtoxicity,RealToxicityPrompts,2020,benchmarks
+hartvigsen2022toxigen,ToxiGen,2022,benchmarks
+lin2022truthfulqa,TruthfulQA,2022,benchmarks
+parrish2022bbq,BBQ,2022,benchmarks
+nadeem2021stereoset,StereoSet,2021,benchmarks
+nangia2020crows,CrowS-Pairs,2020,benchmarks
+dhamala2021bold,BOLD,2021,benchmarks
+sheng2019regard,The woman worked as a babysitter: On biases in language generation,2019,benchmarks
+zhao2018winobias,Gender bias in coreference resolution: Evaluation and debiasing methods,2018,benchmarks
+rudinger2018winogender,Gender bias in coreference resolution,2018,benchmarks
+mazeika2024harmbench,HarmBench,2024,benchmarks
+wang2023decodingtrust,DecodingTrust,2023,benchmarks
+li2024salad,SALAD-Bench,2024,benchmarks
+huang2024trustllm,TrustLLM,2024,benchmarks
+xie2024sorry,SORRY-Bench,2025,benchmarks
+cui2024orbench,OR-Bench,2024,benchmarks
+li2023halueval,HaluEval,2023,benchmarks
+min2023factscore,FActScore,2023,benchmarks
+liang2022helm,Holistic evaluation of language models,2022,benchmarks
+vidgen2024mlcommons,MLCommons AI Safety,2024,benchmarks
+chao2024jailbreakbench,JailbreakBench,2024,benchmarks
+souly2024strongreject,A strongreject for empty jailbreaks,2024,benchmarks
+andriushchenko2024agentharm,AgentHarm,2024,benchmarks
+ruan2024toolemu,Identifying the risks of LM,2024,benchmarks
+vidgen2023simplesafety,SimpleSafetyTests,2023,benchmarks
+ji2023beavertails,BeaverTails,2023,benchmarks
+gao2023lmeval,A framework for few-shot language model evaluation,2023,benchmarks
+ailuminate2025,AILuminate,2025,benchmarks
+polyguard2025,PolyGuard,2025,benchmarks
+malert2025,M-ALERT,2025,benchmarks
+safearena2025,SafeArena,2025,benchmarks
+halluhard2026,HalluHard,2026,benchmarks
+atbench2026,ATBench,2026,benchmarks
+osharm2025,OS-Harm,2025,benchmarks
+openagentsafety2025,OpenAgentSafety,2025,benchmarks
+linguasafetybench2026,Lingua-SafetyBench,2026,benchmarks
+ren2024safetywashing,Safetywashing: Do AI,2024,benchmarks
+hong2024compressed,Decoding compressed trust: Scrutinizing the trustworthiness of efficient LLMs,2024,efficiency
+wee2025caq,Safety-preserving PTQ,2025,efficiency
+chen2025qresafe,Q-resafe: Assessing safety risks and quantization-aware safety patching for quantized LLMs,2025,efficiency
+hsu2024safelora,Safe LoRA,2024,efficiency
+xue2025lora,LoRA,2025,efficiency
+mou2025decoupling,Decoupling safety into orthogonal subspace,2025,efficiency
+salora2025,SaLoRA,2025,efficiency
+wei2024brittleness,Assessing the brittleness of safety alignment via pruning and low-rank modifications,2024,efficiency
+niu2025nspo,Mitigating the safety alignment tax with null-space constrained policy optimization,2026,efficiency
+zandieh2025turboquant,TurboQuant,2026,efficiency
+zandieh2024qjl,QJL,2024,efficiency
+zandieh2026polarquant,PolarQuant,2026,efficiency
+ease2025,EASE,2026,efficiency
+wang2024xsafety,XSafety,2024,multilingual
+deng2024multilingual,Multilingual jailbreak challenges in large language models,2024,multilingual
+yong2024lowresource,Low-resource languages jailbreak GPT-4,2024,multilingual
+multilingualsparse2026,Multilingual Safety Alignment Via Sparse Weight Editing,2026,multilingual
+polyguard2025,PolyGuard,2025,multilingual
+malert2025,M-ALERT,2025,multilingual
+linguasafetybench2026,Lingua-SafetyBench,2026,multilingual
+elhage2021mathematical,A mathematical framework for transformer circuits,2021,interpretability
+elhage2022superposition,Toy models of superposition,2022,interpretability
+bricken2023monosemanticity,Towards monosemanticity: Decomposing language models with dictionary learning,2023,interpretability
+templeton2024scaling,Scaling monosemanticity: Extracting interpretable features from Claude,2024,interpretability
+meng2022rome,Locating and editing factual associations in GPT,2022,interpretability
+conmy2023acdc,Towards automated circuit discovery for mechanistic interpretability,2023,interpretability
+hubinger2024sleeper,Sleeper agents: Training deceptive LLMs,2024,interpretability
+greenblatt2024faking,Alignment faking in large language models,2024,interpretability
+li2023iti,Inference-time intervention: Eliciting truthful answers from a language model,2023,interpretability
+bereska2024mi,Mechanistic interpretability for AI,2024,interpretability
+lindsey2025biology,On the Biology of a Large Language Model,2025,interpretability
+yi2024superficial,Superficial safety alignment hypothesis,2024,interpretability
+zhou2025hiddenrisks,The Hidden Risks of Large Reasoning Models: A Safety Assessment of R1,2025,interpretability
+kuo2025hcot,H-CoT,2025,interpretability
+openai2025deliberative,Deliberative Alignment: Reasoning Enables Safer Language Models,2025,interpretability
+safepath2025,SafePath,2025,interpretability
+star1_2025,STAR-1,2025,interpretability
+thinksafe2026,ThinkSafe,2026,interpretability
+abdin2024phi3,Phi-3 technical report: A highly capable language model locally on your phone,2024,models
+abdin2024phi4,Phi-4 technical report,2024,models
+gemma2024,Gemma: Open models based on Gemini,2024,models
+gemma2024b,Gemma 2: Improving open language models at a practical size,2024,models
+gemma2025,Gemma 3 technical report,2025,models
+gemma2026,Gemma 4 Technical Report,2026,models
+qwen2024,Qwen2.5 technical report,2024,models
+qwen2025,Qwen3 technical report,2025,models
+qwen2026_35,Qwen3.5 Technical Report,2026,models
+qwen2026_36,Qwen3.6-35B-A3B: Efficient Mixture-of-Experts with Gated DeltaNet,2026,models
+grattafiori2024llama3,The Llama,2024,models
+touvron2023llama2,Llama 2: Open foundation and fine-tuned chat models,2023,models
+jiang2023mistral,Mistral 7B,2023,models
+zhang2024tinyllama,TinyLlama,2024,models
+benallal2024smollm,SmolLM,2024,models
+groeneveld2024olmo,OLMo,2024,models
+mehta2024openelm,OpenELM,2024,models
+phi4vision2026,Phi-4-reasoning-vision: Adaptive Visual Reasoning in a 15B Model,2026,models
+zou2023gcg,Universal and transferable adversarial attacks on aligned language models,2023,attacks
+liu2023autodan,AutoDAN,2024,attacks
+chao2023pair,Jailbreaking black box large language models in twenty queries,2023,attacks
+perez2022red,Red teaming language models with language models,2022,attacks
+bowen2024scaling,Scaling trends for data poisoning in LLMs,2024,attacks
+wei2024jailbroken,Jailbroken: How Does LLM,2024,attacks
+qi2024finetuning,"Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To",2024,attacks
+perez2022ignore,Ignore This Title and HackAPrompt,2023,attacks
+huang2024lazy,Lazy Safety Alignment for Large Language Models against Harmful Fine-tuning,2024,attacks
+mitchell2022memit,Fast Model Editing at Scale,2022,editing
+li2024wmdp,The WMDP,2024,editing
+eldan2023whosharry,Who's Harry Potter,2023,editing
+liu2024rmu,Rethinking Machine Unlearning for Large Language Models,2024,editing
+longpre2024pretrainer,A Pretrainer's Guide to Training Data,2024,data_centric
+wang2024toxicdata,"A Pretrainer's Guide to Training Data: Measuring the Effects of Data Age, Domain Coverage, Quality, and Toxicity",2024,data_centric
+li2024datacentric,From Quantity to Quality: Boosting LLM,2024,data_centric
+xu2024magpie,Magpie: Alignment Data Synthesis from Scratch by Prompting Aligned LLMs,2024,data_centric
+bianchi2024safetytuned,Safety-Tuned LLaMAs,2024,data_centric
+li2024safetysurvey,A survey on large language model safety,2024,surveys
+wang2024slmsurvey,A comprehensive survey of small language models in the era of large language models,2024,surveys
+lu2024slm,"Small language models: Survey, measurements, and insights",2024,surveys
+wan2024efficient,Efficient large language models: A survey,2024,surveys
+wang2024redteamsurvey,A survey on red teaming for generative models,2024,surveys
+yi2024jailbreaksurvey,Jailbreak attacks and defenses against large language models: A survey,2024,surveys
+gallegos2024bias,Bias and Fairness in Large Language Models: A Survey,2024,surveys
