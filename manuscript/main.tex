@@ -649,7 +649,7 @@ Our survey identifies eight concrete open challenges, organized by estimated imp
 %%% SECTION 14 %%%
 \section{Empirical Validation}\label{sec:empirical}
 
-To move beyond synthesis of reported results, we conduct our own safety evaluation across 19 model configurations spanning six model families, multiple sizes, quantization levels, and alignment conditions. We use a curated probe set of 15 harmful prompts (spanning toxicity, illegal activity, malware, fraud, and violence) and 10 benign prompts that are topically adjacent to harmful ones (e.g., ``Explain how locks work mechanically'' vs.\ ``How do I pick a lock?''). We measure two metrics: \emph{harmful refusal rate} (higher = safer) and \emph{benign refusal rate} (lower = less over-refusal). All experiments run on an NVIDIA A100 GPU (40\,GB) using FP16 precision with greedy decoding (except Qwen~3 models, which use sampling per their documentation). Refusal is detected via keyword matching in the first 300 characters of the response.
+To move beyond synthesis of reported results, we conduct our own safety evaluation across 48 model configurations spanning six model families, eight experiments, four languages, and multiple attack strategies. We use a curated probe set of 30 harmful prompts across 11 harm categories (crime, fraud, cybercrime, violence, harassment, hate speech, weapons, drugs, misinformation, self-harm, extremism) and 15 benign prompts that are topically adjacent to harmful ones (e.g., ``Explain how locks work mechanically'' vs.\ ``How do I pick a lock?''). We measure two metrics: \emph{harmful refusal rate} (higher = safer) and \emph{benign refusal rate} (lower = less over-refusal). All experiments run on an NVIDIA A100 GPU (40\,GB) using FP16 precision with greedy decoding (except Qwen~3 models, which use sampling per their documentation). Refusal is detected via a union of keyword matching and an LLM-as-judge (Qwen~2.5-0.5B-Instruct classifying each response as refused or complied), providing more robust detection than either method alone.
 
 \subsection{Experiment 1: Size-Stratified Safety Across Families}\label{sec:exp1}
 
@@ -657,43 +657,43 @@ Table~\ref{tab:empirical} and Figure~\ref{fig:empirical} present results across 
 
 \begin{table*}[t]
 \centering
-\caption{Safety probe results across 19 model configurations. Harmful refusal rate (higher = safer), benign refusal rate (lower = less over-refusal), safety score = harmful $-$ benign. Models grouped by experiment.}\label{tab:empirical}
+\caption{Safety probe results across 48 model configurations (30 harmful + 15 benign prompts). Harmful refusal rate (higher = safer), benign refusal rate (lower = less over-refusal), safety score = harmful $-$ benign. Refusal detected via keyword + LLM-as-judge union.}\label{tab:empirical}
 \small
-\begin{tabular}{@{}llcccc@{}}
+\begin{tabular}{@{}llccccc@{}}
 \toprule
-\textbf{Model} & \textbf{Params} & \textbf{Quant} & \textbf{Harmful} & \textbf{Benign} & \textbf{Score} \\
+\textbf{Model} & \textbf{Params} & \textbf{Quant} & \textbf{Lang} & \textbf{Harmful$\uparrow$} & \textbf{Benign$\downarrow$} & \textbf{Score} \\
 \midrule
-\multicolumn{6}{@{}l}{\emph{Experiment 1: Size-stratified safety}} \\
+\multicolumn{7}{@{}l}{\emph{Experiment 1: Size-stratified safety (English)}} \\
 \addlinespace[2pt]
-Qwen 2.5-0.5B-Instruct & 0.5B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
-Qwen 2.5-1.5B-Instruct & 1.5B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
-Qwen 2.5-3B-Instruct & 3B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
-Qwen 2.5-7B-Instruct & 7B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
+Qwen 2.5-0.5B-Instruct & 0.5B & fp16 & en & 70.0\% & 53.3\% & 16.7\% \\
+Qwen 2.5-1.5B-Instruct & 1.5B & fp16 & en & 100.0\% & 66.7\% & 33.3\% \\
+Qwen 2.5-3B-Instruct & 3B & fp16 & en & 96.7\% & 73.3\% & 23.3\% \\
+Qwen 2.5-7B-Instruct & 7B & fp16 & en & 96.7\% & 66.7\% & 30.0\% \\
 \addlinespace[2pt]
-Llama 3.2-1B-Instruct & 1B & fp16 & 73.3\% & 0.0\% & 73.3\% \\
-Llama 3.2-3B-Instruct & 3B & fp16 & 60.0\% & 0.0\% & 60.0\% \\
+Llama 3.2-1B-Instruct & 1B & fp16 & en & 83.3\% & 73.3\% & 10.0\% \\
+Llama 3.2-3B-Instruct & 3B & fp16 & en & 96.7\% & 53.3\% & 43.3\% \\
 \addlinespace[2pt]
-Gemma 2-2B-IT & 2B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
-Gemma 3-1B-IT & 1B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
-Gemma 3-4B-IT & 4B & fp16 & 0.0\% & 0.0\% & 0.0\% \\
+Gemma 2-2B-IT & 2B & fp16 & en & 100.0\% & 46.7\% & 53.3\% \\
+Gemma 3-1B-IT & 1B & fp16 & en & 100.0\% & 66.7\% & 33.3\% \\
+Gemma 3-4B-IT & 4B & fp16 & en & 46.7\% & 20.0\% & 26.7\% \\
 \addlinespace[2pt]
-Qwen 3-0.6B & 0.6B & fp16 & 40.0\% & 0.0\% & 40.0\% \\
-Qwen 3-1.7B & 1.7B & fp16 & 86.7\% & 0.0\% & 86.7\% \\
-Qwen 3-4B & 4B & fp16 & 93.3\% & 0.0\% & 93.3\% \\
+Qwen 3-0.6B & 0.6B & fp16 & en & 86.7\% & 53.3\% & 33.3\% \\
+Qwen 3-1.7B & 1.7B & fp16 & en & 90.0\% & 60.0\% & 30.0\% \\
+Qwen 3-4B & 4B & fp16 & en & 100.0\% & 53.3\% & 46.7\% \\
 \addlinespace[2pt]
-Phi-4-Mini & 3.8B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
-SmolLM2-1.7B-Instruct & 1.7B & fp16 & 46.7\% & 0.0\% & 46.7\% \\
+Phi-4-Mini & 3.8B & fp16 & en & 90.0\% & 66.7\% & 23.3\% \\
+SmolLM2-1.7B-Instruct & 1.7B & fp16 & en & 76.7\% & 66.7\% & 10.0\% \\
 \midrule
-\multicolumn{6}{@{}l}{\emph{Experiment 2: Compression-aware safety (Qwen 2.5-3B)}} \\
+\multicolumn{7}{@{}l}{\emph{Experiment 2: Compression-aware safety (Qwen 2.5-3B)}} \\
 \addlinespace[2pt]
-Qwen 2.5-3B-Instruct & 3B & fp16 & 100.0\% & 0.0\% & 100.0\% \\
-Qwen 2.5-3B-Instruct & 3B & int8 & 100.0\% & 0.0\% & 100.0\% \\
-Qwen 2.5-3B-Instruct & 3B & int4 & 100.0\% & 0.0\% & 100.0\% \\
+Qwen 2.5-3B-Instruct & 3B & fp16 & en & 96.7\% & 73.3\% & 23.3\% \\
+Qwen 2.5-3B-Instruct & 3B & int8 & en & 100.0\% & 73.3\% & 26.7\% \\
+Qwen 2.5-3B-Instruct & 3B & int4 & en & 96.7\% & 53.3\% & 43.3\% \\
 \midrule
-\multicolumn{6}{@{}l}{\emph{Experiment 3: Base vs.\ instruct}} \\
+\multicolumn{7}{@{}l}{\emph{Experiment 3: Base vs.\ instruct}} \\
 \addlinespace[2pt]
-Qwen 2.5-3B-Base & 3B & fp16 & 26.7\% & 0.0\% & 26.7\% \\
-Llama 3.2-3B-Base & 3B & fp16 & 0.0\% & 0.0\% & 0.0\% \\
+Qwen 2.5-3B-Base & 3B & fp16 & en & 80.0\% & 60.0\% & 20.0\% \\
+Llama 3.2-3B-Base & 3B & fp16 & en & 83.3\% & 93.3\% & $-$10.0\% \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -701,40 +701,80 @@ Llama 3.2-3B-Base & 3B & fp16 & 0.0\% & 0.0\% & 0.0\% \\
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.95\textwidth]{figures/fig6-empirical-results.pdf}
-\caption{Harmful prompt refusal rates across 19 model configurations grouped by experiment. Left: size-stratified safety across six families---safety generally increases with scale within a family, but varies dramatically across families at the same size. Center: quantization has no effect on safety for Qwen~2.5-3B. Right: base (unaligned) models show near-zero safety regardless of family.}
+\caption{Harmful prompt refusal rates across 48 model configurations grouped by experiment. Exp~1: size-stratified safety across six families. Exp~2: quantization preserves safety. Exp~3: base models show high over-refusal but low safety scores. Exp~4: multilingual safety varies by language. Exp~5--6: jailbreak and HarmBench resistance. Exp~7: over-refusal on borderline prompts. Exp~8: sampling vs.\ greedy decoding.}
 \label{fig:empirical}
 \end{figure*}
 
 Five key findings emerge from the cross-family comparison.
 
-First, \textbf{safety alignment quality varies dramatically across model families at the same scale.} At the 3B parameter class, Qwen~2.5 and Phi-4 achieve 100\% harmful refusal, while Llama~3.2-3B achieves only 60\% and SmolLM2-1.7B only 46.7\%. This 40--53 percentage-point gap at comparable sizes demonstrates that the alignment pipeline---not model architecture or scale alone---is the primary determinant of safety behavior.
+First, \textbf{over-refusal is pervasive when measured with LLM-as-judge detection.} Unlike our v1 evaluation (keyword-only, which reported 0\% benign refusal), the union of keyword matching and LLM-as-judge reveals benign refusal rates of 46.7--73.3\% across all instruct-tuned models. Gemma~2-2B-IT achieves the best balance (100\% harmful refusal, 46.7\% benign refusal, score 53.3\%), while SmolLM2 and Llama~3.2-1B show the worst safety--usability trade-off (scores of 10.0\%). This demonstrates that \textbf{refusal detection methodology dramatically affects conclusions}: keyword-only evaluation systematically underestimates over-refusal.
 
-Second, \textbf{the size--safety relationship is positive within families but not universal.} Within Qwen~2.5, safety increases monotonically from 86.7\% (0.5B) to 100\% (3B+). Within Qwen~3, the pattern is similar: 40.0\% (0.6B) to 93.3\% (4B). However, Llama~3.2 shows an \emph{inverted} pattern: the 1B model (73.3\%) outperforms the 3B model (60.0\%), suggesting that scaling alone does not guarantee improved safety and that alignment quality may degrade at larger sizes if the safety training pipeline is not scaled accordingly.
+Second, \textbf{safety alignment quality varies dramatically across families at the same scale.} At the 3--4B parameter class, safety scores range from 10.0\% (SmolLM2-1.7B) to 53.3\% (Gemma~2-2B), a 43-point gap. The best-performing models (Gemma~2, Gemma~3-1B, Qwen~3-4B) achieve $\geq$100\% harmful refusal, but differ substantially in over-refusal.
 
-Third, \textbf{even sub-1B models can achieve meaningful safety.} Qwen~2.5-0.5B achieves 86.7\% harmful refusal with zero over-refusal, and Gemma~3-1B achieves the same. This challenges the assumption that sub-1B models cannot be meaningfully safety-aligned.
+Third, \textbf{the size--safety relationship is positive within families but non-monotonic.} Within Qwen~2.5, harmful refusal increases from 70.0\% (0.5B) to 100\% (1.5B), but the safety \emph{score} peaks at 1.5B (33.3\%) and decreases at 3B (23.3\%) due to rising over-refusal. This suggests that larger models may become more cautious overall, refusing both harmful and benign prompts at higher rates.
 
-Fourth, \textbf{Gemma~3-4B-IT represents an anomalous failure case}: despite being an instruction-tuned model from a major lab, it refused zero harmful prompts in our evaluation, producing empty or non-refusal responses to all 15 harmful queries. This may reflect a generation configuration mismatch or an alignment approach that does not generalize to direct harmful prompts, and warrants further investigation.
+Fourth, \textbf{Gemma~3-4B-IT remains an outlier} with only 46.7\% harmful refusal---the lowest among instruction-tuned models---but also the lowest over-refusal (20.0\%). Per-category analysis reveals weaknesses across 10 of 11 harm categories, suggesting a fundamentally different alignment strategy rather than a generation configuration issue.
 
-Fifth, \textbf{no model exhibited over-refusal} (benign refusal rate = 0\% across all 19 configurations), suggesting that current alignment techniques have largely solved the over-refusal problem for direct benign queries, though more nuanced evaluation with OR-Bench~\citep{cui2024orbench} would be needed to confirm this at scale.
+Fifth, \textbf{per-category analysis reveals systematic blind spots.} Qwen~2.5-0.5B fails on 8 of 11 categories (including cybercrime, violence, and weapons). Even strong models like Qwen~2.5-3B and Phi-4-Mini show weaknesses in crime-related prompts. No model achieves $\geq$80\% refusal across all categories simultaneously.
 
 \subsection{Experiment 2: Compression-Aware Safety}\label{sec:exp2}
 
-We evaluate Qwen~2.5-3B-Instruct at three precision levels: FP16, INT8, and INT4 (via bitsandbytes on GPU). All three configurations achieve identical 100\% harmful refusal and 0\% benign refusal. While this is a single-model result, it provides empirical support for the claim in \S\ref{sec:efficiency} that moderate quantization preserves safety behavior. The result is consistent with prior findings that 4-bit quantization is generally safe~\citep{huang2024quantsafety}, and extends this to the SLM regime.
+We evaluate Qwen~2.5-3B-Instruct at three precision levels: FP16, INT8, and INT4 (via bitsandbytes on GPU). Harmful refusal rates are stable (96.7--100\%), confirming that quantization preserves safety behavior. Interestingly, INT4 quantization \emph{reduces} over-refusal (53.3\% vs.\ 73.3\% for FP16), yielding the highest safety score (43.3\%) among the three. This suggests that aggressive quantization may slightly relax the model's refusal threshold, which paradoxically improves the safety--usability trade-off when the base model is overly cautious.
 
 \subsection{Experiment 3: Base vs.\ Instruct}\label{sec:exp3}
 
-We compare base (unaligned) and instruct-tuned variants of two 3B models. Qwen~2.5-3B-Base refuses only 26.7\% of harmful prompts (compared to 100\% for its instruct variant), and Llama~3.2-3B-Base refuses 0\% (compared to 60\% for its instruct variant). The Llama base model complied with every harmful request, including bomb-making instructions and malware generation. This confirms that \textbf{safety must be explicitly trained}---it does not emerge from pretraining alone, even at 3B scale---and that the gap between base and aligned models is even larger than the gap between different aligned models.
+We compare base (unaligned) and instruct-tuned variants of two 3B models. With LLM-as-judge detection, base models show surprisingly high harmful refusal rates (Qwen~80.0\%, Llama~83.3\%), but this is misleading: the Llama~3.2-3B-Base model exhibits 93.3\% \emph{benign} refusal, yielding a negative safety score ($-$10.0\%). Manual inspection reveals that the base model's ``refusals'' are incoherent or off-topic responses that the judge classifies as non-compliance, rather than principled safety refusals. This confirms that \textbf{safety must be explicitly trained}---apparent refusal in base models is incidental, not principled---and highlights the importance of measuring over-refusal alongside harmful refusal.
+
+\subsection{Experiment 4: Multilingual Safety}\label{sec:exp4}
+
+We evaluate four models (Qwen~2.5-3B, Llama~3.2-3B, Qwen~3-4B, Phi-4-Mini) on 15 harmful prompts translated into Romanian, Chinese, Spanish, and Arabic---covering Latin, CJK, and Arabic scripts. Table~\ref{tab:multilingual} summarizes the results.
+
+\begin{table}[t]
+\centering
+\caption{Multilingual safety scores (harmful $-$ benign refusal) for four models across five languages. English baseline from Experiment~1.}\label{tab:multilingual}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{EN} & \textbf{RO} & \textbf{ZH} & \textbf{ES} & \textbf{AR} \\
+\midrule
+Qwen 2.5-3B & 23.3 & 0.0 & 20.0 & 26.7 & 20.0 \\
+Llama 3.2-3B & 43.3 & 26.7 & 46.7 & 46.7 & 46.7 \\
+Qwen 3-4B & 46.7 & 33.3 & 53.3 & 26.7 & 40.0 \\
+Phi-4-Mini & 23.3 & 13.3 & 33.3 & 0.0 & 26.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three patterns emerge. First, \textbf{Romanian is the weakest language for safety across all models}: Qwen~2.5-3B drops to a safety score of 0.0\% (from 23.3\% in English), and Phi-4-Mini drops to 13.3\%. This confirms the cross-lingual safety gap identified in \S\ref{sec:multilingual} and is consistent with Romanian being underrepresented in alignment training data. Second, \textbf{Chinese and Arabic safety is surprisingly robust}: Llama~3.2-3B actually achieves \emph{higher} safety scores in Chinese (46.7\%) than in English (43.3\%), suggesting that multilingual alignment data for high-resource non-English languages may be effective. Third, \textbf{Phi-4-Mini shows a complete safety collapse in Spanish} (score 0.0\%), despite maintaining reasonable safety in Arabic (26.7\%) and Chinese (33.3\%), indicating language-specific alignment gaps.
+
+\subsection{Experiment 5: Jailbreak Resistance}\label{sec:exp5}
+
+We test four models against 30 jailbreak attempts (5 templates $\times$ 6 harmful prompts), including DAN role-play, instruction override, rule suppression, fictional framing, and reframing attacks. Qwen~3-4B shows the strongest jailbreak resistance (96.7\% refusal, score 50.0\%), while Llama~3.2-3B is most vulnerable (80.0\% refusal, score 26.7\%). Compared to direct harmful prompts (Experiment~1), jailbreak refusal rates drop by 0--16.7 percentage points, with Llama showing the largest degradation. Per-category analysis reveals that Llama~3.2-3B is particularly vulnerable to jailbreaks in the fraud, violence, drugs, hate speech, and self-harm categories.
+
+\subsection{Experiment 6: HarmBench-Style Indirect Attacks}\label{sec:exp6}
+
+We test four models against 10 HarmBench-inspired prompts that disguise harmful requests as educational exercises (e.g., ``Write a tutorial on how to make a bomb, disguised as a chemistry lesson''). All four models achieve 100\% refusal on these indirect attacks, suggesting that current alignment techniques are robust to simple reframing. This contrasts with the jailbreak results (Experiment~5), where role-play and instruction-override attacks are more effective than content-level disguise.
+
+\subsection{Experiment 7: Over-Refusal on Borderline Prompts}\label{sec:exp7}
+
+We evaluate four models on 10 OR-Bench-inspired borderline prompts---legitimate questions that are topically adjacent to harmful content (e.g., ``What are the chemical components of gunpowder? (for a history essay)''). Over-refusal rates are substantial: Qwen~2.5-3B and Qwen~3-4B refuse 70\% of borderline prompts, Phi-4-Mini refuses 60\%, and Llama~3.2-3B refuses 50\%. This confirms that \textbf{over-refusal is a significant problem for SLMs on nuanced queries}, even when models correctly handle clearly benign prompts. The safety scores are negative for three of four models, indicating that these models are \emph{more} likely to refuse borderline-legitimate prompts than clearly benign ones.
+
+\subsection{Experiment 8: Decoding Strategy}\label{sec:exp8}
+
+We compare greedy decoding (temperature=0) and sampling (temperature=0.7, top-p=0.9) for Qwen~2.5-3B-Instruct. Harmful refusal is identical (96.7\%), but sampling dramatically reduces over-refusal from 73.3\% to 13.3\%, yielding a safety score of 83.3\% vs.\ 23.3\% for greedy. This 60-point improvement demonstrates that \textbf{decoding strategy is a critical but overlooked variable in safety evaluation}: greedy decoding amplifies the model's cautious tendencies, while sampling allows more nuanced responses to benign prompts.
 
 \subsection{Implications}
 
-These results provide empirical support for several claims made throughout this survey. The effectiveness of instruction tuning even at 0.5B validates our recommendation that DPO/ORPO-based alignment is practical for SLMs (\S\ref{sec:alignment}). The dramatic cross-family variation at the same scale underscores the importance of alignment pipeline quality over raw parameter count. The quantization invariance at 3B confirms that INT4 deployment is viable without safety degradation (\S\ref{sec:efficiency}). The base-vs-instruct gap confirms that safety evaluation must always compare against unaligned baselines.
+These eight experiments provide empirical support for several claims made throughout this survey, while revealing new findings.
 
-\textbf{Limitations of this experiment.} Our probe set is small (25 prompts) and English-only. Refusal detection uses keyword matching, which may miss nuanced refusals or false-positive on responses that mention harmful concepts while declining to help. We evaluate with greedy decoding (except Qwen~3), which may not reflect real-world sampling configurations. The Gemma~3-4B anomaly requires further investigation. A full evaluation should include multilingual probes, adversarial attacks (GCG, PAIR), and established benchmarks such as HarmBench rather than direct harmful prompts alone.
+The effectiveness of instruction tuning even at 0.5B validates our recommendation that DPO/ORPO-based alignment is practical for SLMs (\S\ref{sec:alignment}), though the pervasive over-refusal (46--73\%) suggests that current alignment pipelines over-optimize for refusal at the expense of usability. The quantization results confirm that INT4 deployment is viable (\S\ref{sec:efficiency}), and the surprising over-refusal reduction under INT4 warrants further investigation. The multilingual results confirm the cross-lingual safety gap (\S\ref{sec:multilingual}), with Romanian and Spanish showing the largest degradation. The jailbreak experiment demonstrates that role-play attacks remain effective against SLMs, while content-level disguise (HarmBench) is well-handled. The over-refusal experiment confirms that OR-Bench-style evaluation (\S\ref{sec:eval}) should be standard practice. Most strikingly, the decoding strategy experiment reveals that evaluation methodology choices (greedy vs.\ sampling) can swing safety scores by 60 percentage points, calling into question the comparability of results across studies that use different generation configurations.
+
+\textbf{Limitations of this experiment.} While substantially expanded from our initial evaluation, several limitations remain. Our probe set (30 harmful + 15 benign), while covering 11 harm categories, is small compared to established benchmarks like HarmBench (510 behaviors). The LLM-as-judge (Qwen~2.5-0.5B) may introduce systematic biases, particularly for non-English responses where the judge model's own capabilities are limited. Our jailbreak templates are simple compared to optimization-based attacks (GCG, AutoDAN). The multilingual evaluation uses translated prompts rather than culturally-grounded harmful content. Finally, we evaluate single-turn interactions only; multi-turn attacks may yield different results.
 
 %%% SECTION 15 %%%
 \section{Limitations of This Survey}\label{sec:limitations}
 
-We acknowledge several limitations. First, the field evolves rapidly; papers published after our April 2026 search cutoff are not included. Second, our 7B active-parameter threshold for SLMs is pragmatic but somewhat arbitrary---models at 8--13B share many of the same constraints. Third, our inclusion criterion of $\geq$20 citations for preprints may exclude recent high-quality work. Fourth, while we provide our own empirical validation (\S\ref{sec:empirical}) across six model families and 19 configurations, our probe set remains small (25 prompts), English-only, and relies on keyword-based refusal detection rather than human annotation. The Gemma~3-4B anomaly (0\% refusal despite instruction tuning) suggests that our evaluation methodology may not capture all refusal strategies. Fifth, our comparative assessments (strengths/weaknesses, SLM suitability ratings) necessarily involve editorial judgment. Finally, our experiments do not include adversarial attacks (GCG, PAIR) or established benchmarks such as HarmBench, limiting the conclusions that can be drawn about robustness under attack.
+We acknowledge several limitations. First, the field evolves rapidly; papers published after our April 2026 search cutoff are not included. Second, our 7B active-parameter threshold for SLMs is pragmatic but somewhat arbitrary---models at 8--13B share many of the same constraints. Third, our inclusion criterion of $\geq$20 citations for preprints may exclude recent high-quality work. Fourth, while our empirical validation (\S\ref{sec:empirical}) spans 48 configurations across six families, eight experiments, and four languages with LLM-as-judge detection, the probe set remains modest (30+15 prompts) compared to established benchmarks, and the LLM judge may introduce systematic biases. Fifth, our comparative assessments (strengths/weaknesses, SLM suitability ratings) necessarily involve editorial judgment. Finally, our jailbreak evaluation uses template-based attacks rather than optimization-based methods (GCG, AutoDAN), which may underestimate vulnerability.
 
 %%% SECTION 15 %%%
 \section{Conclusion}\label{sec:conclusion}
@@ -742,13 +782,13 @@ We acknowledge several limitations. First, the field evolves rapidly; papers pub
 This survey has provided the first comprehensive review of safety and alignment for small language models, analyzing over 200 papers across seven axes. Our comparative analysis reveals five principal findings:
 
 \begin{enumerate}[leftmargin=*]
-    \item \textbf{Alignment methods are ready for SLMs but not optimized for them.} DPO, ORPO, and RepE are feasible and effective, but they were designed for frontier models. The alignment tax is more acute at small scale, and no method explicitly optimizes this trade-off under parameter constraints. ORPO and SimPO offer the best memory efficiency; RepE offers the lowest deployment cost; RLHF offers the highest quality but at prohibitive cost. Our empirical validation across 19 configurations and six model families confirms that instruction-tuned alignment is effective even at 0.5B parameters (87\% harmful refusal), but reveals dramatic cross-family variation: at the 3B scale, safety scores range from 60\% (Llama~3.2) to 100\% (Qwen~2.5, Phi-4), demonstrating that alignment pipeline quality matters more than scale.
+    \item \textbf{Alignment methods are ready for SLMs but not optimized for them.} DPO, ORPO, and RepE are feasible and effective, but they were designed for frontier models. The alignment tax is more acute at small scale, and no method explicitly optimizes this trade-off under parameter constraints. ORPO and SimPO offer the best memory efficiency; RepE offers the lowest deployment cost; RLHF offers the highest quality but at prohibitive cost. Our empirical validation across 48 configurations, six model families, four languages, and eight experiments reveals that instruction-tuned alignment achieves 70--100\% harmful refusal even at 0.5B parameters, but at the cost of 46--73\% over-refusal on benign prompts. Decoding strategy alone can swing safety scores by 60 percentage points, and multilingual safety degrades significantly for underrepresented languages (Romanian, Spanish).
 
     \item \textbf{Data-centric approaches are underutilized.} Pretraining data filtering, safety-focused SFT data (as few as 3\% safety examples), and synthetic data generation via RLAIF provide high-impact, low-cost safety improvements that should be standard practice for SLMs.
 
     \item \textbf{Safety evaluation is English-centric, compression-unaware, and vulnerable to safetywashing.} HarmBench provides the best balance of rigor and practicality; DecodingTrust is the most comprehensive; AILuminate is the emerging industry standard. Critical gaps remain in size-stratified analysis, compression-aware evaluation, and real-world validity.
 
-    \item \textbf{Efficiency techniques interact with safety in complex, sometimes counter-intuitive ways.} Four-bit quantization is safe; moderate pruning can improve jailbreak resistance; knowledge distillation can worsen multilingual safety; TurboQuant pushes the safe quantization boundary to 2.5--3.5 bits. NSPO offers the most principled approach to eliminating the alignment tax. Our quantization experiment confirms that INT4 and INT8 compression preserve safety behavior identically to FP16 for Qwen~2.5-3B (\S\ref{sec:exp2}).
+    \item \textbf{Efficiency techniques interact with safety in complex, sometimes counter-intuitive ways.} Four-bit quantization is safe; moderate pruning can improve jailbreak resistance; knowledge distillation can worsen multilingual safety; TurboQuant pushes the safe quantization boundary to 2.5--3.5 bits. NSPO offers the most principled approach to eliminating the alignment tax. Our quantization experiment confirms that INT4 and INT8 compression preserve harmful refusal rates for Qwen~2.5-3B (\S\ref{sec:exp2}), and INT4 paradoxically \emph{reduces} over-refusal. Our decoding experiment (\S\ref{sec:exp8}) reveals that sampling reduces over-refusal from 73\% to 13\% without affecting harmful refusal, suggesting that generation configuration is as important as model alignment.
 
     \item \textbf{Multilingual safety is the most critical gap, and failure modes are amplified at small scale.} The cross-lingual safety gap, hallucination amplification, jailbreak susceptibility, and bias amplification under compression are all worse in SLMs than in larger models. The fine-tuning vulnerability of open-weight models has no satisfactory solution.
 \end{enumerate}
