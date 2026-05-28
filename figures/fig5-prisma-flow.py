@@ -38,7 +38,7 @@ ax.text(5, 4.7, 'Full-text articles assessed\nfor eligibility\n(n = 280)', fonts
         ha='center', va='center', bbox=box_style)
 
 # Exclusion box 2
-ax.text(8.5, 5.3, 'Excluded (n = 65)\n- Models >13B only\n- No method contribution\n- Below citation threshold',
+ax.text(8.5, 5.3, 'Excluded (n = 141)\n- Models >13B only\n- No method contribution\n- Below citation threshold',
         fontsize=8, ha='center', va='center', bbox=exc_style)
 ax.annotate('', xy=(7.2, 5.3), xytext=(6.8, 4.9), arrowprops=dict(arrowstyle='->', color='#E65100', lw=1.2))
 
@@ -47,12 +47,12 @@ ax.annotate('', xy=(5, 3.7), xytext=(5, 4.0), arrowprops=dict(arrowstyle='->', c
 
 # Included
 ax.text(5, 3.4, 'Included', fontsize=13, fontweight='bold', ha='center', color='#2E7D32')
-ax.text(5, 2.5, 'Studies included in\nsystematic survey\n(n = 215)', fontsize=11,
+ax.text(5, 2.5, 'Studies included in\nsystematic survey\n(n = 139)', fontsize=11,
         ha='center', va='center', bbox=fin_style)
 
 # Breakdown
-ax.text(5, 1.2, 'Alignment (68)  |  Benchmarks (42)  |  Efficiency (31)\n'
-                 'Multilingual (18)  |  Interpretability (24)  |  Models (32)',
+ax.text(5, 1.2, 'Alignment (45)  |  Benchmarks (27)  |  Efficiency (20)\n'
+                 'Multilingual (12)  |  Interpretability (15)  |  Models (20)',
         fontsize=9, ha='center', va='center',
         bbox=dict(boxstyle='round,pad=0.3', facecolor='#F5F5F5', edgecolor='#999', linewidth=1))
 

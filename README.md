@@ -3,7 +3,7 @@
 This repository contains the analysis code, structured datasets, and supplementary materials for the survey paper:
 
 > **Safety and Alignment of Small Language Models: A Systematic Survey of Methods, Evaluation, and Open Challenges**
-> Robert-Mihai Colca, Dana Petcu
+> Robert-Mihai Colca
 > West University of Timișoara, Romania
 
 ## Repository Structure
@@ -60,8 +60,8 @@ If you use this data or analysis in your work, please cite:
 ```bibtex
 @article{colca2026slmsafety,
   title={Safety and Alignment of Small Language Models: A Systematic Survey of Methods, Evaluation, and Open Challenges},
-  author={Colca, Robert-Mihai and Petcu, Dana},
-  journal={Artificial Intelligence Review},
+  author={Colca, Robert-Mihai},
+  journal={ACM Computing Surveys},
   year={2026}
 }
 ```

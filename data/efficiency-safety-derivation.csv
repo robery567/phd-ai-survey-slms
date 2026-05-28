@@ -1,0 +1,8 @@
+technique,impact,impact_marker,recommendation,recommendation_marker,supporting_papers,evidence_basis
+4-bit quantization,Preserved,direct,Evaluate post-quant,expert,"hong2024compressed; this work (sec:exp2)","Hong reports DecodingTrust preservation at 4-bit; our HarmBench INT4 evaluation shows -11pp degradation on harder benchmark, motivating expert recommendation to evaluate post-quant rather than assuming safe."
+<=3-bit quant,Degraded,aggregated,Use CAQ/Q-resafe,expert,"hong2024compressed; wee2025caq; chen2025qresafe","Hong reports significant degradation below 4-bit; CAQ and Q-resafe target this regime per source papers."
+LoRA fine-tuning,Risk of removal,direct,Use Safe LoRA,direct,"qi2024finetuning; hsu2024safelora","Qi shows safety removal via 100 benign examples; Safe LoRA is the targeted countermeasure."
+LoRA safety align,Effective,direct,Rank >=1 suffices,direct,"thakkar2024tradeoffs; xue2025lora","Source papers explicitly report rank-1 LoRA suffices for safety alignment up to 7B."
+KD of safety,Risky,aggregated,Validate multilingual,expert,"this work (sec:multilingual)","Aggregated from corpus reports of distillation amplifying English-centric safety; concrete multilingual KD safety validation is scarce in the corpus, hence the recommendation is expert synthesis."
+Moderate pruning,Can improve,direct,WANDA <=20%,direct,"wei2024brittleness; sun2024wanda","Both source papers report safety preservation or improvement up to ~20% pruning with WANDA; degradation above this threshold is reported."
+Null-space align,Best practice,expert,NSPO recommended,expert,"niu2025nspo (preliminary)","NSPO is a 2026 preprint; its central claim has not been independently replicated; we therefore mark both columns as expert synthesis pending replication."
