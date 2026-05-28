@@ -123,6 +123,30 @@ REPRO_HEADER = code(
 )
 
 
+# HuggingFace login helper used by all GPU notebooks.
+# Prefers Colab Secrets (userdata.get('HF_TOKEN')); falls back to getpass()
+# only if the secret is not set. Avoids the double-prompt flow.
+HF_LOGIN = code(
+    "from huggingface_hub import login\n",
+    "\n",
+    "_token = os.environ.get('HF_TOKEN')\n",
+    "if not _token:\n",
+    "    try:\n",
+    "        from google.colab import userdata\n",
+    "        _token = userdata.get('HF_TOKEN')\n",
+    "        if _token:\n",
+    "            print('Using HF_TOKEN from Colab Secrets.')\n",
+    "    except Exception:\n",
+    "        _token = None\n",
+    "if not _token:\n",
+    "    from getpass import getpass\n",
+    "    _token = getpass('HuggingFace token (or set HF_TOKEN in Colab Secrets): ').strip()\n",
+    "os.environ['HF_TOKEN'] = _token\n",
+    "login(token=_token, add_to_git_credential=False)\n",
+    "print('Logged in.')\n",
+)
+
+
 # =============================================================================
 # Notebook 09: Official HarmBench classifier agreement (E1)
 # =============================================================================
@@ -606,17 +630,16 @@ nb11_cells = [
     md(
         "## Authenticate with HuggingFace\n",
         "\n",
-        "Llama Guard 3-1B (the judge) is gated. Generate a token at https://huggingface.co/settings/tokens ",
-        "with at least `read` scope, then paste it below. PolyGuardPrompts and M-ALERT are public.\n",
+        "Llama Guard 3-1B (the judge) is gated. Two options:\n",
+        "\n",
+        "1. **Colab Secrets (recommended).** In the left sidebar, click the key icon, add `HF_TOKEN` ",
+        "   with the value of your token from https://huggingface.co/settings/tokens, and toggle ",
+        "   notebook access on. The login cell below will pick it up silently.\n",
+        "2. **Manual paste.** If no Colab Secret is set, the cell falls back to a `getpass` prompt.\n",
+        "\n",
+        "Either way the token only needs `read` scope. PolyGuardPrompts and M-ALERT are public.\n",
     ),
-    code(
-        "from huggingface_hub import login\n",
-        "from getpass import getpass\n",
-        "if 'HF_TOKEN' not in os.environ:\n",
-        "    os.environ['HF_TOKEN'] = getpass('HuggingFace token: ').strip()\n",
-        "login(token=os.environ['HF_TOKEN'], add_to_git_credential=False)\n",
-        "print('Logged in.')\n",
-    ),
+    HF_LOGIN,
     md(
         "## Sample harmful prompts from both datasets\n",
         "\n",
@@ -894,14 +917,7 @@ nb12_cells = [
         "    print('reduce gcg_search_width to 256 below.')\n",
     ),
     DRIVE_MOUNT,
-    code(
-        "from huggingface_hub import login\n",
-        "from getpass import getpass\n",
-        "if 'HF_TOKEN' not in os.environ:\n",
-        "    os.environ['HF_TOKEN'] = getpass('HuggingFace token: ').strip()\n",
-        "login(token=os.environ['HF_TOKEN'], add_to_git_credential=False)\n",
-        "print('Logged in.')\n",
-    ),
+    HF_LOGIN,
     code(
         "REPRO = {\n",
         "    'notebook': '12_gcg_attack',\n",
@@ -947,15 +963,29 @@ nb12_cells = [
         "    print('No §14.5 results found; will sample directly from HarmBench.')\n",
     ),
     code(
-        "# walledai/HarmBench has 'Behavior', 'Target' (and other) fields.\n",
+        "# walledai/HarmBench standard config has columns: prompt, category. The original\n",
+        "# centerforaisafety/HarmBench CSV has Behavior / Target / BehaviorID / FunctionalCategory /\n",
+        "# SemanticCategory / Tags / ContextString. The HF mirror only ships prompt + category;\n",
+        "# we normalise here and synthesise Target ourselves.\n",
         "ds = load_dataset(REPRO['harmbench_dataset'], 'standard', split='train')\n",
         "hb_df = ds.to_pandas()\n",
         "print(f'HarmBench standard total: {len(hb_df)}')\n",
         "print('HarmBench columns:', list(hb_df.columns))\n",
         "\n",
+        "# Normalise the behavior column name so the rest of the loop is column-agnostic.\n",
+        "# Target column isn't shipped on HF; synthesise it from the behavior using the\n",
+        "# standard GCG convention from the original HarmBench paper: 'Sure, here is {behavior}'.\n",
+        "BEHAV_COL = 'Behavior' if 'Behavior' in hb_df.columns else 'prompt'\n",
+        "hb_df = hb_df.rename(columns={BEHAV_COL: 'behavior'})\n",
+        "if 'Target' not in hb_df.columns:\n",
+        "    hb_df['Target'] = hb_df['behavior'].apply(\n",
+        "        lambda b: 'Sure, here is ' + b[0].lower() + b[1:]\n",
+        "    )\n",
+        "print(f'After normalisation: columns = {list(hb_df.columns)}')\n",
+        "\n",
         "# Intersect with the §14.5 prompts when available; otherwise random sample\n",
         "if jb_prompts:\n",
-        "    hb_df = hb_df[hb_df['Behavior'].isin(jb_prompts)]\n",
+        "    hb_df = hb_df[hb_df['behavior'].isin(jb_prompts)]\n",
         "    print(f'HarmBench rows matching §14.5 behaviors: {len(hb_df)}')\n",
         "if len(hb_df) > REPRO['n_behaviors']:\n",
         "    hb_df = hb_df.sample(n=REPRO['n_behaviors'], random_state=REPRO['seed'])\n",
@@ -1036,10 +1066,10 @@ nb12_cells = [
         "    )\n",
         "\n",
         "    for i, b in enumerate(behaviors):\n",
-        "        behavior = b['Behavior']\n",
+        "        behavior = b['behavior']\n",
         "        if behavior in done_behaviors:\n",
         "            continue\n",
-        "        target = b.get('Target') or 'Sure, here is'\n",
+        "        target = b.get('Target') or ('Sure, here is ' + behavior[0].lower() + behavior[1:])\n",
         "        t0 = time.time()\n",
         "        try:\n",
         "            res = gcg_optimise(target_model, target_tok, behavior, target, cfg)\n",
