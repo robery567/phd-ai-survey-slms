@@ -1,0 +1,2305 @@
+{
+  "qwen_0.5B": {
+    "label": "Qwen2.5-0.5B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4968553459119497,
+        "ci_lo": 0.4201355417946759,
+        "ci_hi": 0.5737235159216941
+      },
+      "benign_refusal": {
+        "p": 0.54,
+        "ci_lo": 0.4426486032336822,
+        "ci_hi": 0.6343919169097589
+      },
+      "safety_score": -0.04314465408805035
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4968553459119497,
+        "ci_lo": 0.4201355417946759,
+        "ci_hi": 0.5737235159216941
+      },
+      "benign_refusal": {
+        "p": 0.46,
+        "ci_lo": 0.365608083090241,
+        "ci_hi": 0.5573513967663177
+      },
+      "safety_score": 0.036855345911949666
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6352201257861635,
+        "ci_lo": 0.5580276557628547,
+        "ci_hi": 0.7060328624332368
+      },
+      "benign_refusal": {
+        "p": 0.24,
+        "ci_lo": 0.16691325556948777,
+        "ci_hi": 0.3323233634981448
+      },
+      "safety_score": 0.3952201257861635
+    }
+  },
+  "qwen_1.5B": {
+    "label": "Qwen2.5-1.5B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.36,
+        "ci_lo": 0.2727122040140433,
+        "ci_hi": 0.4576459754839127
+      },
+      "safety_score": 0.023647798742138404
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.64,
+        "ci_lo": 0.5423540245160874,
+        "ci_hi": 0.7272877959859567
+      },
+      "safety_score": -0.2563522012578616
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8679245283018868,
+        "ci_lo": 0.8065240613105426,
+        "ci_hi": 0.9119661858741718
+      },
+      "benign_refusal": {
+        "p": 0.49,
+        "ci_lo": 0.3942199893044113,
+        "ci_hi": 0.5865198806597284
+      },
+      "safety_score": 0.37792452830188683
+    }
+  },
+  "qwen_3B": {
+    "label": "Qwen2.5-3B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.41509433962264153,
+        "ci_lo": 0.3413906408392633,
+        "ci_hi": 0.4928039175027257
+      },
+      "benign_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "safety_score": -0.004905660377358456
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.41509433962264153,
+        "ci_lo": 0.3413906408392633,
+        "ci_hi": 0.4928039175027257
+      },
+      "benign_refusal": {
+        "p": 0.58,
+        "ci_lo": 0.4820648670304296,
+        "ci_hi": 0.6720161732564526
+      },
+      "safety_score": -0.16490566037735843
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.779874213836478,
+        "ci_lo": 0.709292827128597,
+        "ci_hi": 0.8372510361144763
+      },
+      "benign_refusal": {
+        "p": 0.35,
+        "ci_lo": 0.26364248243097527,
+        "ci_hi": 0.4474555670311204
+      },
+      "safety_score": 0.42987421383647806
+    }
+  },
+  "qwen_7B": {
+    "label": "Qwen2.5-7B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.47,
+        "ci_lo": 0.3751081795934127,
+        "ci_hi": 0.5671114302990063
+      },
+      "safety_score": -0.08635220125786158
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.53,
+        "ci_lo": 0.4328885697009936,
+        "ci_hi": 0.6248918204065873
+      },
+      "safety_score": -0.14635220125786164
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.7861635220125787,
+        "ci_lo": 0.7160778422300219,
+        "ci_hi": 0.8427479055803114
+      },
+      "benign_refusal": {
+        "p": 0.16,
+        "ci_lo": 0.1009528848880478,
+        "ci_hi": 0.24420269389270247
+      },
+      "safety_score": 0.6261635220125786
+    }
+  },
+  "llama_1B": {
+    "label": "Llama3.2-1B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.30940128643245896,
+        "ci_hi": 0.49799741320893826
+      },
+      "safety_score": 0.008805031446540879
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.5020025867910618,
+        "ci_hi": 0.6905987135675411
+      },
+      "safety_score": -0.19119496855345908
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.9182389937106918,
+        "ci_lo": 0.865147622525362,
+        "ci_hi": 0.9515977011974328
+      },
+      "benign_refusal": {
+        "p": 0.21,
+        "ci_lo": 0.141656540619153,
+        "ci_hi": 0.29979968834089865
+      },
+      "safety_score": 0.7082389937106919
+    }
+  },
+  "llama_3B": {
+    "label": "Llama3.2-3B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.384645517580519,
+        "ci_hi": 0.5768342223477604
+      },
+      "safety_score": -0.07119496855345908
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.52,
+        "ci_lo": 0.42316577765223967,
+        "ci_hi": 0.615354482419481
+      },
+      "safety_score": -0.11119496855345912
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8427672955974843,
+        "ci_lo": 0.7781894922737795,
+        "ci_hi": 0.8911732166418944
+      },
+      "benign_refusal": {
+        "p": 0.07,
+        "ci_lo": 0.03431926106727266,
+        "ci_hi": 0.13749514739073504
+      },
+      "safety_score": 0.7727672955974842
+    }
+  },
+  "gemma_2B": {
+    "label": "Gemma2-2B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4025157232704403,
+        "ci_lo": 0.32945857064395406,
+        "ci_hi": 0.4801722185635147
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.30940128643245896,
+        "ci_hi": 0.49799741320893826
+      },
+      "safety_score": 0.002515723270440251
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4025157232704403,
+        "ci_lo": 0.32945857064395406,
+        "ci_hi": 0.4801722185635147
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.5020025867910618,
+        "ci_hi": 0.6905987135675411
+      },
+      "safety_score": -0.1974842767295597
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.9811320754716981,
+        "ci_lo": 0.9460013803642147,
+        "ci_hi": 0.9935627890311809
+      },
+      "benign_refusal": {
+        "p": 0.35,
+        "ci_lo": 0.26364248243097527,
+        "ci_hi": 0.4474555670311204
+      },
+      "safety_score": 0.6311320754716981
+    }
+  },
+  "gemma3_1B": {
+    "label": "Gemma3-1B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.49056603773584906,
+        "ci_lo": 0.41400646472092706,
+        "ci_hi": 0.5675707084281828
+      },
+      "benign_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.4038315303659956,
+        "ci_hi": 0.5961684696340044
+      },
+      "safety_score": -0.009433962264150941
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.49056603773584906,
+        "ci_lo": 0.41400646472092706,
+        "ci_hi": 0.5675707084281828
+      },
+      "benign_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.4038315303659956,
+        "ci_hi": 0.5961684696340044
+      },
+      "safety_score": -0.009433962264150941
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8238993710691824,
+        "ci_lo": 0.7572579994511391,
+        "ci_hi": 0.8752590557627548
+      },
+      "benign_refusal": {
+        "p": 0.19,
+        "ci_lo": 0.12514751509768735,
+        "ci_hi": 0.27778845379064376
+      },
+      "safety_score": 0.6338993710691825
+    }
+  },
+  "gemma3_4B": {
+    "label": "Gemma3-4B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4025157232704403,
+        "ci_lo": 0.32945857064395406,
+        "ci_hi": 0.4801722185635147
+      },
+      "benign_refusal": {
+        "p": 0.45,
+        "ci_lo": 0.35614537979511973,
+        "ci_hi": 0.5475539700255787
+      },
+      "safety_score": -0.04748427672955974
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4025157232704403,
+        "ci_lo": 0.32945857064395406,
+        "ci_hi": 0.4801722185635147
+      },
+      "benign_refusal": {
+        "p": 0.55,
+        "ci_lo": 0.4524460299744213,
+        "ci_hi": 0.6438546202048803
+      },
+      "safety_score": -0.14748427672955977
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.006289308176100629,
+        "ci_lo": 0.001111081403321116,
+        "ci_hi": 0.03476098006676309
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.03699349820698569
+      },
+      "safety_score": 0.006289308176100629
+    }
+  },
+  "qwen3_0.6B": {
+    "label": "Qwen3-0.6B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.44025157232704404,
+        "ci_lo": 0.36540282334136076,
+        "ci_hi": 0.5179192732696685
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.384645517580519,
+        "ci_hi": 0.5768342223477604
+      },
+      "safety_score": -0.039748427672955944
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.44025157232704404,
+        "ci_lo": 0.36540282334136076,
+        "ci_hi": 0.5179192732696685
+      },
+      "benign_refusal": {
+        "p": 0.52,
+        "ci_lo": 0.42316577765223967,
+        "ci_hi": 0.615354482419481
+      },
+      "safety_score": -0.07974842767295598
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.3584905660377358,
+        "ci_lo": 0.2880975527346779,
+        "ci_hi": 0.43556004450197033
+      },
+      "benign_refusal": {
+        "p": 0.14,
+        "ci_lo": 0.08526343659939131,
+        "ci_hi": 0.2213718821096384
+      },
+      "safety_score": 0.2184905660377358
+    }
+  },
+  "qwen3_1.7B": {
+    "label": "Qwen3-1.7B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4528301886792453,
+        "ci_lo": 0.3774818676716593,
+        "ci_hi": 0.53040399807389
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.30940128643245896,
+        "ci_hi": 0.49799741320893826
+      },
+      "safety_score": 0.05283018867924527
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4528301886792453,
+        "ci_lo": 0.3774818676716593,
+        "ci_hi": 0.53040399807389
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.5020025867910618,
+        "ci_hi": 0.6905987135675411
+      },
+      "safety_score": -0.14716981132075468
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6037735849056604,
+        "ci_lo": 0.5261624216601201,
+        "ci_hi": 0.676488673699671
+      },
+      "benign_refusal": {
+        "p": 0.19,
+        "ci_lo": 0.12514751509768735,
+        "ci_hi": 0.27778845379064376
+      },
+      "safety_score": 0.41377358490566035
+    }
+  },
+  "qwen3_4B": {
+    "label": "Qwen3-4B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.41,
+        "ci_lo": 0.3186731302113651,
+        "ci_hi": 0.5079856994658921
+      },
+      "safety_score": -0.0011949685534590748
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4088050314465409,
+        "ci_lo": 0.3354183722021748,
+        "ci_hi": 0.4864943015725541
+      },
+      "benign_refusal": {
+        "p": 0.59,
+        "ci_lo": 0.4920143005341078,
+        "ci_hi": 0.6813268697886348
+      },
+      "safety_score": -0.18119496855345907
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.779874213836478,
+        "ci_lo": 0.709292827128597,
+        "ci_hi": 0.8372510361144763
+      },
+      "benign_refusal": {
+        "p": 0.23,
+        "ci_lo": 0.15843265880303448,
+        "ci_hi": 0.3215438302287378
+      },
+      "safety_score": 0.549874213836478
+    }
+  },
+  "phi4": {
+    "label": "Phi4-Mini",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4276729559748428,
+        "ci_lo": 0.3533722534825573,
+        "ci_hi": 0.5053860739939517
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.384645517580519,
+        "ci_hi": 0.5768342223477604
+      },
+      "safety_score": -0.0523270440251572
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4276729559748428,
+        "ci_lo": 0.3533722534825573,
+        "ci_hi": 0.5053860739939517
+      },
+      "benign_refusal": {
+        "p": 0.52,
+        "ci_lo": 0.42316577765223967,
+        "ci_hi": 0.615354482419481
+      },
+      "safety_score": -0.09232704402515723
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8113207547169812,
+        "ci_lo": 0.7434365256634086,
+        "ci_hi": 0.8645167604159651
+      },
+      "benign_refusal": {
+        "p": 0.16,
+        "ci_lo": 0.1009528848880478,
+        "ci_hi": 0.24420269389270247
+      },
+      "safety_score": 0.6513207547169811
+    }
+  },
+  "smollm": {
+    "label": "SmolLM2-1.7B",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.39622641509433965,
+        "ci_lo": 0.32351132630032886,
+        "ci_hi": 0.47383757833987983
+      },
+      "benign_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.4038315303659956,
+        "ci_hi": 0.5961684696340044
+      },
+      "safety_score": -0.10377358490566035
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.39622641509433965,
+        "ci_lo": 0.32351132630032886,
+        "ci_hi": 0.47383757833987983
+      },
+      "benign_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.4038315303659956,
+        "ci_hi": 0.5961684696340044
+      },
+      "safety_score": -0.10377358490566035
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.29559748427672955,
+        "ci_lo": 0.2301684817722814,
+        "ci_hi": 0.3706702697917661
+      },
+      "benign_refusal": {
+        "p": 0.07,
+        "ci_lo": 0.03431926106727266,
+        "ci_hi": 0.13749514739073504
+      },
+      "safety_score": 0.22559748427672954
+    }
+  },
+  "quant_fp16": {
+    "label": "Qwen2.5-3B-fp16",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4779874213836478,
+        "ci_lo": 0.401783933727467,
+        "ci_hi": 0.5552294702871227
+      },
+      "benign_refusal": {
+        "p": 0.41,
+        "ci_lo": 0.3186731302113651,
+        "ci_hi": 0.5079856994658921
+      },
+      "safety_score": 0.06798742138364783
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4779874213836478,
+        "ci_lo": 0.401783933727467,
+        "ci_hi": 0.5552294702871227
+      },
+      "benign_refusal": {
+        "p": 0.59,
+        "ci_lo": 0.4920143005341078,
+        "ci_hi": 0.6813268697886348
+      },
+      "safety_score": -0.11201257861635217
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.779874213836478,
+        "ci_lo": 0.709292827128597,
+        "ci_hi": 0.8372510361144763
+      },
+      "benign_refusal": {
+        "p": 0.35,
+        "ci_lo": 0.26364248243097527,
+        "ci_hi": 0.4474555670311204
+      },
+      "safety_score": 0.42987421383647806
+    }
+  },
+  "quant_int8": {
+    "label": "Qwen2.5-3B-int8",
+    "lang": "en",
+    "quantization": "int8",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4591194968553459,
+        "ci_lo": 0.38353944373879917,
+        "ci_hi": 0.5366283065740102
+      },
+      "benign_refusal": {
+        "p": 0.45,
+        "ci_lo": 0.35614537979511973,
+        "ci_hi": 0.5475539700255787
+      },
+      "safety_score": 0.00911949685534591
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4591194968553459,
+        "ci_lo": 0.38353944373879917,
+        "ci_hi": 0.5366283065740102
+      },
+      "benign_refusal": {
+        "p": 0.55,
+        "ci_lo": 0.4524460299744213,
+        "ci_hi": 0.6438546202048803
+      },
+      "safety_score": -0.09088050314465412
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8050314465408805,
+        "ci_lo": 0.7365625888926903,
+        "ci_hi": 0.8591088126194233
+      },
+      "benign_refusal": {
+        "p": 0.25,
+        "ci_lo": 0.17545211362287677,
+        "ci_hi": 0.3430446354806161
+      },
+      "safety_score": 0.5550314465408805
+    }
+  },
+  "quant_int4": {
+    "label": "Qwen2.5-3B-int4",
+    "lang": "en",
+    "quantization": "int4",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.36477987421383645,
+        "ci_lo": 0.2939671375667631,
+        "ci_hi": 0.4419723442371452
+      },
+      "benign_refusal": {
+        "p": 0.41,
+        "ci_lo": 0.3186731302113651,
+        "ci_hi": 0.5079856994658921
+      },
+      "safety_score": -0.04522012578616352
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.36477987421383645,
+        "ci_lo": 0.2939671375667631,
+        "ci_hi": 0.4419723442371452
+      },
+      "benign_refusal": {
+        "p": 0.59,
+        "ci_lo": 0.4920143005341078,
+        "ci_hi": 0.6813268697886348
+      },
+      "safety_score": -0.22522012578616352
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8050314465408805,
+        "ci_lo": 0.7365625888926903,
+        "ci_hi": 0.8591088126194233
+      },
+      "benign_refusal": {
+        "p": 0.32,
+        "ci_lo": 0.2366914732499909,
+        "ci_hi": 0.4166261861045239
+      },
+      "safety_score": 0.48503144654088054
+    }
+  },
+  "base_qwen": {
+    "label": "Qwen2.5-3B-Base",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.44654088050314467,
+        "ci_lo": 0.3714363125029201,
+        "ci_hi": 0.5241676686753692
+      },
+      "benign_refusal": {
+        "p": 0.33,
+        "ci_lo": 0.2456312273412803,
+        "ci_hi": 0.42694656204909476
+      },
+      "safety_score": 0.11654088050314465
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.44654088050314467,
+        "ci_lo": 0.3714363125029201,
+        "ci_hi": 0.5241676686753692
+      },
+      "benign_refusal": {
+        "p": 0.67,
+        "ci_lo": 0.5730534379509052,
+        "ci_hi": 0.7543687726587197
+      },
+      "safety_score": -0.22345911949685537
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.1320754716981132,
+        "ci_lo": 0.08803381412582825,
+        "ci_hi": 0.19347593868945742
+      },
+      "benign_refusal": {
+        "p": 0.08,
+        "ci_lo": 0.04109346148438061,
+        "ci_hi": 0.14998107700948735
+      },
+      "safety_score": 0.052075471698113204
+    }
+  },
+  "base_llama": {
+    "label": "Llama3.2-3B-Base",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 159,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.53,
+        "ci_lo": 0.4328885697009936,
+        "ci_hi": 0.6248918204065873
+      },
+      "safety_score": -0.14635220125786164
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3836477987421384,
+        "ci_lo": 0.31165490612038377,
+        "ci_hi": 0.46113022938530485
+      },
+      "benign_refusal": {
+        "p": 0.47,
+        "ci_lo": 0.3751081795934127,
+        "ci_hi": 0.5671114302990063
+      },
+      "safety_score": -0.08635220125786158
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.031446540880503145,
+        "ci_lo": 0.013505386164195967,
+        "ci_hi": 0.07149421357492854
+      },
+      "benign_refusal": {
+        "p": 0.03,
+        "ci_lo": 0.01025452402403891,
+        "ci_hi": 0.08451936429052763
+      },
+      "safety_score": 0.0014465408805031457
+    }
+  },
+  "qwen_3B_ro": {
+    "label": "Qwen2.5-3B-RO",
+    "lang": "ro",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": -0.06666666666666671
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": -0.26666666666666666
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "benign_refusal": {
+        "p": 0.2,
+        "ci_lo": 0.07047549346981555,
+        "ci_hi": 0.45185448715169363
+      },
+      "safety_score": 0.3333333333333333
+    }
+  },
+  "qwen_3B_zh": {
+    "label": "Qwen2.5-3B-ZH",
+    "lang": "zh",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "safety_score": 0.1333333333333333
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.2,
+        "ci_lo": 0.07047549346981555,
+        "ci_hi": 0.45185448715169363
+      },
+      "safety_score": 0.39999999999999997
+    }
+  },
+  "qwen_3B_es": {
+    "label": "Qwen2.5-3B-ES",
+    "lang": "es",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.19999999999999996
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": 0.0
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8,
+        "ci_lo": 0.5481455128483064,
+        "ci_hi": 0.9295245065301845
+      },
+      "benign_refusal": {
+        "p": 0.2,
+        "ci_lo": 0.07047549346981555,
+        "ci_hi": 0.45185448715169363
+      },
+      "safety_score": 0.6000000000000001
+    }
+  },
+  "qwen_3B_ar": {
+    "label": "Qwen2.5-3B-AR",
+    "lang": "ar",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": -0.1333333333333333
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.7333333333333333,
+        "ci_lo": 0.48049565944019423,
+        "ci_hi": 0.8910254667430763
+      },
+      "benign_refusal": {
+        "p": 0.2,
+        "ci_lo": 0.07047549346981555,
+        "ci_hi": 0.45185448715169363
+      },
+      "safety_score": 0.5333333333333332
+    }
+  },
+  "llama_3B_ro": {
+    "label": "Llama3.2-3B-RO",
+    "lang": "ro",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "safety_score": -0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "safety_score": 0.0
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.26666666666666666
+    }
+  },
+  "llama_3B_zh": {
+    "label": "Llama3.2-3B-ZH",
+    "lang": "zh",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "benign_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "safety_score": -0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "benign_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "safety_score": -0.39999999999999997
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.6
+    }
+  },
+  "llama_3B_es": {
+    "label": "Llama3.2-3B-ES",
+    "lang": "es",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.2666666666666666
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.8,
+        "ci_lo": 0.5481455128483064,
+        "ci_hi": 0.9295245065301845
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.7333333333333334
+    }
+  },
+  "llama_3B_ar": {
+    "label": "Llama3.2-3B-AR",
+    "lang": "ar",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "safety_score": 0.1333333333333333
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "safety_score": 0.19999999999999996
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.5333333333333333
+    }
+  },
+  "qwen3_4B_ro": {
+    "label": "Qwen3-4B-RO",
+    "lang": "ro",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "benign_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "safety_score": -0.1333333333333333
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "benign_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "safety_score": 0.2
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.33333333333333337
+    }
+  },
+  "qwen3_4B_zh": {
+    "label": "Qwen3-4B-ZH",
+    "lang": "zh",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.7333333333333333,
+        "ci_lo": 0.48049565944019423,
+        "ci_hi": 0.8910254667430763
+      },
+      "safety_score": -0.39999999999999997
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.9333333333333333,
+        "ci_lo": 0.7018347012621997,
+        "ci_hi": 0.9881331045067314
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.8666666666666667
+    }
+  },
+  "qwen3_4B_es": {
+    "label": "Qwen3-4B-ES",
+    "lang": "es",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "safety_score": -0.13333333333333336
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "safety_score": -0.2
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.3333333333333333,
+        "ci_lo": 0.1517632443971472,
+        "ci_hi": 0.5828645226148023
+      },
+      "benign_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "safety_score": 0.26666666666666666
+    }
+  },
+  "qwen3_4B_ar": {
+    "label": "Qwen3-4B-AR",
+    "lang": "ar",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": -0.1333333333333333
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.7333333333333333,
+        "ci_lo": 0.48049565944019423,
+        "ci_hi": 0.8910254667430763
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.20388330103584867
+      },
+      "safety_score": 0.7333333333333333
+    }
+  },
+  "phi4_ro": {
+    "label": "Phi4-Mini-RO",
+    "lang": "ro",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": 0.06666666666666665
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6666666666666666,
+        "ci_lo": 0.41713547738519763,
+        "ci_hi": 0.8482367556028527
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.2666666666666666
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.06666666666666667,
+        "ci_lo": 0.011866895493268553,
+        "ci_hi": 0.2981652987378003
+      },
+      "benign_refusal": {
+        "p": 0.13333333333333333,
+        "ci_lo": 0.03736125910306534,
+        "ci_hi": 0.3788198283232237
+      },
+      "safety_score": -0.06666666666666667
+    }
+  },
+  "phi4_zh": {
+    "label": "Phi4-Mini-ZH",
+    "lang": "zh",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "benign_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "safety_score": 0.0
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "benign_refusal": {
+        "p": 0.7333333333333333,
+        "ci_lo": 0.48049565944019423,
+        "ci_hi": 0.8910254667430763
+      },
+      "safety_score": -0.4666666666666666
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "benign_refusal": {
+        "p": 0.13333333333333333,
+        "ci_lo": 0.03736125910306534,
+        "ci_hi": 0.3788198283232237
+      },
+      "safety_score": 0.4
+    }
+  },
+  "phi4_es": {
+    "label": "Phi4-Mini-ES",
+    "lang": "es",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "safety_score": 0.0
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.35746830120624595,
+        "ci_hi": 0.8017550385865843
+      },
+      "safety_score": -0.19999999999999996
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.26666666666666666,
+        "ci_lo": 0.10897453325692366,
+        "ci_hi": 0.5195043405598057
+      },
+      "benign_refusal": {
+        "p": 0.13333333333333333,
+        "ci_lo": 0.03736125910306534,
+        "ci_hi": 0.3788198283232237
+      },
+      "safety_score": 0.13333333333333333
+    }
+  },
+  "phi4_ar": {
+    "label": "Phi4-Mini-AR",
+    "lang": "ar",
+    "quantization": "fp16",
+    "n_harmful": 15,
+    "n_benign": 15,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "benign_refusal": {
+        "p": 0.5333333333333333,
+        "ci_lo": 0.30116980025498397,
+        "ci_hi": 0.7519046463426261
+      },
+      "safety_score": -0.1333333333333333
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.19824496141341577,
+        "ci_hi": 0.642531698793754
+      },
+      "benign_refusal": {
+        "p": 0.4666666666666667,
+        "ci_lo": 0.24809535365737387,
+        "ci_hi": 0.698830199745016
+      },
+      "safety_score": -0.06666666666666665
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.7333333333333333,
+        "ci_lo": 0.48049565944019423,
+        "ci_hi": 0.8910254667430763
+      },
+      "benign_refusal": {
+        "p": 0.13333333333333333,
+        "ci_lo": 0.03736125910306534,
+        "ci_hi": 0.3788198283232237
+      },
+      "safety_score": 0.6
+    }
+  },
+  "qwen_3B_jb": {
+    "label": "Qwen2.5-3B-JB",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.384645517580519,
+        "ci_hi": 0.5768342223477604
+      },
+      "safety_score": -0.06
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.52,
+        "ci_lo": 0.42316577765223967,
+        "ci_hi": 0.615354482419481
+      },
+      "safety_score": -0.10000000000000003
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.66,
+        "ci_lo": 0.5627772885472462,
+        "ci_hi": 0.7453847920265184
+      },
+      "benign_refusal": {
+        "p": 0.35,
+        "ci_lo": 0.26364248243097527,
+        "ci_hi": 0.4474555670311204
+      },
+      "safety_score": 0.31000000000000005
+    }
+  },
+  "llama_3B_jb": {
+    "label": "Llama3.2-3B-JB",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "benign_refusal": {
+        "p": 0.56,
+        "ci_lo": 0.4622810465167698,
+        "ci_hi": 0.6532797336983921
+      },
+      "safety_score": -0.12000000000000005
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "benign_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "safety_score": 0.0
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.76,
+        "ci_lo": 0.6676766365018553,
+        "ci_hi": 0.8330867444305122
+      },
+      "benign_refusal": {
+        "p": 0.07,
+        "ci_lo": 0.03431926106727266,
+        "ci_hi": 0.13749514739073504
+      },
+      "safety_score": 0.69
+    }
+  },
+  "qwen3_4B_jb": {
+    "label": "Qwen3-4B-JB",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "benign_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "safety_score": 0.0
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.44,
+        "ci_lo": 0.34672026630160796,
+        "ci_hi": 0.5377189534832303
+      },
+      "benign_refusal": {
+        "p": 0.56,
+        "ci_lo": 0.4622810465167698,
+        "ci_hi": 0.6532797336983921
+      },
+      "safety_score": -0.12000000000000005
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.68,
+        "ci_lo": 0.5833738138954762,
+        "ci_hi": 0.7633085267500092
+      },
+      "benign_refusal": {
+        "p": 0.18,
+        "ci_lo": 0.11700225498946347,
+        "ci_hi": 0.2666735838630073
+      },
+      "safety_score": 0.5
+    }
+  },
+  "phi4_jb": {
+    "label": "Phi4-Mini-JB",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 100,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.43,
+        "ci_lo": 0.337332985241101,
+        "ci_hi": 0.5278461045078768
+      },
+      "benign_refusal": {
+        "p": 0.39,
+        "ci_lo": 0.3001687400639442,
+        "ci_hi": 0.4879698295415927
+      },
+      "safety_score": 0.03999999999999998
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.43,
+        "ci_lo": 0.337332985241101,
+        "ci_hi": 0.5278461045078768
+      },
+      "benign_refusal": {
+        "p": 0.61,
+        "ci_lo": 0.5120301704584073,
+        "ci_hi": 0.6998312599360558
+      },
+      "safety_score": -0.18
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.75,
+        "ci_lo": 0.656955364519384,
+        "ci_hi": 0.8245478863771232
+      },
+      "benign_refusal": {
+        "p": 0.16,
+        "ci_lo": 0.1009528848880478,
+        "ci_hi": 0.24420269389270247
+      },
+      "safety_score": 0.59
+    }
+  },
+  "qwen_3B_mt": {
+    "label": "Qwen2.5-3B-MT",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 10,
+    "n_benign": 0,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    }
+  },
+  "llama_3B_mt": {
+    "label": "Llama3.2-3B-MT",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 10,
+    "n_benign": 0,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.31267376973365824,
+        "ci_hi": 0.8318196702937638
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.6
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.31267376973365824,
+        "ci_hi": 0.8318196702937638
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.6
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.31267376973365824,
+        "ci_hi": 0.8318196702937638
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.6
+    }
+  },
+  "qwen3_4B_mt": {
+    "label": "Qwen3-4B-MT",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 10,
+    "n_benign": 0,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.1,
+        "ci_lo": 0.017876213095072924,
+        "ci_hi": 0.40415002679523854
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.1
+    }
+  },
+  "phi4_mt": {
+    "label": "Phi4-Mini-MT",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 10,
+    "n_benign": 0,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.23659309051256394,
+        "ci_hi": 0.7634069094874361
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.5
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.23659309051256394,
+        "ci_hi": 0.7634069094874361
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.5
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.5,
+        "ci_lo": 0.23659309051256394,
+        "ci_hi": 0.7634069094874361
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.5
+    }
+  },
+  "qwen_3B_or": {
+    "label": "Qwen2.5-3B-OR",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 20,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.3,
+        "ci_lo": 0.14547724486760422,
+        "ci_hi": 0.5189728183535234
+      },
+      "safety_score": 0.12
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.7,
+        "ci_lo": 0.48102718164647645,
+        "ci_hi": 0.8545227551323957
+      },
+      "safety_score": -0.27999999999999997
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.35,
+        "ci_lo": 0.26364248243097527,
+        "ci_hi": 0.4474555670311204
+      },
+      "benign_refusal": {
+        "p": 0.25,
+        "ci_lo": 0.11186170140766563,
+        "ci_hi": 0.4687008776187441
+      },
+      "safety_score": 0.09999999999999998
+    }
+  },
+  "llama_3B_or": {
+    "label": "Llama3.2-3B-OR",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 20,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.21880653237281705,
+        "ci_hi": 0.6134184992377469
+      },
+      "safety_score": 0.019999999999999962
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.3279838267435473,
+        "ci_hi": 0.5179351329695703
+      },
+      "benign_refusal": {
+        "p": 0.6,
+        "ci_lo": 0.3865815007622531,
+        "ci_hi": 0.781193467627183
+      },
+      "safety_score": -0.18
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.07,
+        "ci_lo": 0.03431926106727266,
+        "ci_hi": 0.13749514739073504
+      },
+      "benign_refusal": {
+        "p": 0.05,
+        "ci_lo": 0.008881448800795402,
+        "ci_hi": 0.2361311934467421
+      },
+      "safety_score": 0.020000000000000004
+    }
+  },
+  "qwen3_4B_or": {
+    "label": "Qwen3-4B-OR",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 20,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.30940128643245896,
+        "ci_hi": 0.49799741320893826
+      },
+      "benign_refusal": {
+        "p": 0.2,
+        "ci_lo": 0.080657662579798,
+        "ci_hi": 0.4160174322518936
+      },
+      "safety_score": 0.2
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.4,
+        "ci_lo": 0.30940128643245896,
+        "ci_hi": 0.49799741320893826
+      },
+      "benign_refusal": {
+        "p": 0.8,
+        "ci_lo": 0.5839825677481064,
+        "ci_hi": 0.919342337420202
+      },
+      "safety_score": -0.4
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.19,
+        "ci_lo": 0.12514751509768735,
+        "ci_hi": 0.27778845379064376
+      },
+      "benign_refusal": {
+        "p": 0.05,
+        "ci_lo": 0.008881448800795402,
+        "ci_hi": 0.2361311934467421
+      },
+      "safety_score": 0.14
+    }
+  },
+  "phi4_or": {
+    "label": "Phi4-Mini-OR",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 100,
+    "n_benign": 20,
+    "has_perpoint_labels": true,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.53,
+        "ci_lo": 0.4328885697009936,
+        "ci_hi": 0.6248918204065873
+      },
+      "benign_refusal": {
+        "p": 0.3,
+        "ci_lo": 0.14547724486760422,
+        "ci_hi": 0.5189728183535234
+      },
+      "safety_score": 0.23000000000000004
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.53,
+        "ci_lo": 0.4328885697009936,
+        "ci_hi": 0.6248918204065873
+      },
+      "benign_refusal": {
+        "p": 0.7,
+        "ci_lo": 0.48102718164647645,
+        "ci_hi": 0.8545227551323957
+      },
+      "safety_score": -0.16999999999999993
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.16,
+        "ci_lo": 0.1009528848880478,
+        "ci_hi": 0.24420269389270247
+      },
+      "benign_refusal": {
+        "p": 0.15,
+        "ci_lo": 0.052368745896216595,
+        "ci_hi": 0.36041886474075696
+      },
+      "safety_score": 0.010000000000000009
+    }
+  },
+  "decode_sample": {
+    "label": "Qwen2.5-3B-Sample",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 50,
+    "n_benign": 50,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.29375003354711976,
+        "ci_hi": 0.5576655823142176
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.3479713528657804,
+        "ci_hi": 0.6148825510995539
+      },
+      "safety_score": -0.06
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.29375003354711976,
+        "ci_hi": 0.5576655823142176
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.3479713528657804,
+        "ci_hi": 0.6148825510995539
+      },
+      "safety_score": -0.06
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.42,
+        "ci_lo": 0.29375003354711976,
+        "ci_hi": 0.5576655823142176
+      },
+      "benign_refusal": {
+        "p": 0.48,
+        "ci_lo": 0.3479713528657804,
+        "ci_hi": 0.6148825510995539
+      },
+      "safety_score": -0.06
+    }
+  },
+  "qwen3_4B_variance": {
+    "label": "Qwen3-4B (3 runs)",
+    "lang": "en",
+    "quantization": "fp16",
+    "n_harmful": 0,
+    "n_benign": 0,
+    "has_perpoint_labels": false,
+    "reported": {
+      "harmful_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.0
+    },
+    "guard": {
+      "harmful_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.0
+    },
+    "keyword": {
+      "harmful_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "benign_refusal": {
+        "p": 0.0,
+        "ci_lo": 0.0,
+        "ci_hi": 0.0
+      },
+      "safety_score": 0.0
+    }
+  }
+}
