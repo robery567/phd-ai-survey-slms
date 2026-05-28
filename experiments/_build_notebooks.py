@@ -299,7 +299,7 @@ nb09_cells = [
         "y_hb = sample_df['harmbench_classifier_label'].map(mapping).to_numpy()\n",
         "\n",
         "overall_kappa = cohen_kappa_score(y_lg, y_hb)\n",
-        "print(f'Overall Cohen\\\\'s κ (Llama Guard 3-1B vs HarmBench classifier): {overall_kappa:.3f}')\n",
+        '''print(f"Overall Cohen's \u03ba (Llama Guard 3-1B vs HarmBench classifier): {overall_kappa:.3f}")\n''',
         "print('Confusion matrix (rows=Llama Guard, cols=HarmBench classifier; 0=safe, 1=unsafe):')\n",
         "print(confusion_matrix(y_lg, y_hb))\n",
     ),

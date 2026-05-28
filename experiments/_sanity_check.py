@@ -201,6 +201,47 @@ print()
 
 
 # ---------------------------------------------------------------------------
+# Check 7: every code cell parses as valid Python (catches f-string and
+#          escape-sequence bugs at scaffold time, not at runtime in Colab)
+# ---------------------------------------------------------------------------
+print("Check 7 — every code cell parses as valid Python")
+import ast
+for name in (GPU_NOTEBOOKS | CPU_NOTEBOOKS):
+    p = ROOT / name
+    nb = json.loads(p.read_text())
+    bad_cells = 0
+    for i, cell in enumerate(nb["cells"]):
+        if cell["cell_type"] != "code":
+            continue
+        src = "".join(cell.get("source", []))
+        # Strip Colab/Jupyter cell magics (%%capture, !pip, %pip, etc.) which
+        # are not valid Python on their own. A plain ast.parse would otherwise
+        # reject these legitimate cells.
+        scrubbed_lines = []
+        for line in src.splitlines():
+            stripped = line.lstrip()
+            if stripped.startswith(("%%", "%", "!")):
+                scrubbed_lines.append("# " + line)
+            else:
+                scrubbed_lines.append(line)
+        scrubbed = "\n".join(scrubbed_lines)
+        try:
+            ast.parse(scrubbed)
+        except SyntaxError as exc:
+            bad_cells += 1
+            fail(f"{name} cell {i} ({cell['cell_type']}): {exc.msg} at line {exc.lineno}")
+            # also dump the offending line to make the failure debuggable
+            try:
+                offending = scrubbed.splitlines()[exc.lineno - 1]
+                print(f"      offending line: {offending!r}")
+            except IndexError:
+                pass
+    if bad_cells == 0:
+        passed(f"{name}: all code cells parse")
+print()
+
+
+# ---------------------------------------------------------------------------
 print("=" * 60)
 if errors:
     print(f"FAILED: {len(errors)} issue(s) above")
