@@ -31,19 +31,31 @@ def code(*lines: str) -> dict:
     }
 
 
-def write_nb(name: str, cells: list[dict]) -> None:
+def write_nb(name: str, cells: list[dict], *, gpu: bool = True) -> None:
+    """Write a Colab-compatible notebook.
+
+    gpu=True (default): requests an A100 high-memory runtime, matching the
+    convention used by paper2-benchmark and paper3-alignment.
+    gpu=False: CPU-only runtime, used by notebooks that only do aggregation.
+    """
+    metadata = {
+        "kernelspec": {"name": "python3", "display_name": "Python 3"},
+        "language_info": {"name": "python", "version": "3.11"},
+    }
+    if gpu:
+        metadata["colab"] = {
+            "provenance": [],
+            "gpuType": "A100",
+            "machine_shape": "hm",
+        }
+        metadata["accelerator"] = "GPU"
+    else:
+        metadata["colab"] = {"provenance": []}
+        # Intentionally no 'accelerator' field; Colab treats this as CPU.
+
     nb = {
         "cells": cells,
-        "metadata": {
-            "kernelspec": {
-                "display_name": "Python 3",
-                "language": "python",
-                "name": "python3",
-            },
-            "language_info": {"name": "python", "version": "3.11"},
-            "colab": {"provenance": []},
-            "accelerator": "GPU",
-        },
+        "metadata": metadata,
         "nbformat": 4,
         "nbformat_minor": 5,
     }
@@ -52,7 +64,7 @@ def write_nb(name: str, cells: list[dict]) -> None:
     print(f"wrote {target.relative_to(NB_DIR.parent)}")
 
 
-# Common environment block used by all notebooks
+# Common environment block used by the GPU notebooks
 ENV_INSTALL = code(
     "%%capture\n",
     "!pip install -U 'transformers>=4.51' 'accelerate>=1.1' huggingface_hub datasets ipywidgets statsmodels -q\n",
@@ -65,10 +77,22 @@ ENV_INSTALL = code(
     "import transformers\n",
     "from transformers import AutoModelForCausalLM, AutoTokenizer\n",
     "\n",
+    "# --- Hard-fail if Colab didn't allocate a GPU ---\n",
+    "assert torch.cuda.is_available(), (\n",
+    "    'No GPU detected. In Colab: Runtime > Change runtime type > A100 GPU. '\n",
+    "    'This notebook will not run on CPU.'\n",
+    ")\n",
+    "_gpu_name = torch.cuda.get_device_name(0)\n",
+    "_vram_gb = torch.cuda.get_device_properties(0).total_memory / 1e9\n",
     "print(f'transformers: {transformers.__version__}')\n",
-    "print(f'GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"none\"}')\n",
-    "if torch.cuda.is_available():\n",
-    "    print(f'VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB')\n",
+    "print(f'GPU: {_gpu_name}')\n",
+    "print(f'VRAM: {_vram_gb:.1f} GB')\n",
+    "if 'A100' not in _gpu_name and _vram_gb < 35:\n",
+    "    print()\n",
+    "    print('WARNING: this notebook is configured for an A100 (40 GB).')\n",
+    "    print(f'You appear to have a {_gpu_name} with {_vram_gb:.1f} GB.')\n",
+    "    print('Smaller GPUs may OOM on the 13B HarmBench classifier or the GCG run.')\n",
+    "    print('Consider switching to A100 via Runtime > Change runtime type.')\n",
 )
 
 DRIVE_MOUNT = code(
@@ -509,7 +533,7 @@ nb10_cells = [
         "summary_df[summary_df.judge == 'reported'].head(20)\n",
     ),
 ]
-write_nb("10_confidence_intervals.ipynb", nb10_cells)
+write_nb("10_confidence_intervals.ipynb", nb10_cells, gpu=False)
 
 
 # =============================================================================
@@ -706,8 +730,23 @@ nb12_cells = [
         "import nanogcg\n",
         "from nanogcg import GCGConfig\n",
         "\n",
+        "# --- Hard-fail if Colab didn't allocate a GPU ---\n",
+        "assert torch.cuda.is_available(), (\n",
+        "    'No GPU detected. In Colab: Runtime > Change runtime type > A100 GPU. '\n",
+        "    'GCG cannot run on CPU.'\n",
+        ")\n",
+        "_gpu_name = torch.cuda.get_device_name(0)\n",
+        "_vram_gb = torch.cuda.get_device_properties(0).total_memory / 1e9\n",
         "print(f'transformers: {transformers.__version__}')\n",
         "print(f'nanogcg: {nanogcg.__version__ if hasattr(nanogcg, \"__version__\") else \"installed\"}')\n",
+        "print(f'GPU: {_gpu_name}')\n",
+        "print(f'VRAM: {_vram_gb:.1f} GB')\n",
+        "if 'A100' not in _gpu_name and _vram_gb < 35:\n",
+        "    print()\n",
+        "    print('WARNING: GCG is configured for an A100 (40 GB).')\n",
+        "    print(f'You appear to have a {_gpu_name} with {_vram_gb:.1f} GB.')\n",
+        "    print('Consider switching to A100 via Runtime > Change runtime type, or')\n",
+        "    print('reduce gcg_search_width to 256 below.')\n",
     ),
     DRIVE_MOUNT,
     code(
@@ -834,6 +873,6 @@ nb13_cells = [
         "Filled in once notebooks 09-12 produce their JSONs.\n",
     ),
 ]
-write_nb("13_aggregate_revision_results.ipynb", nb13_cells)
+write_nb("13_aggregate_revision_results.ipynb", nb13_cells, gpu=False)
 
 print("\nAll notebooks written. Open them in Colab via the Drive mount or run `jupyter lab` locally.")

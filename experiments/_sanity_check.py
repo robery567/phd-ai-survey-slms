@@ -143,6 +143,64 @@ print()
 
 
 # ---------------------------------------------------------------------------
+# Check 5: Colab metadata configures A100 high-memory runtime where appropriate
+# ---------------------------------------------------------------------------
+print("Check 5 — Colab runtime metadata")
+GPU_NOTEBOOKS = {
+    "09_official_harmbench_classifier.ipynb",
+    "11_polyguard_multilingual.ipynb",
+    "12_gcg_attack.ipynb",
+}
+CPU_NOTEBOOKS = {
+    "10_confidence_intervals.ipynb",
+    "13_aggregate_revision_results.ipynb",
+}
+
+for name in GPU_NOTEBOOKS:
+    p = ROOT / name
+    nb = json.loads(p.read_text())
+    md = nb.get("metadata", {})
+    colab = md.get("colab", {})
+    accel = md.get("accelerator")
+    if accel != "GPU":
+        fail(f"{name}: accelerator={accel!r} (expected 'GPU')")
+        continue
+    if colab.get("gpuType") != "A100":
+        fail(f"{name}: colab.gpuType={colab.get('gpuType')!r} (expected 'A100')")
+        continue
+    if colab.get("machine_shape") != "hm":
+        fail(f"{name}: colab.machine_shape={colab.get('machine_shape')!r} (expected 'hm')")
+        continue
+    passed(f"{name}: A100 high-memory runtime configured")
+
+for name in CPU_NOTEBOOKS:
+    p = ROOT / name
+    nb = json.loads(p.read_text())
+    md = nb.get("metadata", {})
+    accel = md.get("accelerator")
+    if accel is not None:
+        fail(f"{name}: accelerator={accel!r} (expected None / CPU)")
+        continue
+    passed(f"{name}: CPU runtime configured")
+print()
+
+
+# ---------------------------------------------------------------------------
+# Check 6: GPU notebooks have a hard-fail assertion if no GPU is allocated
+# ---------------------------------------------------------------------------
+print("Check 6 — GPU notebooks fail fast on CPU runtime")
+for name in GPU_NOTEBOOKS:
+    p = ROOT / name
+    nb = json.loads(p.read_text())
+    src = "\n".join("".join(c.get("source", [])) for c in nb["cells"] if c["cell_type"] == "code")
+    if "assert torch.cuda.is_available()" not in src:
+        fail(f"{name}: no torch.cuda.is_available() assert found")
+        continue
+    passed(f"{name}: hard-fail GPU assertion present")
+print()
+
+
+# ---------------------------------------------------------------------------
 print("=" * 60)
 if errors:
     print(f"FAILED: {len(errors)} issue(s) above")
