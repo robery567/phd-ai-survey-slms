@@ -25,4 +25,7 @@ Per-cell derivation CSVs supporting Tables 3, 4 and Figures 4, 5 live under `../
 
 ## Status
 
-These artifacts are being prepared in tandem with the CSUR resubmission. The manuscript references them by filename; the files themselves are filled in across the revision workstream — see `../REVISION_PLAN.md` tasks M1.4, M1.5, M1.6, M1.9, M2.1–M2.5.
+These artifacts accompany the CSUR resubmission. The manuscript references them by
+filename; `reproducibility.md` is complete and maps every Section 14 table and figure
+to its result JSON, model identifiers, dataset revisions, judge configuration,
+decoding settings, seeds, and software versions.
