@@ -12,7 +12,7 @@ This directory contains the search queries, screening logs, and coding rubrics r
 | `rubrics/efficiency-rubric.md` | Operational definitions for Table 4 (efficiency–safety) | §3.4 |
 | `rubrics/benchmark-coverage-rubric.md` | Coding rule for green/yellow/red cells in Figure 5 | §3.4 |
 | `reproducibility.md` | Per-experiment model IDs + revisions, quantization recipes, judge configs, decoding settings, seeds, hardware, software versions | §3.5 |
-| `PRISMA-checklist.pdf` | Mapping of PRISMA-2020 items to manuscript sections | §3.2 |
+| `PRISMA-checklist.md` | Mapping of PRISMA-2020 items to manuscript sections | §3.2 |
 
 Per-cell derivation CSVs supporting Tables 3, 4 and Figures 4, 5 live under `../data/`:
 
