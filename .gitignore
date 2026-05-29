@@ -2,4 +2,14 @@ __pycache__/
 *.pyc
 .DS_Store
 .venv/
+
+# Manuscript sources and any LaTeX manuscript fragments are kept out of git.
 manuscript/
+figures/fig1-taxonomy.tex
+experiments/_build_appendix.py
+experiments/results/manuscript_table_*.tex
+
+# Leftover submission bundles
+submission/
+submission */
+*.zip
