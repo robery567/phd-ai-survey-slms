@@ -6,6 +6,7 @@ __pycache__/
 # Manuscript sources and any LaTeX manuscript fragments are kept out of git.
 manuscript/
 _acm_build/
+_ieee_build/
 figures/fig1-taxonomy.tex
 experiments/_build_appendix.py
 experiments/results/manuscript_table_*.tex
