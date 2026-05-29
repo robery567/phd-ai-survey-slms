@@ -9,6 +9,11 @@ figures/fig1-taxonomy.tex
 experiments/_build_appendix.py
 experiments/results/manuscript_table_*.tex
 
+# Manuscript-revision planning / tracking docs (local only).
+REVISION_PLAN.md
+experiments/REVISION_RUNBOOK.md
+tasks.md
+
 # Leftover submission bundles
 submission/
 submission */
